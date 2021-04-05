@@ -1,16 +1,29 @@
 package sk.stu.fiit.view;
 
+import java.awt.CardLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.Timer;
+import sk.stu.fiit.database.Database;
+
 /**
  *
  * @author Martin Melisek
  */
 public class MainScreen extends javax.swing.JFrame {
 
-    /**
-     * Creates new form MainScreen
-     */
+    final DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+    final DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+
+    private Timer timer;
+
     public MainScreen() {
         initComponents();
+        this.timeSetup();
+
     }
 
     /**
@@ -21,22 +34,268 @@ public class MainScreen extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
+
+        cardPane = new javax.swing.JPanel();
+        domovPane = new sk.stu.fiit.view.panes.DomovPane();
+        izbyPane = new sk.stu.fiit.view.panes.IzbyPane();
+        rezervaciePane = new sk.stu.fiit.view.panes.RezervaciePane();
+        sluzbyPane = new sk.stu.fiit.view.panes.SluzbyPane();
+        ubytovaniaPane = new sk.stu.fiit.view.panes.UbytovaniaPane();
+        zakazniciPane = new sk.stu.fiit.view.panes.ZakazniciPane();
+        menuPane = new javax.swing.JPanel();
+        btnDomov = new javax.swing.JButton();
+        btnZakaznici = new javax.swing.JButton();
+        btnRezervacie = new javax.swing.JButton();
+        labelDatum = new javax.swing.JLabel();
+        labelCas = new javax.swing.JLabel();
+        btnUbytovania = new javax.swing.JButton();
+        btnIzby = new javax.swing.JButton();
+        btnSluzby = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Hotelový systém");
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+        cardPane.setLayout(new java.awt.CardLayout());
+        cardPane.add(domovPane, "DOMOV");
+
+        javax.swing.GroupLayout izbyPaneLayout = new javax.swing.GroupLayout(izbyPane);
+        izbyPane.setLayout(izbyPaneLayout);
+        izbyPaneLayout.setHorizontalGroup(
+            izbyPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 840, Short.MAX_VALUE)
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+        izbyPaneLayout.setVerticalGroup(
+            izbyPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 530, Short.MAX_VALUE)
         );
+
+        cardPane.add(izbyPane, "IZBY");
+
+        javax.swing.GroupLayout rezervaciePaneLayout = new javax.swing.GroupLayout(rezervaciePane);
+        rezervaciePane.setLayout(rezervaciePaneLayout);
+        rezervaciePaneLayout.setHorizontalGroup(
+            rezervaciePaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 840, Short.MAX_VALUE)
+        );
+        rezervaciePaneLayout.setVerticalGroup(
+            rezervaciePaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 530, Short.MAX_VALUE)
+        );
+
+        cardPane.add(rezervaciePane, "REZERVACIE");
+
+        javax.swing.GroupLayout sluzbyPaneLayout = new javax.swing.GroupLayout(sluzbyPane);
+        sluzbyPane.setLayout(sluzbyPaneLayout);
+        sluzbyPaneLayout.setHorizontalGroup(
+            sluzbyPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 840, Short.MAX_VALUE)
+        );
+        sluzbyPaneLayout.setVerticalGroup(
+            sluzbyPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 530, Short.MAX_VALUE)
+        );
+
+        cardPane.add(sluzbyPane, "SLUZBY");
+
+        javax.swing.GroupLayout ubytovaniaPaneLayout = new javax.swing.GroupLayout(ubytovaniaPane);
+        ubytovaniaPane.setLayout(ubytovaniaPaneLayout);
+        ubytovaniaPaneLayout.setHorizontalGroup(
+            ubytovaniaPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 840, Short.MAX_VALUE)
+        );
+        ubytovaniaPaneLayout.setVerticalGroup(
+            ubytovaniaPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 530, Short.MAX_VALUE)
+        );
+
+        cardPane.add(ubytovaniaPane, "UBYTOVANIA");
+
+        javax.swing.GroupLayout zakazniciPaneLayout = new javax.swing.GroupLayout(zakazniciPane);
+        zakazniciPane.setLayout(zakazniciPaneLayout);
+        zakazniciPaneLayout.setHorizontalGroup(
+            zakazniciPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 840, Short.MAX_VALUE)
+        );
+        zakazniciPaneLayout.setVerticalGroup(
+            zakazniciPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 530, Short.MAX_VALUE)
+        );
+
+        cardPane.add(zakazniciPane, "ZAKAZNICI");
+
+        getContentPane().add(cardPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 0, 840, 530));
+
+        menuPane.setBackground(new java.awt.Color(153, 153, 153));
+        menuPane.setLayout(new java.awt.GridBagLayout());
+
+        btnDomov.setBackground(new java.awt.Color(102, 102, 255));
+        btnDomov.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnDomov.setForeground(new java.awt.Color(255, 255, 255));
+        btnDomov.setText("Domov");
+        btnDomov.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btnDomovMouseReleased(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        menuPane.add(btnDomov, gridBagConstraints);
+
+        btnZakaznici.setBackground(new java.awt.Color(102, 102, 255));
+        btnZakaznici.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnZakaznici.setForeground(new java.awt.Color(255, 255, 255));
+        btnZakaznici.setText("Zákazníci");
+        btnZakaznici.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btnZakazniciMouseReleased(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        menuPane.add(btnZakaznici, gridBagConstraints);
+
+        btnRezervacie.setBackground(new java.awt.Color(102, 102, 255));
+        btnRezervacie.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnRezervacie.setForeground(new java.awt.Color(255, 255, 255));
+        btnRezervacie.setText("Rezervácie");
+        btnRezervacie.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btnRezervacieMouseReleased(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        menuPane.add(btnRezervacie, gridBagConstraints);
+
+        labelDatum.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        labelDatum.setForeground(new java.awt.Color(0, 0, 0));
+        labelDatum.setText("datum");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 6;
+        menuPane.add(labelDatum, gridBagConstraints);
+
+        labelCas.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        labelCas.setForeground(new java.awt.Color(0, 0, 0));
+        labelCas.setText("cas");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 7;
+        menuPane.add(labelCas, gridBagConstraints);
+
+        btnUbytovania.setBackground(new java.awt.Color(102, 102, 255));
+        btnUbytovania.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnUbytovania.setForeground(new java.awt.Color(255, 255, 255));
+        btnUbytovania.setText("Ubytovania");
+        btnUbytovania.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btnUbytovaniaMouseReleased(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        menuPane.add(btnUbytovania, gridBagConstraints);
+
+        btnIzby.setBackground(new java.awt.Color(102, 102, 255));
+        btnIzby.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnIzby.setForeground(new java.awt.Color(255, 255, 255));
+        btnIzby.setText("Izby");
+        btnIzby.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btnIzbyMouseReleased(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        menuPane.add(btnIzby, gridBagConstraints);
+
+        btnSluzby.setBackground(new java.awt.Color(102, 102, 255));
+        btnSluzby.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnSluzby.setForeground(new java.awt.Color(255, 255, 255));
+        btnSluzby.setText("Služby");
+        btnSluzby.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btnSluzbyMouseReleased(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        menuPane.add(btnSluzby, gridBagConstraints);
+
+        getContentPane().add(menuPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 120, 530));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+
+    private void btnDomovMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDomovMouseReleased
+        this.timeSetup();
+        switchScene("DOMOV", domovPane);
+    }//GEN-LAST:event_btnDomovMouseReleased
+
+    private void btnZakazniciMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnZakazniciMouseReleased
+        this.timeSetup();
+        switchScene("ZAKAZNICI", zakazniciPane);
+    }//GEN-LAST:event_btnZakazniciMouseReleased
+
+    private void btnUbytovaniaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUbytovaniaMouseReleased
+        switchScene("UBYTOVANIA", ubytovaniaPane);
+    }//GEN-LAST:event_btnUbytovaniaMouseReleased
+
+    private void btnRezervacieMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRezervacieMouseReleased
+        switchScene("REZERVACIE", rezervaciePane);
+    }//GEN-LAST:event_btnRezervacieMouseReleased
+
+    private void btnIzbyMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIzbyMouseReleased
+        switchScene("IZBY", izbyPane);
+    }//GEN-LAST:event_btnIzbyMouseReleased
+
+    private void btnSluzbyMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSluzbyMouseReleased
+        switchScene("SLUZBY", sluzbyPane);
+    }//GEN-LAST:event_btnSluzbyMouseReleased
+
+    private void switchScene(String scene, IViewRefresh pane) {
+        CardLayout cl = (CardLayout) (cardPane.getLayout());
+        pane.refresh();
+        cl.show(cardPane, scene);
+    }
+
+    public void timeSetup() {
+        ActionListener timerListener = new TimeActionListener(Database.getInstance().getAppTime());
+        this.timer = new Timer(1000, timerListener);
+        timer.setInitialDelay(0);
+        timer.start();
+    }
+
+    private class TimeActionListener implements ActionListener {
+
+        private Date time;
+
+        public TimeActionListener(Date time) {
+            this.time = time;
+        }
+
+        public void actionPerformed(ActionEvent e) {
+            String datum = dateFormat.format(this.time);
+            String cas = timeFormat.format(this.time);
+            labelDatum.setText(datum);
+            labelCas.setText(cas);
+        }
+    }
 
     public static void main() {
         /* Set the Nimbus look and feel */
@@ -71,5 +330,21 @@ public class MainScreen extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnDomov;
+    private javax.swing.JButton btnIzby;
+    private javax.swing.JButton btnRezervacie;
+    private javax.swing.JButton btnSluzby;
+    private javax.swing.JButton btnUbytovania;
+    private javax.swing.JButton btnZakaznici;
+    private javax.swing.JPanel cardPane;
+    private sk.stu.fiit.view.panes.DomovPane domovPane;
+    private sk.stu.fiit.view.panes.IzbyPane izbyPane;
+    private javax.swing.JLabel labelCas;
+    private javax.swing.JLabel labelDatum;
+    private javax.swing.JPanel menuPane;
+    private sk.stu.fiit.view.panes.RezervaciePane rezervaciePane;
+    private sk.stu.fiit.view.panes.SluzbyPane sluzbyPane;
+    private sk.stu.fiit.view.panes.UbytovaniaPane ubytovaniaPane;
+    private sk.stu.fiit.view.panes.ZakazniciPane zakazniciPane;
     // End of variables declaration//GEN-END:variables
 }
