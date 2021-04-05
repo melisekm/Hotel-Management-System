@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import javax.swing.Timer;
 import sk.stu.fiit.database.Database;
@@ -22,7 +23,7 @@ public class MainScreen extends javax.swing.JFrame {
 
     public MainScreen() {
         initComponents();
-        this.timeSetup();
+        this.timeSetup(new Date());
 
     }
 
@@ -243,12 +244,10 @@ public class MainScreen extends javax.swing.JFrame {
 
 
     private void btnDomovMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDomovMouseReleased
-        this.timeSetup();
         switchScene("DOMOV", domovPane);
     }//GEN-LAST:event_btnDomovMouseReleased
 
     private void btnZakazniciMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnZakazniciMouseReleased
-        this.timeSetup();
         switchScene("ZAKAZNICI", zakazniciPane);
     }//GEN-LAST:event_btnZakazniciMouseReleased
 
@@ -274,24 +273,32 @@ public class MainScreen extends javax.swing.JFrame {
         cl.show(cardPane, scene);
     }
 
-    public void timeSetup() {
-        ActionListener timerListener = new TimeActionListener(Database.getInstance().getAppTime());
-        this.timer = new Timer(1000, timerListener);
-        timer.setInitialDelay(0);
-        timer.start();
+    public void timeSetup(Date date) {
+        if (this.timer != null) {
+            this.timer.stop();
+        }
+        this.timer = new Timer(1000, new TimeActionListener(date));
+        this.timer.setInitialDelay(0);
+        this.timer.start();
+
     }
 
     private class TimeActionListener implements ActionListener {
 
-        private Date time;
+        private Calendar cal = Calendar.getInstance();
 
         public TimeActionListener(Date time) {
-            this.time = time;
+            Database.getInstance().setAppTime(time);
+            cal.setTime(time);
         }
 
         public void actionPerformed(ActionEvent e) {
-            String datum = dateFormat.format(this.time);
-            String cas = timeFormat.format(this.time);
+            Calendar now = Calendar.getInstance();
+            now.setTime(new Date());
+            now.set(Calendar.DATE, this.cal.get(Calendar.DATE));
+            Date time = now.getTime();
+            String datum = dateFormat.format(time);
+            String cas = timeFormat.format(time);
             labelDatum.setText(datum);
             labelCas.setText(cas);
         }

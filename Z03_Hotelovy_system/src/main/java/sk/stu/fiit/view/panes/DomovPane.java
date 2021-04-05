@@ -11,9 +11,8 @@ import sk.stu.fiit.view.MainScreen;
  *
  * @author Martin Melisek
  */
-public class DomovPane extends javax.swing.JPanel implements IViewRefresh{
+public class DomovPane extends javax.swing.JPanel implements IViewRefresh {
 
-    MainScreen parent = (MainScreen)SwingUtilities.getWindowAncestor(this);
     public DomovPane() {
         initComponents();
     }
@@ -55,9 +54,9 @@ public class DomovPane extends javax.swing.JPanel implements IViewRefresh{
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseReleased
+        MainScreen parent = (MainScreen) SwingUtilities.getAncestorOfClass(MainScreen.class, this);
         Date d = jDateChooser2.getDate();
-        Database.getInstance().setAppTime(d);
-        this.parent.timeSetup();
+        parent.timeSetup(d);
     }//GEN-LAST:event_jButton1MouseReleased
 
 

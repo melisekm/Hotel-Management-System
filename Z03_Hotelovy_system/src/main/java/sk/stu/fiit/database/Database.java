@@ -8,7 +8,7 @@ import java.util.Date;
  */
 public class Database {
 
-    private Date appTime = new Date();
+    private Date appTime;
     private static Database INSTANCE = new Database();
 
     private Database() {
