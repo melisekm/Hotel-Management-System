@@ -50,7 +50,7 @@ public class DomovPane extends javax.swing.JPanel implements IViewRefresh {
 
         jButton3.setText("nacitat db");
         add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 350, -1, -1));
-        add(jDateChooser2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 290, 82, 22));
+        add(jDateChooser2, new org.netbeans.lib.awtextra.AbsoluteConstraints(192, 290, 130, 22));
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseReleased
