@@ -34,7 +34,6 @@ public class IOController  extends Controller {
         try ( ObjectInputStream in = new ObjectInputStream(new FileInputStream(file))) {
             logger.info("Nacitavam databazu so suboru " + file.getName());
             Database.createDatabase((Database) in.readObject());
-            this.setDb(Database.getInstance());
             logger.info("Databaza uspesene nacitana.");
         }
     }

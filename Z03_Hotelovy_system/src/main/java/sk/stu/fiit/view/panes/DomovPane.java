@@ -3,6 +3,7 @@ package sk.stu.fiit.view.panes;
 import java.util.Date;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
+import sk.stu.fiit.database.Database;
 import sk.stu.fiit.utils.ViewUtils;
 import sk.stu.fiit.view.IViewRefresh;
 import sk.stu.fiit.view.MainScreen;
@@ -67,6 +68,8 @@ public class DomovPane extends javax.swing.JPanel implements IViewRefresh {
 
     private void btnIOMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIOMouseReleased
         ViewUtils.showDialog(new IOManagerDialog((JFrame) SwingUtilities.getWindowAncestor(this), true));
+        MainScreen parent = (MainScreen) SwingUtilities.getAncestorOfClass(MainScreen.class, this);
+        parent.timeSetup(Database.getInstance().getAppTime());
     }//GEN-LAST:event_btnIOMouseReleased
 
 

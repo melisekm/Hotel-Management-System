@@ -10,24 +10,12 @@ import sk.stu.fiit.model.Zakaznik;
  */
 public abstract class Controller {
 
-    protected Database db;
-
-    public Controller() {
-        this.db = Database.getInstance();
-    }
-
     public ArrayList<Zakaznik> getZakaznici() {
-        return db.getZakaznici();
+        return Database.getInstance().getZakaznici();
     }
 
     public void setZakaznici(ArrayList<Zakaznik> zakaznici) {
-        db.setZakaznici(zakaznici);
+        Database.getInstance().setZakaznici(zakaznici);
     }
-
-    protected void setDb(Database db) {
-        this.db = db;
-    }
-    
-    
 
 }

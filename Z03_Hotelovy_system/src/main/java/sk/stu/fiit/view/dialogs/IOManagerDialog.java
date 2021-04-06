@@ -18,7 +18,7 @@ public class IOManagerDialog extends javax.swing.JDialog {
 
     private static final Logger logger = LoggerFactory.getLogger(IOManagerDialog.class);
 
-    private IOController io = new IOController();
+    private IOController controller = new IOController();
 
     public IOManagerDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -147,7 +147,7 @@ public class IOManagerDialog extends javax.swing.JDialog {
         File file = new File(fieldCesta.getText());
         try {
             if (radioBtnNacitat.isSelected()) {
-                this.io.loadDatabase(file);
+                this.controller.loadDatabase(file);
                 JOptionPane.showMessageDialog(this, "Nacitanie bolo uspesne", "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 if (!ViewUtils.validateFieldsNotBlank(this, fieldCesta, fieldNazov)) {
@@ -157,26 +157,25 @@ public class IOManagerDialog extends javax.swing.JDialog {
                     logger.info("Prepisujem existujuci subor.");
                     file.createNewFile();
                 }
-                this.io.saveDatabase(file);
+                this.controller.saveDatabase(file);
                 JOptionPane.showMessageDialog(this, "Ulozenie bolo uspesne", "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
 
             }
+            this.setVisible(false);
+            this.dispose();
         } catch (FileNotFoundException ex) {
             logger.error(ex.getMessage());
-            logger.error("SUBOR " + file.getName() + "NEEXISTUJE");
+            logger.error("SUBOR " + file.getName() + " NEEXISTUJE");
             JOptionPane.showMessageDialog(this, "Subor neexistuje.", "SUBOR NEEXISTUJE", JOptionPane.ERROR_MESSAGE);
         } catch (IOException ex) {
-            logger.error("NASTALA NEOCAKAVANA IO CHYBA");
+            logger.error("SUBOR PRAVDEPODOBNE NIE JE KOMPATIBILNY");
             logger.error(ex.getMessage());
-            ex.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Neocakavana chyba. (code 1)", "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Subor nie je kompatibilny. (code 1)", "ERROR", JOptionPane.ERROR_MESSAGE);
         } catch (ClassNotFoundException ex) {
             logger.error(ex.getMessage());
             logger.error("Neocakavana chyba. (code 2)", "ERROR", JOptionPane.ERROR_MESSAGE);
-            ex.printStackTrace();
         }
-        this.setVisible(false);
-        this.dispose();
+
     }//GEN-LAST:event_btnVykonatMouseReleased
 
 
