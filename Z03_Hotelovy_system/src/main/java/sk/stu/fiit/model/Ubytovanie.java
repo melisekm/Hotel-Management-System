@@ -16,5 +16,4 @@ public class Ubytovanie {
     private double cena;
     private ArrayList<Sluzba> sluzby;
     private boolean zaplatene;
-
 }

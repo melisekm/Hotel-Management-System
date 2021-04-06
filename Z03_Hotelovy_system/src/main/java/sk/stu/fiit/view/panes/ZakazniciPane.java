@@ -1,5 +1,16 @@
 package sk.stu.fiit.view.panes;
 
+import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+import javax.swing.text.JTextComponent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import sk.stu.fiit.controller.ZakaznikController;
+import sk.stu.fiit.model.Pohlavie;
+import sk.stu.fiit.model.Zakaznik;
+import sk.stu.fiit.utils.ViewUtils;
 import sk.stu.fiit.view.IViewRefresh;
 
 /**
@@ -8,11 +19,19 @@ import sk.stu.fiit.view.IViewRefresh;
  */
 public class ZakazniciPane extends javax.swing.JPanel implements IViewRefresh {
 
-    /**
-     * Creates new form ZakaznikPane
-     */
+    private static final Logger logger = LoggerFactory.getLogger(ZakazniciPane.class);
+
+    private ZakaznikController controller = new ZakaznikController();
+
+    private JTextComponent[] baseFields;
+    private boolean novy = true;
+
     public ZakazniciPane() {
         initComponents();
+        this.baseFields = new JTextComponent[]{
+            fieldTelCislo, fieldMeno, fieldCisloOP, fieldNarodnost, textAreaAdresa
+        };
+        this.refresh();
     }
 
     /**
@@ -24,24 +43,224 @@ public class ZakazniciPane extends javax.swing.JPanel implements IViewRefresh {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+        labelSpecialisti = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        listZakaznici = new javax.swing.JList<>();
+        labelMeno = new javax.swing.JLabel();
+        comboBoxPohlavie = new javax.swing.JComboBox<>();
+        fieldMeno = new javax.swing.JTextField();
+        labelTelCislo = new javax.swing.JLabel();
+        labelStat = new javax.swing.JLabel();
+        fieldTelCislo = new javax.swing.JTextField();
+        fieldNarodnost = new javax.swing.JTextField();
+        btnUlozit = new javax.swing.JButton();
+        labelCisloOP = new javax.swing.JLabel();
+        fieldCisloOP = new javax.swing.JTextField();
+        labelZakaznik = new javax.swing.JLabel();
+        labelCisloOP1 = new javax.swing.JLabel();
+        btnHistoria = new javax.swing.JButton();
+        labelAdresa = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        textAreaAdresa = new javax.swing.JTextArea();
+        btnPridat = new javax.swing.JButton();
+
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        labelSpecialisti.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        labelSpecialisti.setText("Zákazníci");
+        add(labelSpecialisti, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 20, 130, -1));
+
+        listZakaznici.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        listZakaznici.setModel(new DefaultListModel<Zakaznik>());
+        listZakaznici.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        listZakaznici.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                listZakazniciMouseReleased(evt);
+            }
+        });
+        jScrollPane1.setViewportView(listZakaznici);
+
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 60, 260, 340));
+
+        labelMeno.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        labelMeno.setText("Meno:");
+        add(labelMeno, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 60, 40));
+
+        comboBoxPohlavie.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        comboBoxPohlavie.setModel(new DefaultComboBoxModel<>(Pohlavie.values()));
+        add(comboBoxPohlavie, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 300, 250, 40));
+
+        fieldMeno.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        add(fieldMeno, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 60, 250, 40));
+
+        labelTelCislo.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        labelTelCislo.setText("Telefónne č.:");
+        add(labelTelCislo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, 110, 40));
+
+        labelStat.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        labelStat.setText("Národnosť:");
+        add(labelStat, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 110, 40));
+
+        fieldTelCislo.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        add(fieldTelCislo, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 180, 250, 40));
+
+        fieldNarodnost.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        add(fieldNarodnost, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 120, 250, 40));
+
+        btnUlozit.setBackground(new java.awt.Color(51, 153, 0));
+        btnUlozit.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnUlozit.setForeground(new java.awt.Color(255, 255, 255));
+        btnUlozit.setText("ULOŽIŤ");
+        btnUlozit.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btnUlozitMouseReleased(evt);
+            }
+        });
+        add(btnUlozit, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 360, 250, -1));
+
+        labelCisloOP.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        labelCisloOP.setText("Číslo OP:");
+        add(labelCisloOP, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, 90, 40));
+
+        fieldCisloOP.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        add(fieldCisloOP, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 240, 250, 40));
+
+        labelZakaznik.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        labelZakaznik.setText("Zákazník");
+        add(labelZakaznik, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, -1));
+
+        labelCisloOP1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        labelCisloOP1.setText("Pohlavie:");
+        add(labelCisloOP1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 300, 90, 40));
+
+        btnHistoria.setBackground(new java.awt.Color(102, 102, 255));
+        btnHistoria.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnHistoria.setForeground(new java.awt.Color(255, 255, 255));
+        btnHistoria.setText("Zobraziť históriu ubytovaní");
+        btnHistoria.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btnHistoriaMouseReleased(evt);
+            }
+        });
+        add(btnHistoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 240, 250, 40));
+
+        labelAdresa.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        labelAdresa.setText("Adresa:");
+        add(labelAdresa, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 60, 90, 40));
+
+        textAreaAdresa.setColumns(20);
+        textAreaAdresa.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        textAreaAdresa.setLineWrap(true);
+        textAreaAdresa.setRows(5);
+        textAreaAdresa.setWrapStyleWord(true);
+        jScrollPane2.setViewportView(textAreaAdresa);
+
+        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 120, 250, 100));
+
+        btnPridat.setBackground(new java.awt.Color(102, 102, 255));
+        btnPridat.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnPridat.setForeground(new java.awt.Color(255, 255, 255));
+        btnPridat.setText("PRIDAŤ");
+        btnPridat.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btnPridatMouseReleased(evt);
+            }
+        });
+        add(btnPridat, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 410, 260, -1));
     }// </editor-fold>//GEN-END:initComponents
+
+    private void listZakazniciMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listZakazniciMouseReleased
+        this.setZakaznikInfo();
+    }//GEN-LAST:event_listZakazniciMouseReleased
+
+    private void btnUlozitMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUlozitMouseReleased
+        if (!ViewUtils.validateFieldsNotBlank(this, baseFields)) {
+            return;
+        }
+        Pohlavie pohlavie = (Pohlavie) comboBoxPohlavie.getSelectedItem();
+        String meno = fieldMeno.getText();
+        String narodnost = fieldNarodnost.getText();
+        String telCislo = fieldTelCislo.getText();
+        String cisloOP = fieldCisloOP.getText();
+        String adresa = textAreaAdresa.getText();
+        if (this.novy) {
+            logger.info(String.format("Ukladam noveho zakaznika %s", meno));
+            this.controller.saveZakaznik(pohlavie, meno, narodnost, cisloOP, telCislo, adresa);
+        } else {
+            logger.info(String.format("Editujem existujuceho zakaznika %s", meno));
+            Zakaznik povodnyZakaznik = listZakaznici.getSelectedValue();
+            this.controller.saveZakaznik(povodnyZakaznik, pohlavie, meno, narodnost, cisloOP, telCislo, adresa);
+        }
+
+        JOptionPane.showMessageDialog(this, "Zakaznik Ulozeny", "SUCESS", JOptionPane.INFORMATION_MESSAGE);
+        this.refresh();
+    }//GEN-LAST:event_btnUlozitMouseReleased
+
+    private void btnHistoriaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHistoriaMouseReleased
+    }//GEN-LAST:event_btnHistoriaMouseReleased
+
+    private void btnPridatMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPridatMouseReleased
+        ViewUtils.clearFields(baseFields);
+        btnHistoria.setVisible(false);
+        this.novy = true;
+    }//GEN-LAST:event_btnPridatMouseReleased
+    private void setZakaznikInfo() {
+        Zakaznik z = listZakaznici.getSelectedValue();
+        Boolean zoznamJePrazdny = listZakaznici.getModel().getSize() == 0;
+        if (zoznamJePrazdny) {
+            ViewUtils.clearFields(baseFields);
+            btnHistoria.setVisible(false);
+            return;
+        }
+        fieldMeno.setText(z.getMeno());
+        fieldTelCislo.setText(z.getTelCislo());
+        fieldNarodnost.setText(z.getNarodnost());
+        fieldCisloOP.setText(z.getCisloOP());
+        textAreaAdresa.setText(z.getAdresa());
+        comboBoxPohlavie.setSelectedItem(z.getPohlavie());
+        btnHistoria.setVisible(true);
+        this.novy = false;
+
+    }
+
+    private void naplnListZakaznikov() {
+        DefaultListModel model = (DefaultListModel) listZakaznici.getModel();
+        ArrayList<Zakaznik> zakaznici = this.controller.getZakaznici();
+        model.setSize(0);
+        for (Zakaznik zakaznik : zakaznici) {
+            model.addElement(zakaznik);
+        }
+        listZakaznici.setSelectedIndex(0);
+    }
 
     @Override
     public void refresh() {
-        System.out.println("TATO METODA NIEJE IMPLEMENTOVANA"); //TODO
+        this.naplnListZakaznikov();
+        this.setZakaznikInfo();
     }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnHistoria;
+    private javax.swing.JButton btnPridat;
+    private javax.swing.JButton btnUlozit;
+    private javax.swing.JComboBox<Pohlavie> comboBoxPohlavie;
+    private javax.swing.JTextField fieldCisloOP;
+    private javax.swing.JTextField fieldMeno;
+    private javax.swing.JTextField fieldNarodnost;
+    private javax.swing.JTextField fieldTelCislo;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel labelAdresa;
+    private javax.swing.JLabel labelCisloOP;
+    private javax.swing.JLabel labelCisloOP1;
+    private javax.swing.JLabel labelMeno;
+    private javax.swing.JLabel labelSpecialisti;
+    private javax.swing.JLabel labelStat;
+    private javax.swing.JLabel labelTelCislo;
+    private javax.swing.JLabel labelZakaznik;
+    private javax.swing.JList<Zakaznik> listZakaznici;
+    private javax.swing.JTextArea textAreaAdresa;
     // End of variables declaration//GEN-END:variables
+
 }

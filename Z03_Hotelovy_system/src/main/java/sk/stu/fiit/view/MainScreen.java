@@ -56,8 +56,13 @@ public class MainScreen extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Hotelový systém");
+        setMinimumSize(new java.awt.Dimension(430, 530));
+        setPreferredSize(new java.awt.Dimension(1100, 530));
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        cardPane.setMinimumSize(new java.awt.Dimension(1200, 530));
+        cardPane.setPreferredSize(new java.awt.Dimension(1200, 530));
         cardPane.setLayout(new java.awt.CardLayout());
         cardPane.add(domovPane, "DOMOV");
 
@@ -65,7 +70,7 @@ public class MainScreen extends javax.swing.JFrame {
         izbyPane.setLayout(izbyPaneLayout);
         izbyPaneLayout.setHorizontalGroup(
             izbyPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 840, Short.MAX_VALUE)
+            .addGap(0, 1200, Short.MAX_VALUE)
         );
         izbyPaneLayout.setVerticalGroup(
             izbyPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -78,7 +83,7 @@ public class MainScreen extends javax.swing.JFrame {
         rezervaciePane.setLayout(rezervaciePaneLayout);
         rezervaciePaneLayout.setHorizontalGroup(
             rezervaciePaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 840, Short.MAX_VALUE)
+            .addGap(0, 1200, Short.MAX_VALUE)
         );
         rezervaciePaneLayout.setVerticalGroup(
             rezervaciePaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -91,7 +96,7 @@ public class MainScreen extends javax.swing.JFrame {
         sluzbyPane.setLayout(sluzbyPaneLayout);
         sluzbyPaneLayout.setHorizontalGroup(
             sluzbyPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 840, Short.MAX_VALUE)
+            .addGap(0, 1200, Short.MAX_VALUE)
         );
         sluzbyPaneLayout.setVerticalGroup(
             sluzbyPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -104,7 +109,7 @@ public class MainScreen extends javax.swing.JFrame {
         ubytovaniaPane.setLayout(ubytovaniaPaneLayout);
         ubytovaniaPaneLayout.setHorizontalGroup(
             ubytovaniaPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 840, Short.MAX_VALUE)
+            .addGap(0, 1200, Short.MAX_VALUE)
         );
         ubytovaniaPaneLayout.setVerticalGroup(
             ubytovaniaPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -112,21 +117,9 @@ public class MainScreen extends javax.swing.JFrame {
         );
 
         cardPane.add(ubytovaniaPane, "UBYTOVANIA");
-
-        javax.swing.GroupLayout zakazniciPaneLayout = new javax.swing.GroupLayout(zakazniciPane);
-        zakazniciPane.setLayout(zakazniciPaneLayout);
-        zakazniciPaneLayout.setHorizontalGroup(
-            zakazniciPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 840, Short.MAX_VALUE)
-        );
-        zakazniciPaneLayout.setVerticalGroup(
-            zakazniciPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 530, Short.MAX_VALUE)
-        );
-
         cardPane.add(zakazniciPane, "ZAKAZNICI");
 
-        getContentPane().add(cardPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 0, 840, 530));
+        getContentPane().add(cardPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 0, -1, -1));
 
         menuPane.setBackground(new java.awt.Color(153, 153, 153));
         menuPane.setLayout(new java.awt.GridBagLayout());
