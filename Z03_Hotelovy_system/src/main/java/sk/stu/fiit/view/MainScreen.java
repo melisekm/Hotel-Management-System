@@ -41,9 +41,9 @@ public class MainScreen extends javax.swing.JFrame {
         domovPane = new sk.stu.fiit.view.panes.DomovPane();
         izbyPane = new sk.stu.fiit.view.panes.IzbyPane();
         rezervaciePane = new sk.stu.fiit.view.panes.RezervaciePane();
-        sluzbyPane = new sk.stu.fiit.view.panes.SluzbyPane();
         ubytovaniaPane = new sk.stu.fiit.view.panes.UbytovaniaPane();
         zakazniciPane = new sk.stu.fiit.view.panes.ZakazniciPane();
+        sluzbyPane = new sk.stu.fiit.view.panes.SluzbyPane();
         menuPane = new javax.swing.JPanel();
         btnDomov = new javax.swing.JButton();
         btnZakaznici = new javax.swing.JButton();
@@ -92,19 +92,6 @@ public class MainScreen extends javax.swing.JFrame {
 
         cardPane.add(rezervaciePane, "REZERVACIE");
 
-        javax.swing.GroupLayout sluzbyPaneLayout = new javax.swing.GroupLayout(sluzbyPane);
-        sluzbyPane.setLayout(sluzbyPaneLayout);
-        sluzbyPaneLayout.setHorizontalGroup(
-            sluzbyPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1200, Short.MAX_VALUE)
-        );
-        sluzbyPaneLayout.setVerticalGroup(
-            sluzbyPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 530, Short.MAX_VALUE)
-        );
-
-        cardPane.add(sluzbyPane, "SLUZBY");
-
         javax.swing.GroupLayout ubytovaniaPaneLayout = new javax.swing.GroupLayout(ubytovaniaPane);
         ubytovaniaPane.setLayout(ubytovaniaPaneLayout);
         ubytovaniaPaneLayout.setHorizontalGroup(
@@ -118,6 +105,7 @@ public class MainScreen extends javax.swing.JFrame {
 
         cardPane.add(ubytovaniaPane, "UBYTOVANIA");
         cardPane.add(zakazniciPane, "ZAKAZNICI");
+        cardPane.add(sluzbyPane, "SLUZBY");
 
         getContentPane().add(cardPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 0, -1, -1));
 
@@ -137,6 +125,8 @@ public class MainScreen extends javax.swing.JFrame {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 0.1;
+        gridBagConstraints.insets = new java.awt.Insets(3, 0, 3, 0);
         menuPane.add(btnDomov, gridBagConstraints);
 
         btnZakaznici.setBackground(new java.awt.Color(102, 102, 255));
@@ -152,6 +142,8 @@ public class MainScreen extends javax.swing.JFrame {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 0.1;
+        gridBagConstraints.insets = new java.awt.Insets(3, 0, 3, 0);
         menuPane.add(btnZakaznici, gridBagConstraints);
 
         btnRezervacie.setBackground(new java.awt.Color(102, 102, 255));
@@ -167,6 +159,8 @@ public class MainScreen extends javax.swing.JFrame {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 0.1;
+        gridBagConstraints.insets = new java.awt.Insets(3, 0, 3, 0);
         menuPane.add(btnRezervacie, gridBagConstraints);
 
         labelDatum.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -175,6 +169,8 @@ public class MainScreen extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 6;
+        gridBagConstraints.weightx = 0.1;
+        gridBagConstraints.insets = new java.awt.Insets(3, 0, 3, 0);
         menuPane.add(labelDatum, gridBagConstraints);
 
         labelCas.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -183,6 +179,8 @@ public class MainScreen extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 7;
+        gridBagConstraints.weightx = 0.1;
+        gridBagConstraints.insets = new java.awt.Insets(3, 0, 3, 0);
         menuPane.add(labelCas, gridBagConstraints);
 
         btnUbytovania.setBackground(new java.awt.Color(102, 102, 255));
@@ -197,6 +195,8 @@ public class MainScreen extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
+        gridBagConstraints.weightx = 0.1;
+        gridBagConstraints.insets = new java.awt.Insets(3, 0, 3, 0);
         menuPane.add(btnUbytovania, gridBagConstraints);
 
         btnIzby.setBackground(new java.awt.Color(102, 102, 255));
@@ -212,6 +212,8 @@ public class MainScreen extends javax.swing.JFrame {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 0.1;
+        gridBagConstraints.insets = new java.awt.Insets(3, 0, 3, 0);
         menuPane.add(btnIzby, gridBagConstraints);
 
         btnSluzby.setBackground(new java.awt.Color(102, 102, 255));
@@ -227,6 +229,8 @@ public class MainScreen extends javax.swing.JFrame {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 5;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 0.1;
+        gridBagConstraints.insets = new java.awt.Insets(3, 0, 3, 0);
         menuPane.add(btnSluzby, gridBagConstraints);
 
         getContentPane().add(menuPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 120, 530));

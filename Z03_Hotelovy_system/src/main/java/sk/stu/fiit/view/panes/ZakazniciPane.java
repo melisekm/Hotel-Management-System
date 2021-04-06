@@ -43,8 +43,8 @@ public class ZakazniciPane extends javax.swing.JPanel implements IViewRefresh {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        labelSpecialisti = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        labelZakaznici = new javax.swing.JLabel();
+        scrollPaneZakaznici = new javax.swing.JScrollPane();
         listZakaznici = new javax.swing.JList<>();
         labelMeno = new javax.swing.JLabel();
         comboBoxPohlavie = new javax.swing.JComboBox<>();
@@ -66,9 +66,9 @@ public class ZakazniciPane extends javax.swing.JPanel implements IViewRefresh {
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        labelSpecialisti.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        labelSpecialisti.setText("Zákazníci");
-        add(labelSpecialisti, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 20, 130, -1));
+        labelZakaznici.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        labelZakaznici.setText("Zákazníci");
+        add(labelZakaznici, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 20, 130, -1));
 
         listZakaznici.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         listZakaznici.setModel(new DefaultListModel<Zakaznik>());
@@ -78,9 +78,9 @@ public class ZakazniciPane extends javax.swing.JPanel implements IViewRefresh {
                 listZakazniciMouseReleased(evt);
             }
         });
-        jScrollPane1.setViewportView(listZakaznici);
+        scrollPaneZakaznici.setViewportView(listZakaznici);
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 60, 260, 340));
+        add(scrollPaneZakaznici, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 60, 260, 340));
 
         labelMeno.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         labelMeno.setText("Meno:");
@@ -175,6 +175,7 @@ public class ZakazniciPane extends javax.swing.JPanel implements IViewRefresh {
 
     private void btnUlozitMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUlozitMouseReleased
         if (!ViewUtils.validateFieldsNotBlank(this, baseFields)) {
+            logger.error("Neboli vyplnene vsetky polia");
             return;
         }
         Pohlavie pohlavie = (Pohlavie) comboBoxPohlavie.getSelectedItem();
@@ -197,6 +198,7 @@ public class ZakazniciPane extends javax.swing.JPanel implements IViewRefresh {
     }//GEN-LAST:event_btnUlozitMouseReleased
 
     private void btnHistoriaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHistoriaMouseReleased
+        // TODO
     }//GEN-LAST:event_btnHistoriaMouseReleased
 
     private void btnPridatMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPridatMouseReleased
@@ -204,14 +206,15 @@ public class ZakazniciPane extends javax.swing.JPanel implements IViewRefresh {
         btnHistoria.setVisible(false);
         this.novy = true;
     }//GEN-LAST:event_btnPridatMouseReleased
+
     private void setZakaznikInfo() {
-        Zakaznik z = listZakaznici.getSelectedValue();
         Boolean zoznamJePrazdny = listZakaznici.getModel().getSize() == 0;
         if (zoznamJePrazdny) {
             ViewUtils.clearFields(baseFields);
             btnHistoria.setVisible(false);
             return;
         }
+        Zakaznik z = listZakaznici.getSelectedValue();
         fieldMeno.setText(z.getMeno());
         fieldTelCislo.setText(z.getTelCislo());
         fieldNarodnost.setText(z.getNarodnost());
@@ -249,17 +252,17 @@ public class ZakazniciPane extends javax.swing.JPanel implements IViewRefresh {
     private javax.swing.JTextField fieldMeno;
     private javax.swing.JTextField fieldNarodnost;
     private javax.swing.JTextField fieldTelCislo;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel labelAdresa;
     private javax.swing.JLabel labelCisloOP;
     private javax.swing.JLabel labelCisloOP1;
     private javax.swing.JLabel labelMeno;
-    private javax.swing.JLabel labelSpecialisti;
     private javax.swing.JLabel labelStat;
     private javax.swing.JLabel labelTelCislo;
+    private javax.swing.JLabel labelZakaznici;
     private javax.swing.JLabel labelZakaznik;
     private javax.swing.JList<Zakaznik> listZakaznici;
+    private javax.swing.JScrollPane scrollPaneZakaznici;
     private javax.swing.JTextArea textAreaAdresa;
     // End of variables declaration//GEN-END:variables
 

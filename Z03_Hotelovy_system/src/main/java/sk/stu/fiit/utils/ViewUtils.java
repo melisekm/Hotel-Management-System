@@ -4,7 +4,10 @@ import java.awt.Component;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.showMessageDialog;
 import javax.swing.text.JTextComponent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Library pre View
@@ -12,8 +15,8 @@ import javax.swing.text.JTextComponent;
  * @author Martin Melisek
  */
 public class ViewUtils {
-    
 
+    private static final Logger logger = LoggerFactory.getLogger(ViewUtils.class);
     private ViewUtils() {
     }
 
@@ -36,6 +39,25 @@ public class ViewUtils {
                 JOptionPane.showMessageDialog(parent, "Vsetky polia musia byt vyplnene", "Invalid Input", JOptionPane.ERROR_MESSAGE);
                 return false;
             }
+        }
+        return true;
+    }
+
+    public static boolean validateDoubleTextField(Component parent, JTextComponent... fields) {
+        try {
+            for (JTextComponent field : fields) {
+                double convertedField = Double.parseDouble(field.getText());
+                boolean isFieldMimoRozsah = Boolean.logicalOr(convertedField < 0, convertedField > Long.MAX_VALUE);
+                if (isFieldMimoRozsah) {
+                    throw new ArithmeticException();
+                }
+            }
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(parent, "Neplatna hodnota v ciselnom poli.", "Invalid input.", JOptionPane.ERROR_MESSAGE);
+            return false;
+        } catch (ArithmeticException ex) {
+            JOptionPane.showMessageDialog(parent, "Hodnota je mimo rozsah.", "Invalid input.", JOptionPane.ERROR_MESSAGE);
+            return false;
         }
         return true;
     }

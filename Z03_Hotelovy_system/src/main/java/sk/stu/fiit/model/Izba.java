@@ -14,4 +14,5 @@ public class Izba {
     private double cena;
     private ArrayList<Icon> galeria;
     private boolean volna;
+    private int pocetLozok; 
 }

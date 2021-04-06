@@ -151,6 +151,7 @@ public class IOManagerDialog extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "Nacitanie bolo uspesne", "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 if (!ViewUtils.validateFieldsNotBlank(this, fieldCesta, fieldNazov)) {
+                    logger.error("Neboli vyplnene vsetky polia");
                     return;
                 }
                 if (!file.exists()) {
@@ -159,7 +160,6 @@ public class IOManagerDialog extends javax.swing.JDialog {
                 }
                 this.controller.saveDatabase(file);
                 JOptionPane.showMessageDialog(this, "Ulozenie bolo uspesne", "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
-
             }
             this.setVisible(false);
             this.dispose();
@@ -173,7 +173,9 @@ public class IOManagerDialog extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Subor nie je kompatibilny. (code 1)", "ERROR", JOptionPane.ERROR_MESSAGE);
         } catch (ClassNotFoundException ex) {
             logger.error(ex.getMessage());
-            logger.error("Neocakavana chyba. (code 2)", "ERROR", JOptionPane.ERROR_MESSAGE);
+            logger.error("Bola nahrata databasa, ktora nie je kompatibilna alebo uplne ina trieda.");
+            JOptionPane.showMessageDialog(this,"Neocakavana chyba. (code 2)", "ERROR", JOptionPane.ERROR_MESSAGE);
+
         }
 
     }//GEN-LAST:event_btnVykonatMouseReleased
