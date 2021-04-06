@@ -24,4 +24,10 @@ public abstract class Controller {
         db.setZakaznici(zakaznici);
     }
 
+    protected void setDb(Database db) {
+        this.db = db;
+    }
+    
+    
+
 }

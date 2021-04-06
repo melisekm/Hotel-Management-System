@@ -51,13 +51,16 @@
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton3">
+    <Component class="javax.swing.JButton" name="btnIO">
       <Properties>
-        <Property name="text" type="java.lang.String" value="nacitat db"/>
+        <Property name="text" type="java.lang.String" value="Na&#x10d;&#xed;tavanie a ukladanie &#xfa;dajov..."/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnIOMouseReleased"/>
+      </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="250" y="350" width="-1" height="-1"/>
+          <AbsoluteConstraints x="200" y="390" width="-1" height="-1"/>
         </Constraint>
       </Constraints>
     </Component>

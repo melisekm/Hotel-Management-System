@@ -11,11 +11,13 @@ import sk.stu.fiit.view.MainScreen;
  */
 public class Main {
 
-//    private static final Logger logger = LoggerFactory.getLogger(Main.class);
-    public static void main(String[] args) {
-        Locale.setDefault(new Locale("en", "GB")); // globalny oddelovac desatinnych miest
+    static {
         Database.createDatabase();
         DataLoader.loadData();
+    }
+
+    public static void main(String[] args) {
+        Locale.setDefault(new Locale("en", "GB")); // globalny oddelovac desatinnych miest
         MainScreen.main();
     }
 }

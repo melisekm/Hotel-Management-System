@@ -3,9 +3,10 @@ package sk.stu.fiit.view.panes;
 import java.util.Date;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
-import sk.stu.fiit.database.Database;
+import sk.stu.fiit.utils.ViewUtils;
 import sk.stu.fiit.view.IViewRefresh;
 import sk.stu.fiit.view.MainScreen;
+import sk.stu.fiit.view.dialogs.IOManagerDialog;
 
 /**
  *
@@ -29,7 +30,7 @@ public class DomovPane extends javax.swing.JPanel implements IViewRefresh {
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnIO = new javax.swing.JButton();
         jDateChooser2 = new com.toedter.calendar.JDateChooser();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -48,8 +49,13 @@ public class DomovPane extends javax.swing.JPanel implements IViewRefresh {
         jButton2.setText("Nastavenie Jazyka");
         add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 360, -1, -1));
 
-        jButton3.setText("nacitat db");
-        add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 350, -1, -1));
+        btnIO.setText("Načítavanie a ukladanie údajov...");
+        btnIO.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btnIOMouseReleased(evt);
+            }
+        });
+        add(btnIO, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 390, -1, -1));
         add(jDateChooser2, new org.netbeans.lib.awtextra.AbsoluteConstraints(192, 290, 130, 22));
     }// </editor-fold>//GEN-END:initComponents
 
@@ -59,11 +65,15 @@ public class DomovPane extends javax.swing.JPanel implements IViewRefresh {
         parent.timeSetup(d);
     }//GEN-LAST:event_jButton1MouseReleased
 
+    private void btnIOMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIOMouseReleased
+        ViewUtils.showDialog(new IOManagerDialog((JFrame) SwingUtilities.getWindowAncestor(this), true));
+    }//GEN-LAST:event_btnIOMouseReleased
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnIO;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private com.toedter.calendar.JDateChooser jDateChooser2;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
