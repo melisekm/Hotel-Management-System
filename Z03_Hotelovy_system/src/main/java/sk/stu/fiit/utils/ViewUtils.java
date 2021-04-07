@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 public class ViewUtils {
 
     private static final Logger logger = LoggerFactory.getLogger(ViewUtils.class);
+
     private ViewUtils() {
     }
 
@@ -69,8 +70,13 @@ public class ViewUtils {
     }
 
     public static void clearLabels(JLabel... labels) {
+        clearLabels("", labels);
+
+    }
+
+    public static void clearLabels(String defaultValue, JLabel... labels) {
         for (JLabel label : labels) {
-            label.setText("");
+            label.setText(defaultValue);
         }
     }
 }

@@ -1,17 +1,32 @@
 package sk.stu.fiit.view.dialogs;
 
+import java.awt.Frame;
+import java.util.ArrayList;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import sk.stu.fiit.controller.RezervacieController;
+import sk.stu.fiit.model.Izba;
+import sk.stu.fiit.utils.ViewUtils;
+
 /**
  *
  * @author Martin Melisek
  */
 public class PridatIzbuDialog extends javax.swing.JDialog {
 
-    /**
-     * Creates new form PridatIzbuDialog
-     */
-    public PridatIzbuDialog(java.awt.Frame parent, boolean modal) {
+    private RezervacieController controller;
+    private ArrayList<Izba> pridaneIzby;
+    private Izba zvolenaIzba;
+    private JFrame parent;
+
+    public PridatIzbuDialog(java.awt.Frame parent, boolean modal, ArrayList<Izba> pridaneIzby, RezervacieController controller) {
         super(parent, modal);
         initComponents();
+        this.parent = (JFrame) parent;
+        this.pridaneIzby = pridaneIzby;
+        this.controller = controller;
+        this.naplnTabulku();
     }
 
     /**
@@ -23,64 +38,120 @@ public class PridatIzbuDialog extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        scrollPaneIzby = new javax.swing.JScrollPane();
+        tableIzby = new javax.swing.JTable();
+        labelZoznam = new javax.swing.JLabel();
+        btnPridat = new javax.swing.JButton();
+        btnGaleria = new javax.swing.JButton();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Pridat izbu");
+        setPreferredSize(new java.awt.Dimension(720, 415));
+        setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        tableIzby.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Kategória", "Izba", "Popis", "Počet lôžok", "Cena"
+            }
+        ));
+        scrollPaneIzby.setViewportView(tableIzby);
+
+        getContentPane().add(scrollPaneIzby, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 630, 220));
+
+        labelZoznam.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        labelZoznam.setText("Zoznam dostupných izieb");
+        getContentPane().add(labelZoznam, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, -1, -1));
+
+        btnPridat.setBackground(new java.awt.Color(51, 153, 0));
+        btnPridat.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnPridat.setForeground(new java.awt.Color(255, 255, 255));
+        btnPridat.setText("PRIDAŤ");
+        btnPridat.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btnPridatMouseReleased(evt);
+            }
+        });
+        getContentPane().add(btnPridat, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 330, -1, -1));
+
+        btnGaleria.setBackground(new java.awt.Color(102, 102, 255));
+        btnGaleria.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnGaleria.setForeground(new java.awt.Color(255, 255, 255));
+        btnGaleria.setText("Galéria");
+        btnGaleria.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btnGaleriaMouseReleased(evt);
+            }
+        });
+        getContentPane().add(btnGaleria, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 280, 90, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PridatIzbuDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PridatIzbuDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PridatIzbuDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PridatIzbuDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    private void btnGaleriaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGaleriaMouseReleased
+        int row = tableIzby.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Prosím vyberte izbu.");
+            return;
         }
-        //</editor-fold>
+        Izba i = (Izba) ((DefaultTableModel) tableIzby.getModel()).getValueAt(row, 0);
+        ViewUtils.showDialog(new GaleriaIzbyDialog(this.parent, true, i));
 
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                PridatIzbuDialog dialog = new PridatIzbuDialog(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
+    }//GEN-LAST:event_btnGaleriaMouseReleased
+
+    private void btnPridatMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPridatMouseReleased
+        int row = tableIzby.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Prosím vyberte izbu.");
+            return;
+        }
+        this.zvolenaIzba = (Izba) ((DefaultTableModel) tableIzby.getModel()).getValueAt(row, 0);
+        this.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnPridatMouseReleased
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        this.zvolenaIzba = null;
+    }//GEN-LAST:event_formWindowClosing
+
+    private void naplnTabulku() {
+        DefaultTableModel model = (DefaultTableModel) tableIzby.getModel();
+        ArrayList<Izba> vsetkyIzby = this.controller.getIzby();
+        for (Izba izba : vsetkyIzby) {
+            boolean jeIzbaVolna = izba.isVolna();
+            boolean jeIzbaUzPridana = this.pridaneIzby.contains(izba);
+            boolean nedaSaZarezervovat = Boolean.logicalOr(jeIzbaVolna, jeIzbaUzPridana);
+            if (nedaSaZarezervovat) {
+                continue;
             }
-        });
+            model.addRow(new Object[]{
+                izba,
+                izba.getOznacenie(),
+                izba.getPopis(),
+                izba.getPocetLozok(),
+                String.format("%.02f", izba.getCena())
+            });
+        }
+    }
+
+    public Izba showDialog() {
+        ViewUtils.showDialog(this);
+        return this.zvolenaIzba;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnGaleria;
+    private javax.swing.JButton btnPridat;
+    private javax.swing.JLabel labelZoznam;
+    private javax.swing.JScrollPane scrollPaneIzby;
+    private javax.swing.JTable tableIzby;
     // End of variables declaration//GEN-END:variables
 }

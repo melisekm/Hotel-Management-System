@@ -1,21 +1,27 @@
 package sk.stu.fiit.view.panes;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sk.stu.fiit.controller.RezervacieController;
 import sk.stu.fiit.database.Database;
+import sk.stu.fiit.exceptions.InvalidReservationDateException;
 import sk.stu.fiit.model.Izba;
 import sk.stu.fiit.model.Rezervacia;
 import sk.stu.fiit.model.Zakaznik;
+import sk.stu.fiit.model.Zlava;
 import sk.stu.fiit.utils.ViewUtils;
 import sk.stu.fiit.view.ICRUDPane;
 import sk.stu.fiit.view.IViewRefresh;
+import sk.stu.fiit.view.dialogs.PridatIzbuDialog;
 
 /**
  *
@@ -66,6 +72,11 @@ public class RezervaciePane extends javax.swing.JPanel implements IViewRefresh, 
         tableIzby = new javax.swing.JTable();
         labelPocetIzieb = new javax.swing.JLabel();
         btnPridat = new javax.swing.JButton();
+        labelCenaEur = new javax.swing.JLabel();
+        labelZlavaPercent1 = new javax.swing.JLabel();
+        separatorIzieb = new javax.swing.JSeparator();
+        separatorCena = new javax.swing.JSeparator();
+        separatorZlava = new javax.swing.JSeparator();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -109,7 +120,7 @@ public class RezervaciePane extends javax.swing.JPanel implements IViewRefresh, 
         add(btnUlozit, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 410, 250, -1));
 
         labelDataCena.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        labelDataCena.setText("1 500.00 €");
+        labelDataCena.setText("1 500.00");
         add(labelDataCena, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 340, 100, 40));
 
         labelRezervacia.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -143,6 +154,11 @@ public class RezervaciePane extends javax.swing.JPanel implements IViewRefresh, 
         add(dateChooserOdjazd, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 180, 250, 40));
 
         dateChooserPrijazd.setDateFormatString("dd.MM.yyyy");
+        dateChooserPrijazd.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                dateChooserPrijazdMouseReleased(evt);
+            }
+        });
         add(dateChooserPrijazd, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 120, 250, 40));
 
         labelZlava.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -165,14 +181,12 @@ public class RezervaciePane extends javax.swing.JPanel implements IViewRefresh, 
         add(btnStatusRezervacie, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 410, 250, -1));
 
         labelDataZlava.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        labelDataZlava.setText("15%");
+        labelDataZlava.setText("15");
         add(labelDataZlava, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 290, 60, 40));
 
         tableIzby.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
                 "Kategória", "Izba", "Cena"
@@ -204,6 +218,17 @@ public class RezervaciePane extends javax.swing.JPanel implements IViewRefresh, 
             }
         });
         add(btnPridat, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 410, 260, -1));
+
+        labelCenaEur.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        labelCenaEur.setText("€");
+        add(labelCenaEur, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 340, 20, 40));
+
+        labelZlavaPercent1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        labelZlavaPercent1.setText("%");
+        add(labelZlavaPercent1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 290, -1, 40));
+        add(separatorIzieb, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 270, 390, 20));
+        add(separatorCena, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 370, 390, 20));
+        add(separatorZlava, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 320, 390, 20));
     }// </editor-fold>//GEN-END:initComponents
 
     private void listRezervacieMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listRezervacieMouseReleased
@@ -215,7 +240,36 @@ public class RezervaciePane extends javax.swing.JPanel implements IViewRefresh, 
     }//GEN-LAST:event_btnUlozitMouseReleased
 
     private void btnPridatIzbuMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPridatIzbuMouseReleased
-        // TODO
+        DefaultTableModel tableModel = (DefaultTableModel) tableIzby.getModel();
+        ArrayList<Izba> pridaneIzby = new ArrayList<>();
+        for (int row = 0; row < tableModel.getRowCount(); row++) {
+            pridaneIzby.add((Izba) tableModel.getValueAt(row, 0));
+        }
+        PridatIzbuDialog dialog = new PridatIzbuDialog((JFrame) SwingUtilities.getWindowAncestor(this),
+                true, pridaneIzby, this.controller);
+        Izba pridavanaIzba = dialog.showDialog();
+        if (pridavanaIzba == null) {
+            return;
+        }
+        tableModel.addRow(new Object[]{
+            pridavanaIzba,
+            pridavanaIzba.getOznacenie(),
+            String.format("%.02f", pridavanaIzba.getCena())
+        });
+        pridaneIzby.add(pridavanaIzba);
+        labelDataPocetIzieb.setText(String.valueOf(pridaneIzby.size()));
+        Date prijazd = dateChooserPrijazd.getDate();
+        Date odjazd = dateChooserOdjazd.getDate();
+        Zlava zlava = skontrolujZlavu(prijazd, odjazd, cena, izby.size());
+        try {
+            labelDataCena.setText(this.controller.prepocitajCenu(prijazd, odjazd, pridaneIzby));
+        } catch (InvalidReservationDateException ex) {
+            logger.error(ex.getMessage());
+            JOptionPane.showMessageDialog(this, "prosim nastavte validny datum", "DATE ERROR", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+
     }//GEN-LAST:event_btnPridatIzbuMouseReleased
 
     private void btnStatusRezervacieMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnStatusRezervacieMouseReleased
@@ -223,11 +277,20 @@ public class RezervaciePane extends javax.swing.JPanel implements IViewRefresh, 
     }//GEN-LAST:event_btnStatusRezervacieMouseReleased
 
     private void btnPridatMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPridatMouseReleased
-        ViewUtils.clearLabels(labelDataCena, labelDataPocetIzieb, labelDataZlava);
+        ViewUtils.clearLabels("0", labelDataCena, labelDataPocetIzieb, labelDataZlava);
         btnStatusRezervacie.setVisible(false);
         this.novy = true;
     }//GEN-LAST:event_btnPridatMouseReleased
 
+    private void dateChooserPrijazdMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dateChooserPrijazdMouseReleased
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(dateChooserPrijazd.getDate());
+        cal.add(Calendar.DATE, 1);
+        dateChooserOdjazd.setMinSelectableDate(cal.getTime());
+        dateChooserOdjazd.setDate(cal.getTime());
+    }//GEN-LAST:event_dateChooserPrijazdMouseReleased
+
+    @Override
     public void saveModel() {
         DefaultTableModel model = (DefaultTableModel) tableIzby.getModel();
         Zakaznik zakaznik = (Zakaznik) comboBoxZakaznik.getSelectedItem();
@@ -238,13 +301,19 @@ public class RezervaciePane extends javax.swing.JPanel implements IViewRefresh, 
             Izba i = (Izba) model.getValueAt(row, 0);
             izby.add(i);
         }
-        if (this.novy) {
-            logger.info(String.format("Ukladam novu rezervaciu"));
-            this.controller.saveRezervacia(zakaznik, datumPrijazdu, datumOdjazdu, izby);
-        } else {
-            logger.info(String.format("Editujem existujucu rezervaciu"));
-            Rezervacia povodnaRezervacia = listRezervacie.getSelectedValue();
-            this.controller.saveRezervacia(povodnaRezervacia, zakaznik, datumPrijazdu, datumOdjazdu, izby);
+        try {
+            if (this.novy) {
+                logger.info(String.format("Ukladam novu rezervaciu"));
+                this.controller.saveRezervacia(zakaznik, datumPrijazdu, datumOdjazdu, izby);
+            } else {
+                logger.info(String.format("Editujem existujucu rezervaciu"));
+                Rezervacia povodnaRezervacia = listRezervacie.getSelectedValue();
+                this.controller.saveRezervacia(povodnaRezervacia, zakaznik, datumPrijazdu, datumOdjazdu, izby);
+            }
+        } catch (InvalidReservationDateException ex) {
+            logger.error(ex.getMessage());
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "DATE ERROR", JOptionPane.ERROR_MESSAGE);
+            return;
         }
         JOptionPane.showMessageDialog(this, "Rezervacia ulozena", "SUCESS", JOptionPane.INFORMATION_MESSAGE);
     }
@@ -263,9 +332,10 @@ public class RezervaciePane extends javax.swing.JPanel implements IViewRefresh, 
     public void setModel() {
         Boolean zoznamJePrazdny = listRezervacie.getModel().getSize() == 0;
         if (zoznamJePrazdny) {
-            ViewUtils.clearLabels(labelDataCena, labelDataPocetIzieb, labelDataZlava);
+            ViewUtils.clearLabels("0", labelDataCena, labelDataPocetIzieb, labelDataZlava);
             dateChooserPrijazd.setDate(Database.getInstance().getAppTime());
             dateChooserOdjazd.setDate(Database.getInstance().getAppTime());
+            btnStatusRezervacie.setVisible(false);
             return;
         }
         Rezervacia r = listRezervacie.getSelectedValue();
@@ -275,6 +345,7 @@ public class RezervaciePane extends javax.swing.JPanel implements IViewRefresh, 
         labelDataPocetIzieb.setText(String.valueOf(r.getIzby().size()));
         labelDataCena.setText(String.format("%.02f", r.getCena()));
         labelDataZlava.setText(String.valueOf(r.getZlava().getPercento() * 100) + "% " + r.getZlava().getNazov());
+        btnStatusRezervacie.setVisible(true);
         this.naplnTabulkuIzieb(r);
         this.novy = false;
     }
@@ -290,7 +361,14 @@ public class RezervaciePane extends javax.swing.JPanel implements IViewRefresh, 
                 String.format("%.02f", izba.getCena())
             });
         }
+    }
 
+    private void nastavComboBoxZakaznikov() {
+        DefaultComboBoxModel<Zakaznik> model = (DefaultComboBoxModel) comboBoxZakaznik.getModel();
+        model.removeAllElements();
+        for (Zakaznik zakaznik : this.controller.getZakaznici()) {
+            model.addElement(zakaznik);
+        }
     }
 
     @Override
@@ -298,6 +376,7 @@ public class RezervaciePane extends javax.swing.JPanel implements IViewRefresh, 
         dateChooserOdjazd.setMinSelectableDate(Database.getInstance().getAppTime());
         dateChooserPrijazd.setMinSelectableDate(Database.getInstance().getAppTime());
         this.refreshModel(listRezervacie, this.controller.getRezervacie());
+        this.nastavComboBoxZakaznikov();
     }
 
 
@@ -310,6 +389,7 @@ public class RezervaciePane extends javax.swing.JPanel implements IViewRefresh, 
     private com.toedter.calendar.JDateChooser dateChooserOdjazd;
     private com.toedter.calendar.JDateChooser dateChooserPrijazd;
     private javax.swing.JLabel labelCena;
+    private javax.swing.JLabel labelCenaEur;
     private javax.swing.JLabel labelDataCena;
     private javax.swing.JLabel labelDataPocetIzieb;
     private javax.swing.JLabel labelDataZlava;
@@ -321,9 +401,13 @@ public class RezervaciePane extends javax.swing.JPanel implements IViewRefresh, 
     private javax.swing.JLabel labelRezervacie;
     private javax.swing.JLabel labelZakaznik;
     private javax.swing.JLabel labelZlava;
+    private javax.swing.JLabel labelZlavaPercent1;
     private javax.swing.JList<Rezervacia> listRezervacie;
     private javax.swing.JScrollPane scrollPaneIzby;
     private javax.swing.JScrollPane scrollPaneRezervacie;
+    private javax.swing.JSeparator separatorCena;
+    private javax.swing.JSeparator separatorIzieb;
+    private javax.swing.JSeparator separatorZlava;
     private javax.swing.JTable tableIzby;
     // End of variables declaration//GEN-END:variables
 

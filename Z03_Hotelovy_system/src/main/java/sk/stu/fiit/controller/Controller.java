@@ -2,6 +2,7 @@ package sk.stu.fiit.controller;
 
 import java.util.ArrayList;
 import sk.stu.fiit.database.Database;
+import sk.stu.fiit.model.Izba;
 import sk.stu.fiit.model.Rezervacia;
 import sk.stu.fiit.model.Sluzba;
 import sk.stu.fiit.model.Zakaznik;
@@ -22,6 +23,10 @@ public abstract class Controller {
 
     public ArrayList<Rezervacia> getRezervacie() {
         return Database.getInstance().getRezervacie();
+    }
+    
+    public ArrayList<Izba> getIzby() {
+        return Database.getInstance().getIzby();
     }
 
 }
