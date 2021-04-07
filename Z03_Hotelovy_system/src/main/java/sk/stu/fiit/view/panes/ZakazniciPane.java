@@ -57,11 +57,11 @@ public class ZakazniciPane extends javax.swing.JPanel implements IViewRefresh {
         labelCisloOP = new javax.swing.JLabel();
         fieldCisloOP = new javax.swing.JTextField();
         labelZakaznik = new javax.swing.JLabel();
-        labelCisloOP1 = new javax.swing.JLabel();
-        btnHistoria = new javax.swing.JButton();
+        labelPohlavie = new javax.swing.JLabel();
         labelAdresa = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         textAreaAdresa = new javax.swing.JTextArea();
+        btnHistoria = new javax.swing.JButton();
         btnPridat = new javax.swing.JButton();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -116,7 +116,7 @@ public class ZakazniciPane extends javax.swing.JPanel implements IViewRefresh {
                 btnUlozitMouseReleased(evt);
             }
         });
-        add(btnUlozit, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 360, 250, -1));
+        add(btnUlozit, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 410, 250, -1));
 
         labelCisloOP.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         labelCisloOP.setText("Číslo OP:");
@@ -129,20 +129,9 @@ public class ZakazniciPane extends javax.swing.JPanel implements IViewRefresh {
         labelZakaznik.setText("Zákazník");
         add(labelZakaznik, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, -1));
 
-        labelCisloOP1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        labelCisloOP1.setText("Pohlavie:");
-        add(labelCisloOP1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 300, 90, 40));
-
-        btnHistoria.setBackground(new java.awt.Color(102, 102, 255));
-        btnHistoria.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        btnHistoria.setForeground(new java.awt.Color(255, 255, 255));
-        btnHistoria.setText("Zobraziť históriu ubytovaní");
-        btnHistoria.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                btnHistoriaMouseReleased(evt);
-            }
-        });
-        add(btnHistoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 240, 250, 40));
+        labelPohlavie.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        labelPohlavie.setText("Pohlavie:");
+        add(labelPohlavie, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 300, 90, 40));
 
         labelAdresa.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         labelAdresa.setText("Adresa:");
@@ -156,6 +145,17 @@ public class ZakazniciPane extends javax.swing.JPanel implements IViewRefresh {
         jScrollPane2.setViewportView(textAreaAdresa);
 
         add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 120, 250, 100));
+
+        btnHistoria.setBackground(new java.awt.Color(102, 102, 255));
+        btnHistoria.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnHistoria.setForeground(new java.awt.Color(255, 255, 255));
+        btnHistoria.setText("HISTÓRIA UBYTOVANÍ");
+        btnHistoria.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btnHistoriaMouseReleased(evt);
+            }
+        });
+        add(btnHistoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 410, 250, -1));
 
         btnPridat.setBackground(new java.awt.Color(102, 102, 255));
         btnPridat.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -198,7 +198,7 @@ public class ZakazniciPane extends javax.swing.JPanel implements IViewRefresh {
     }//GEN-LAST:event_btnUlozitMouseReleased
 
     private void btnHistoriaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHistoriaMouseReleased
-        // TODO
+        //TODO
     }//GEN-LAST:event_btnHistoriaMouseReleased
 
     private void btnPridatMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPridatMouseReleased
@@ -255,8 +255,8 @@ public class ZakazniciPane extends javax.swing.JPanel implements IViewRefresh {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel labelAdresa;
     private javax.swing.JLabel labelCisloOP;
-    private javax.swing.JLabel labelCisloOP1;
     private javax.swing.JLabel labelMeno;
+    private javax.swing.JLabel labelPohlavie;
     private javax.swing.JLabel labelStat;
     private javax.swing.JLabel labelTelCislo;
     private javax.swing.JLabel labelZakaznici;

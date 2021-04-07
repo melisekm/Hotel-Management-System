@@ -40,10 +40,10 @@ public class MainScreen extends javax.swing.JFrame {
         cardPane = new javax.swing.JPanel();
         domovPane = new sk.stu.fiit.view.panes.DomovPane();
         izbyPane = new sk.stu.fiit.view.panes.IzbyPane();
-        rezervaciePane = new sk.stu.fiit.view.panes.RezervaciePane();
         ubytovaniaPane = new sk.stu.fiit.view.panes.UbytovaniaPane();
         zakazniciPane = new sk.stu.fiit.view.panes.ZakazniciPane();
         sluzbyPane = new sk.stu.fiit.view.panes.SluzbyPane();
+        rezervaciePane = new sk.stu.fiit.view.panes.RezervaciePane();
         menuPane = new javax.swing.JPanel();
         btnDomov = new javax.swing.JButton();
         btnZakaznici = new javax.swing.JButton();
@@ -79,19 +79,6 @@ public class MainScreen extends javax.swing.JFrame {
 
         cardPane.add(izbyPane, "IZBY");
 
-        javax.swing.GroupLayout rezervaciePaneLayout = new javax.swing.GroupLayout(rezervaciePane);
-        rezervaciePane.setLayout(rezervaciePaneLayout);
-        rezervaciePaneLayout.setHorizontalGroup(
-            rezervaciePaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1200, Short.MAX_VALUE)
-        );
-        rezervaciePaneLayout.setVerticalGroup(
-            rezervaciePaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 530, Short.MAX_VALUE)
-        );
-
-        cardPane.add(rezervaciePane, "REZERVACIE");
-
         javax.swing.GroupLayout ubytovaniaPaneLayout = new javax.swing.GroupLayout(ubytovaniaPane);
         ubytovaniaPane.setLayout(ubytovaniaPaneLayout);
         ubytovaniaPaneLayout.setHorizontalGroup(
@@ -106,6 +93,7 @@ public class MainScreen extends javax.swing.JFrame {
         cardPane.add(ubytovaniaPane, "UBYTOVANIA");
         cardPane.add(zakazniciPane, "ZAKAZNICI");
         cardPane.add(sluzbyPane, "SLUZBY");
+        cardPane.add(rezervaciePane, "REZERVACIE");
 
         getContentPane().add(cardPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 0, -1, -1));
 

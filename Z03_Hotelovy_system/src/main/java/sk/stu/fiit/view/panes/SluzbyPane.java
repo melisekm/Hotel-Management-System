@@ -101,7 +101,7 @@ public class SluzbyPane extends javax.swing.JPanel implements IViewRefresh {
                 btnUlozitMouseReleased(evt);
             }
         });
-        add(btnUlozit, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 360, 250, -1));
+        add(btnUlozit, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 410, 250, -1));
 
         labelZakaznik.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         labelZakaznik.setText("Služby");

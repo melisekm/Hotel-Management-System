@@ -9,6 +9,7 @@ import javax.swing.Icon;
  */
 public class Izba {
     private ArrayList<Ubytovanie> historiaUbytovani;
+    private String oznacenie;
     private String kategoria;
     private String popis;
     private double cena;
