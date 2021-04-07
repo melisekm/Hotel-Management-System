@@ -254,7 +254,7 @@ public class MainScreen extends javax.swing.JFrame {
 
     private void switchScene(String scene, IViewRefresh pane) {
         CardLayout cl = (CardLayout) (cardPane.getLayout());
-        pane.refresh();
+        pane.refreshPane();
         cl.show(cardPane, scene);
     }
 
@@ -286,6 +286,7 @@ public class MainScreen extends javax.swing.JFrame {
             String cas = timeFormat.format(time);
             labelDatum.setText(datum);
             labelCas.setText(cas);
+            Database.getInstance().setAppTime(time);
         }
     }
 

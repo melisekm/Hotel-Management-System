@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import sk.stu.fiit.model.Rezervacia;
 import sk.stu.fiit.model.Sluzba;
 import sk.stu.fiit.model.Zakaznik;
 
@@ -20,6 +21,7 @@ public class Database implements Serializable {
     private static Database INSTANCE;
     private ArrayList<Zakaznik> zakaznici = new ArrayList<>();
     private ArrayList<Sluzba> sluzby = new ArrayList<>();
+    private ArrayList<Rezervacia> rezervacie = new ArrayList<>();
 
     private Database() {
     }
@@ -63,6 +65,14 @@ public class Database implements Serializable {
 
     public void setSluzby(ArrayList<Sluzba> sluzby) {
         this.sluzby = sluzby;
+    }
+
+    public ArrayList<Rezervacia> getRezervacie() {
+        return rezervacie;
+    }
+
+    public void setRezervacie(ArrayList<Rezervacia> rezervacie) {
+        this.rezervacie = rezervacie;
     }
 
 }

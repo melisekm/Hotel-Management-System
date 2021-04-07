@@ -6,5 +6,5 @@ package sk.stu.fiit.view;
  */
 @FunctionalInterface
 public interface IViewRefresh {
-    void refresh();
+    void refreshPane();
 }

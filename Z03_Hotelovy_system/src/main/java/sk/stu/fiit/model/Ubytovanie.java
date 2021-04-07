@@ -11,8 +11,8 @@ public class Ubytovanie {
 
     private String id;
     private ArrayList<Izba> izby;
-    private Date datumOd;
-    private Date datumDo;
+    private Date prijazd;
+    private Date odjazd;
     private int pocetDni;
     private double cena;
     private ArrayList<Sluzba> sluzby;
@@ -21,8 +21,8 @@ public class Ubytovanie {
     public Ubytovanie(String Id, ArrayList<Izba> izby, Date datumOd, Date datumDo, int pocetDni, double cena, ArrayList<Sluzba> sluzby, Platba platba) {
         this.id = Id;
         this.izby = izby;
-        this.datumOd = datumOd;
-        this.datumDo = datumDo;
+        this.prijazd = datumOd;
+        this.odjazd = datumDo;
         this.pocetDni = pocetDni;
         this.cena = cena;
         this.sluzby = sluzby;
@@ -45,20 +45,20 @@ public class Ubytovanie {
         this.izby = izby;
     }
 
-    public Date getDatumOd() {
-        return datumOd;
+    public Date getPrijazd() {
+        return prijazd;
     }
 
-    public void setDatumOd(Date datumOd) {
-        this.datumOd = datumOd;
+    public void setPrijazd(Date prijazd) {
+        this.prijazd = prijazd;
     }
 
-    public Date getDatumDo() {
-        return datumDo;
+    public Date getOdjazd() {
+        return odjazd;
     }
 
-    public void setDatumDo(Date datumDo) {
-        this.datumDo = datumDo;
+    public void setOdjazd(Date odjazd) {
+        this.odjazd = odjazd;
     }
 
     public int getPocetDni() {

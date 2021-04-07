@@ -11,13 +11,14 @@ import sk.stu.fiit.controller.SluzbaController;
 import sk.stu.fiit.model.Sluzba;
 import sk.stu.fiit.model.Ubytovanie;
 import sk.stu.fiit.utils.ViewUtils;
+import sk.stu.fiit.view.ICRUDPane;
 import sk.stu.fiit.view.IViewRefresh;
 
 /**
  *
  * @author Martin Melisek
  */
-public class SluzbyPane extends javax.swing.JPanel implements IViewRefresh {
+public class SluzbyPane extends javax.swing.JPanel implements IViewRefresh, ICRUDPane {
 
     private static final Logger logger = LoggerFactory.getLogger(SluzbyPane.class);
 
@@ -31,7 +32,7 @@ public class SluzbyPane extends javax.swing.JPanel implements IViewRefresh {
         this.baseFields = new JTextComponent[]{
             fieldMeno, fieldCena, textAreaPopis
         };
-        this.refresh();
+        this.refreshPane();
     }
 
     /**
@@ -169,18 +170,21 @@ public class SluzbyPane extends javax.swing.JPanel implements IViewRefresh {
     }// </editor-fold>//GEN-END:initComponents
 
     private void listSluzbyMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listSluzbyMouseReleased
-        this.setSluzbaInfo();
+        this.setModel();
     }//GEN-LAST:event_listSluzbyMouseReleased
 
     private void btnUlozitMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUlozitMouseReleased
-        if (!ViewUtils.validateFieldsNotBlank(this, baseFields)) {
-            logger.error("Neboli vyplnene vsetky potrebne polia.");
-            return;
-        }
-        if (!ViewUtils.validateDoubleTextField(this, fieldCena)) {
-            logger.error("V Poli cena bola zadana invalidna hodnota.");
-            return;
-        }
+        this.updateModel(listSluzby, this.controller.getSluzby());
+    }//GEN-LAST:event_btnUlozitMouseReleased
+
+    private void btnPridatMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPridatMouseReleased
+        ViewUtils.clearFields(baseFields);
+        scrollPaneVyuzitie.setVisible(false);
+        labelVyuzitie.setVisible(false);
+        this.novy = true;
+    }//GEN-LAST:event_btnPridatMouseReleased
+
+    public void saveModel() {
         String meno = fieldMeno.getText();
         Double cena = Double.parseDouble(fieldCena.getText());
         String popis = textAreaPopis.getText();
@@ -193,16 +197,23 @@ public class SluzbyPane extends javax.swing.JPanel implements IViewRefresh {
             this.controller.saveZakaznik(povodnaSluzba, meno, popis, cena);
         }
         JOptionPane.showMessageDialog(this, "Sluzba ulozena", "SUCESS", JOptionPane.INFORMATION_MESSAGE);
-        this.refresh();
-    }//GEN-LAST:event_btnUlozitMouseReleased
+    }
 
-    private void btnPridatMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPridatMouseReleased
-        ViewUtils.clearFields(baseFields);
-        scrollPaneVyuzitie.setVisible(false);
-        labelVyuzitie.setVisible(false);
-        this.novy = true;
-    }//GEN-LAST:event_btnPridatMouseReleased
-    private void setSluzbaInfo() {
+    @Override
+    public boolean validateFields() {
+        if (!ViewUtils.validateFieldsNotBlank(this, baseFields)) {
+            logger.error("Neboli vyplnene vsetky potrebne polia.");
+            return false;
+        }
+        if (!ViewUtils.validateDoubleTextField(this, fieldCena)) {
+            logger.error("V Poli cena bola zadana invalidna hodnota.");
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public void setModel() {
         Boolean zoznamJePrazdny = listSluzby.getModel().getSize() == 0;
         if (zoznamJePrazdny) {
             ViewUtils.clearFields(baseFields);
@@ -217,16 +228,6 @@ public class SluzbyPane extends javax.swing.JPanel implements IViewRefresh {
         tableVyuzitia.setVisible(true);
         this.setTableVyuzitia();
         this.novy = false;
-    }
-
-    private void naplnListSluzieb() {
-        DefaultListModel model = (DefaultListModel) listSluzby.getModel();
-        ArrayList<Sluzba> sluzby = this.controller.getSluzby();
-        model.setSize(0);
-        for (Sluzba sluzba : sluzby) {
-            model.addElement(sluzba);
-        }
-        listSluzby.setSelectedIndex(0);
     }
 
     private void setTableVyuzitia() {
@@ -252,9 +253,8 @@ public class SluzbyPane extends javax.swing.JPanel implements IViewRefresh {
     }
 
     @Override
-    public void refresh() {
-        this.naplnListSluzieb();
-        this.setSluzbaInfo();
+    public void refreshPane() {
+        this.refreshModel(listSluzby, this.controller.getSluzby());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

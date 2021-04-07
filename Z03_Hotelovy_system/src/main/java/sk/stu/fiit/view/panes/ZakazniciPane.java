@@ -11,13 +11,14 @@ import sk.stu.fiit.controller.ZakaznikController;
 import sk.stu.fiit.model.Pohlavie;
 import sk.stu.fiit.model.Zakaznik;
 import sk.stu.fiit.utils.ViewUtils;
+import sk.stu.fiit.view.ICRUDPane;
 import sk.stu.fiit.view.IViewRefresh;
 
 /**
  *
  * @author Martin Melisek
  */
-public class ZakazniciPane extends javax.swing.JPanel implements IViewRefresh {
+public class ZakazniciPane extends javax.swing.JPanel implements IViewRefresh, ICRUDPane {
 
     private static final Logger logger = LoggerFactory.getLogger(ZakazniciPane.class);
 
@@ -31,7 +32,7 @@ public class ZakazniciPane extends javax.swing.JPanel implements IViewRefresh {
         this.baseFields = new JTextComponent[]{
             fieldTelCislo, fieldMeno, fieldCisloOP, fieldNarodnost, textAreaAdresa
         };
-        this.refresh();
+        this.refreshPane();
     }
 
     /**
@@ -170,14 +171,25 @@ public class ZakazniciPane extends javax.swing.JPanel implements IViewRefresh {
     }// </editor-fold>//GEN-END:initComponents
 
     private void listZakazniciMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listZakazniciMouseReleased
-        this.setZakaznikInfo();
+        this.setModel();
     }//GEN-LAST:event_listZakazniciMouseReleased
 
     private void btnUlozitMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUlozitMouseReleased
-        if (!ViewUtils.validateFieldsNotBlank(this, baseFields)) {
-            logger.error("Neboli vyplnene vsetky polia");
-            return;
-        }
+        this.updateModel(listZakaznici, this.controller.getZakaznici());
+    }//GEN-LAST:event_btnUlozitMouseReleased
+
+    private void btnHistoriaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHistoriaMouseReleased
+        //TODO
+    }//GEN-LAST:event_btnHistoriaMouseReleased
+
+    private void btnPridatMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPridatMouseReleased
+        ViewUtils.clearFields(baseFields);
+        btnHistoria.setVisible(false);
+        this.novy = true;
+    }//GEN-LAST:event_btnPridatMouseReleased
+
+    @Override
+    public void saveModel() {
         Pohlavie pohlavie = (Pohlavie) comboBoxPohlavie.getSelectedItem();
         String meno = fieldMeno.getText();
         String narodnost = fieldNarodnost.getText();
@@ -192,22 +204,20 @@ public class ZakazniciPane extends javax.swing.JPanel implements IViewRefresh {
             Zakaznik povodnyZakaznik = listZakaznici.getSelectedValue();
             this.controller.saveZakaznik(povodnyZakaznik, pohlavie, meno, narodnost, cisloOP, telCislo, adresa);
         }
-
         JOptionPane.showMessageDialog(this, "Zakaznik Ulozeny", "SUCESS", JOptionPane.INFORMATION_MESSAGE);
-        this.refresh();
-    }//GEN-LAST:event_btnUlozitMouseReleased
+    }
 
-    private void btnHistoriaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHistoriaMouseReleased
-        //TODO
-    }//GEN-LAST:event_btnHistoriaMouseReleased
+    @Override
+    public boolean validateFields() {
+        if (!ViewUtils.validateFieldsNotBlank(this, baseFields)) {
+            logger.error("Neboli vyplnene vsetky polia");
+            return false;
+        }
+        return true;
+    }
 
-    private void btnPridatMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPridatMouseReleased
-        ViewUtils.clearFields(baseFields);
-        btnHistoria.setVisible(false);
-        this.novy = true;
-    }//GEN-LAST:event_btnPridatMouseReleased
-
-    private void setZakaznikInfo() {
+    @Override
+    public void setModel() {
         Boolean zoznamJePrazdny = listZakaznici.getModel().getSize() == 0;
         if (zoznamJePrazdny) {
             ViewUtils.clearFields(baseFields);
@@ -223,23 +233,11 @@ public class ZakazniciPane extends javax.swing.JPanel implements IViewRefresh {
         comboBoxPohlavie.setSelectedItem(z.getPohlavie());
         btnHistoria.setVisible(true);
         this.novy = false;
-
-    }
-
-    private void naplnListZakaznikov() {
-        DefaultListModel model = (DefaultListModel) listZakaznici.getModel();
-        ArrayList<Zakaznik> zakaznici = this.controller.getZakaznici();
-        model.setSize(0);
-        for (Zakaznik zakaznik : zakaznici) {
-            model.addElement(zakaznik);
-        }
-        listZakaznici.setSelectedIndex(0);
     }
 
     @Override
-    public void refresh() {
-        this.naplnListZakaznikov();
-        this.setZakaznikInfo();
+    public void refreshPane() {
+        this.refreshModel(listZakaznici, this.controller.getZakaznici());
     }
 
 

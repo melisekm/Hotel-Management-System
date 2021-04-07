@@ -37,7 +37,7 @@ public class IzbyPane extends javax.swing.JPanel implements IViewRefresh{
     }// </editor-fold>//GEN-END:initComponents
 
     @Override
-    public void refresh() {
+    public void refreshPane() {
         System.out.println("TATO METODA NIEJE IMPLEMENTOVANA"); //TODO
     }
 

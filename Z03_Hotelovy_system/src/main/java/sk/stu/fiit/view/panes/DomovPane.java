@@ -82,7 +82,7 @@ public class DomovPane extends javax.swing.JPanel implements IViewRefresh {
     // End of variables declaration//GEN-END:variables
 
     @Override
-    public void refresh() {
+    public void refreshPane() {
         System.out.println("TATO METODA NIEJE IMPLEMENTOVANA"); //TODO
     }
 
