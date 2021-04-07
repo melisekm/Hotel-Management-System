@@ -1,7 +1,7 @@
 package sk.stu.fiit.view.dialogs;
 
-import java.awt.Frame;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -18,9 +18,13 @@ public class PridatIzbuDialog extends javax.swing.JDialog {
     private RezervacieController controller;
     private Izba zvolenaIzba;
     private JFrame parent;
+    private Date prijazd;
+    private Date odjazd;
 
-    public PridatIzbuDialog(java.awt.Frame parent, boolean modal, RezervacieController controller) {
+    public PridatIzbuDialog(java.awt.Frame parent, boolean modal, RezervacieController controller, Date prijazd, Date odjazd) {
         super(parent, modal);
+        this.prijazd = prijazd;
+        this.odjazd = odjazd;
         initComponents();
         this.parent = (JFrame) parent;
         this.controller = controller;
@@ -126,12 +130,10 @@ public class PridatIzbuDialog extends javax.swing.JDialog {
 
     private void naplnTabulku() {
         DefaultTableModel model = (DefaultTableModel) tableIzby.getModel();
-        ArrayList<Izba> vsetkyIzby = this.controller.getIzby();
-        for (Izba izba : vsetkyIzby) {
-            boolean jeIzbaObsadena = izba.isObsadena();
+        ArrayList<Izba> dostupneIzby = this.controller.getDostupneIzby(this.prijazd, this.odjazd);
+        for (Izba izba : dostupneIzby) {
             boolean jeIzbaUzPridana = this.controller.getPridavaneIzby().contains(izba);
-            boolean nedaSaZarezervovat = Boolean.logicalOr(jeIzbaObsadena, jeIzbaUzPridana);
-            if (nedaSaZarezervovat) {
+            if (jeIzbaUzPridana) {
                 continue;
             }
             model.addRow(new Object[]{

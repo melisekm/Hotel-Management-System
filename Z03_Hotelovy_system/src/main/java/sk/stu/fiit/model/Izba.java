@@ -1,5 +1,6 @@
 package sk.stu.fiit.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import javax.swing.Icon;
 
@@ -7,7 +8,7 @@ import javax.swing.Icon;
  *
  * @author Martin Melisek
  */
-public class Izba {
+public class Izba implements Serializable {
 
     private ArrayList<Ubytovanie> historiaUbytovani;
     private String oznacenie;
@@ -15,7 +16,6 @@ public class Izba {
     private String popis;
     private double cena;
     private ArrayList<Icon> galeria;
-    private boolean obsadena;
     private int pocetLozok;
 
     public Izba(String oznacenie, String kategoria, String popis, double cena, ArrayList<Icon> galeria, int pocetLozok) {
@@ -26,7 +26,6 @@ public class Izba {
         this.galeria = galeria;
         this.pocetLozok = pocetLozok;
         this.historiaUbytovani = new ArrayList<>();
-        this.obsadena = false;
     }
 
     @Override
@@ -80,14 +79,6 @@ public class Izba {
 
     public void setGaleria(ArrayList<Icon> galeria) {
         this.galeria = galeria;
-    }
-
-    public boolean isObsadena() {
-        return obsadena;
-    }
-
-    public void setObsadena(boolean obsadena) {
-        this.obsadena = obsadena;
     }
 
     public int getPocetLozok() {

@@ -21,44 +21,35 @@ public class RezervacieController extends Controller {
     private double priebeznaCena = 0;
     private Zlava zlava;
 
-    public void saveRezervacia(Zakaznik zakaznik, Date datumPrijazdu, Date datumOdjazdu, int pocetDni, ArrayList<Izba> izby) {
+    public void saveRezervacia(Zakaznik zakaznik, Date datumPrijazdu, Date datumOdjazdu, int pocetDni) {
         this.getRezervacie().add(this.createRezervacia(zakaznik, datumPrijazdu, datumOdjazdu, pocetDni));
     }
 
-    public void saveRezervacia(Rezervacia povodnaRezervacia, Zakaznik zakaznik, Date datumPrijazdu, Date datumOdjazdu, int pocetDni, ArrayList<Izba> izby) {
+    public void saveRezervacia(Rezervacia povodnaRezervacia, Zakaznik zakaznik, Date datumPrijazdu, Date datumOdjazdu, int pocetDni) {
         Rezervacia nova = this.createRezervacia(zakaznik, datumPrijazdu, datumOdjazdu, pocetDni);
         povodnaRezervacia.updateDetails(nova);
     }
 
     private Rezervacia createRezervacia(Zakaznik zakaznik, Date datumPrijazdu, Date datumOdjazdu, int pocetDni) {
         String id = "R" + this.getRezervacie().size();
-        for (Izba izba : this.pridavaneIzby) {
-            izba.setObsadena(true);
-        }
         return new Rezervacia(id, zakaznik, this.pridavaneIzby, datumPrijazdu, datumOdjazdu, pocetDni, this.priebeznaCena, StatusRezervacie.VYTVORENA, this.zlava);
     }
 
     public void pridajIzbu(int pocetDni, Izba pridavanaIzba) {
         this.getPridavaneIzby().add(pridavanaIzba);
-        this.prepocitajCenu(pridavanaIzba, pocetDni);
-    }
-
-    private void prepocitajCenu(Izba pridavanaIzba, int pocetDni) {
-        this.skontrolujZlavu(pocetDni);
-        this.priebeznaCena += pridavanaIzba.getCena();
-        this.priebeznaCena *= pocetDni;
-        skontrolujZlavu(pocetDni);
-        if (this.zlava != null) {
-            this.priebeznaCena *= (1 - this.zlava.getPercento());
-        }
+        this.prepocitajCenu(pocetDni);
     }
 
     public boolean prepocitajCenu(int pocetDni) {
-        if (skontrolujZlavu(pocetDni)) {
-            if (this.zlava != null) {
-                this.priebeznaCena *= (1 - this.zlava.getPercento());
-                return true;
-            }
+        this.priebeznaCena = 0;
+        for (Izba izba : pridavaneIzby) {
+            this.priebeznaCena += izba.getCena();
+        }
+        this.priebeznaCena *= pocetDni;
+        this.skontrolujZlavu(pocetDni);
+        if (this.zlava != null) {
+            this.priebeznaCena *= (1 - this.zlava.getPercento());
+            return true;
         }
         return false;
     }

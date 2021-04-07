@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import sk.stu.fiit.model.Izba;
 import sk.stu.fiit.model.Rezervacia;
 import sk.stu.fiit.model.Sluzba;
+import sk.stu.fiit.model.Ubytovanie;
 import sk.stu.fiit.model.Zakaznik;
 
 /**
@@ -24,6 +25,7 @@ public class Database implements Serializable {
     private ArrayList<Sluzba> sluzby = new ArrayList<>();
     private ArrayList<Rezervacia> rezervacie = new ArrayList<>();
     private ArrayList<Izba> izby = new ArrayList<>();
+    private ArrayList<Ubytovanie> ubytovania = new ArrayList<>();
 
     private Database() {
     }
@@ -83,6 +85,14 @@ public class Database implements Serializable {
 
     public void setIzby(ArrayList<Izba> izby) {
         this.izby = izby;
+    }
+
+    public ArrayList<Ubytovanie> getUbytovania() {
+        return ubytovania;
+    }
+
+    public void setUbytovania(ArrayList<Ubytovanie> ubytovania) {
+        this.ubytovania = ubytovania;
     }
 
 }
