@@ -16,15 +16,13 @@ import sk.stu.fiit.utils.ViewUtils;
 public class PridatIzbuDialog extends javax.swing.JDialog {
 
     private RezervacieController controller;
-    private ArrayList<Izba> pridaneIzby;
     private Izba zvolenaIzba;
     private JFrame parent;
 
-    public PridatIzbuDialog(java.awt.Frame parent, boolean modal, ArrayList<Izba> pridaneIzby, RezervacieController controller) {
+    public PridatIzbuDialog(java.awt.Frame parent, boolean modal, RezervacieController controller) {
         super(parent, modal);
         initComponents();
         this.parent = (JFrame) parent;
-        this.pridaneIzby = pridaneIzby;
         this.controller = controller;
         this.naplnTabulku();
     }
@@ -80,7 +78,7 @@ public class PridatIzbuDialog extends javax.swing.JDialog {
                 btnPridatMouseReleased(evt);
             }
         });
-        getContentPane().add(btnPridat, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 330, -1, -1));
+        getContentPane().add(btnPridat, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 330, -1, -1));
 
         btnGaleria.setBackground(new java.awt.Color(102, 102, 255));
         btnGaleria.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -103,6 +101,10 @@ public class PridatIzbuDialog extends javax.swing.JDialog {
             return;
         }
         Izba i = (Izba) ((DefaultTableModel) tableIzby.getModel()).getValueAt(row, 0);
+        if (i.getGaleria().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Tato izba nema ziadne fotky v galerii");
+            return;
+        }
         ViewUtils.showDialog(new GaleriaIzbyDialog(this.parent, true, i));
 
     }//GEN-LAST:event_btnGaleriaMouseReleased
@@ -126,9 +128,9 @@ public class PridatIzbuDialog extends javax.swing.JDialog {
         DefaultTableModel model = (DefaultTableModel) tableIzby.getModel();
         ArrayList<Izba> vsetkyIzby = this.controller.getIzby();
         for (Izba izba : vsetkyIzby) {
-            boolean jeIzbaVolna = izba.isVolna();
-            boolean jeIzbaUzPridana = this.pridaneIzby.contains(izba);
-            boolean nedaSaZarezervovat = Boolean.logicalOr(jeIzbaVolna, jeIzbaUzPridana);
+            boolean jeIzbaObsadena = izba.isObsadena();
+            boolean jeIzbaUzPridana = this.controller.getPridavaneIzby().contains(izba);
+            boolean nedaSaZarezervovat = Boolean.logicalOr(jeIzbaObsadena, jeIzbaUzPridana);
             if (nedaSaZarezervovat) {
                 continue;
             }

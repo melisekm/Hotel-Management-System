@@ -15,18 +15,18 @@ public class Izba {
     private String popis;
     private double cena;
     private ArrayList<Icon> galeria;
-    private boolean volna;
+    private boolean obsadena;
     private int pocetLozok;
 
-    public Izba(ArrayList<Ubytovanie> historiaUbytovani, String oznacenie, String kategoria, String popis, double cena, ArrayList<Icon> galeria, boolean volna, int pocetLozok) {
-        this.historiaUbytovani = historiaUbytovani;
+    public Izba(String oznacenie, String kategoria, String popis, double cena, ArrayList<Icon> galeria, int pocetLozok) {
         this.oznacenie = oznacenie;
         this.kategoria = kategoria;
         this.popis = popis;
         this.cena = cena;
         this.galeria = galeria;
-        this.volna = volna;
         this.pocetLozok = pocetLozok;
+        this.historiaUbytovani = new ArrayList<>();
+        this.obsadena = false;
     }
 
     @Override
@@ -82,12 +82,12 @@ public class Izba {
         this.galeria = galeria;
     }
 
-    public boolean isVolna() {
-        return volna;
+    public boolean isObsadena() {
+        return obsadena;
     }
 
-    public void setVolna(boolean volna) {
-        this.volna = volna;
+    public void setObsadena(boolean obsadena) {
+        this.obsadena = obsadena;
     }
 
     public int getPocetLozok() {

@@ -1,5 +1,6 @@
 package sk.stu.fiit.view.panes;
 
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -77,6 +78,7 @@ public class RezervaciePane extends javax.swing.JPanel implements IViewRefresh, 
         separatorIzieb = new javax.swing.JSeparator();
         separatorCena = new javax.swing.JSeparator();
         separatorZlava = new javax.swing.JSeparator();
+        btnSkontrolovat = new javax.swing.JButton();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -144,7 +146,7 @@ public class RezervaciePane extends javax.swing.JPanel implements IViewRefresh, 
                 btnPridatIzbuMouseReleased(evt);
             }
         });
-        add(btnPridatIzbu, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 280, 270, -1));
+        add(btnPridatIzbu, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 280, 270, -1));
 
         comboBoxZakaznik.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         comboBoxZakaznik.setModel(new DefaultComboBoxModel<Zakaznik>());
@@ -154,11 +156,6 @@ public class RezervaciePane extends javax.swing.JPanel implements IViewRefresh, 
         add(dateChooserOdjazd, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 180, 250, 40));
 
         dateChooserPrijazd.setDateFormatString("dd.MM.yyyy");
-        dateChooserPrijazd.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                dateChooserPrijazdMouseReleased(evt);
-            }
-        });
         add(dateChooserPrijazd, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 120, 250, 40));
 
         labelZlava.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -229,6 +226,17 @@ public class RezervaciePane extends javax.swing.JPanel implements IViewRefresh, 
         add(separatorIzieb, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 270, 390, 20));
         add(separatorCena, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 370, 390, 20));
         add(separatorZlava, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 320, 390, 20));
+
+        btnSkontrolovat.setBackground(new java.awt.Color(102, 102, 255));
+        btnSkontrolovat.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnSkontrolovat.setForeground(new java.awt.Color(255, 255, 255));
+        btnSkontrolovat.setText("Skontrolovať zľavu");
+        btnSkontrolovat.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btnSkontrolovatMouseReleased(evt);
+            }
+        });
+        add(btnSkontrolovat, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 340, 270, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void listRezervacieMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listRezervacieMouseReleased
@@ -241,12 +249,8 @@ public class RezervaciePane extends javax.swing.JPanel implements IViewRefresh, 
 
     private void btnPridatIzbuMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPridatIzbuMouseReleased
         DefaultTableModel tableModel = (DefaultTableModel) tableIzby.getModel();
-        ArrayList<Izba> pridaneIzby = new ArrayList<>();
-        for (int row = 0; row < tableModel.getRowCount(); row++) {
-            pridaneIzby.add((Izba) tableModel.getValueAt(row, 0));
-        }
         PridatIzbuDialog dialog = new PridatIzbuDialog((JFrame) SwingUtilities.getWindowAncestor(this),
-                true, pridaneIzby, this.controller);
+                true, this.controller);
         Izba pridavanaIzba = dialog.showDialog();
         if (pridavanaIzba == null) {
             return;
@@ -256,21 +260,20 @@ public class RezervaciePane extends javax.swing.JPanel implements IViewRefresh, 
             pridavanaIzba.getOznacenie(),
             String.format("%.02f", pridavanaIzba.getCena())
         });
-        pridaneIzby.add(pridavanaIzba);
-        labelDataPocetIzieb.setText(String.valueOf(pridaneIzby.size()));
-        Date prijazd = dateChooserPrijazd.getDate();
-        Date odjazd = dateChooserOdjazd.getDate();
-        Zlava zlava = skontrolujZlavu(prijazd, odjazd, cena, izby.size());
-        try {
-            labelDataCena.setText(this.controller.prepocitajCenu(prijazd, odjazd, pridaneIzby));
-        } catch (InvalidReservationDateException ex) {
-            logger.error(ex.getMessage());
-            JOptionPane.showMessageDialog(this, "prosim nastavte validny datum", "DATE ERROR", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-
+        int pocetDni = (int) ChronoUnit.DAYS.between(dateChooserPrijazd.getDate().toInstant(), dateChooserOdjazd.getDate().toInstant());
+        this.controller.pridajIzbu(pocetDni, pridavanaIzba);
+        this.updateLabels();
     }//GEN-LAST:event_btnPridatIzbuMouseReleased
+
+    private void updateLabels() {
+        labelDataPocetIzieb.setText(String.valueOf(this.controller.getPridavaneIzby().size()));
+        if (this.controller.getZlava() == null) {
+            labelDataZlava.setText("0");
+        } else {
+            labelDataZlava.setText(String.valueOf(this.controller.getZlava().getPercento() * 100));
+        }
+        labelDataCena.setText(String.format("%.02f", this.controller.getPriebeznaCena()));
+    }
 
     private void btnStatusRezervacieMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnStatusRezervacieMouseReleased
         // TODO
@@ -279,16 +282,16 @@ public class RezervaciePane extends javax.swing.JPanel implements IViewRefresh, 
     private void btnPridatMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPridatMouseReleased
         ViewUtils.clearLabels("0", labelDataCena, labelDataPocetIzieb, labelDataZlava);
         btnStatusRezervacie.setVisible(false);
+        this.controller.clearTempRezervacia();
         this.novy = true;
     }//GEN-LAST:event_btnPridatMouseReleased
 
-    private void dateChooserPrijazdMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dateChooserPrijazdMouseReleased
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(dateChooserPrijazd.getDate());
-        cal.add(Calendar.DATE, 1);
-        dateChooserOdjazd.setMinSelectableDate(cal.getTime());
-        dateChooserOdjazd.setDate(cal.getTime());
-    }//GEN-LAST:event_dateChooserPrijazdMouseReleased
+    private void btnSkontrolovatMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSkontrolovatMouseReleased
+        int pocetDni = (int) ChronoUnit.DAYS.between(dateChooserPrijazd.getDate().toInstant(), dateChooserOdjazd.getDate().toInstant());
+        this.controller.prepocitajCenu(pocetDni);
+        this.updateLabels();
+        //JOptionPane.
+    }//GEN-LAST:event_btnSkontrolovatMouseReleased
 
     @Override
     public void saveModel() {
@@ -296,30 +299,36 @@ public class RezervaciePane extends javax.swing.JPanel implements IViewRefresh, 
         Zakaznik zakaznik = (Zakaznik) comboBoxZakaznik.getSelectedItem();
         Date datumPrijazdu = dateChooserPrijazd.getDate();
         Date datumOdjazdu = dateChooserOdjazd.getDate();
+        int pocetDni = (int) ChronoUnit.DAYS.between(datumPrijazdu.toInstant(), datumOdjazdu.toInstant());
         ArrayList<Izba> izby = new ArrayList<>();
         for (int row = 0; row < model.getRowCount(); row++) {
             Izba i = (Izba) model.getValueAt(row, 0);
             izby.add(i);
         }
-        try {
-            if (this.novy) {
-                logger.info(String.format("Ukladam novu rezervaciu"));
-                this.controller.saveRezervacia(zakaznik, datumPrijazdu, datumOdjazdu, izby);
-            } else {
-                logger.info(String.format("Editujem existujucu rezervaciu"));
-                Rezervacia povodnaRezervacia = listRezervacie.getSelectedValue();
-                this.controller.saveRezervacia(povodnaRezervacia, zakaznik, datumPrijazdu, datumOdjazdu, izby);
-            }
-        } catch (InvalidReservationDateException ex) {
-            logger.error(ex.getMessage());
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "DATE ERROR", JOptionPane.ERROR_MESSAGE);
-            return;
+        if (this.novy) {
+            logger.info(String.format("Ukladam novu rezervaciu"));
+            this.controller.saveRezervacia(zakaznik, datumPrijazdu, datumOdjazdu, pocetDni, izby);
+        } else {
+            logger.info(String.format("Editujem existujucu rezervaciu"));
+            Rezervacia povodnaRezervacia = listRezervacie.getSelectedValue();
+            this.controller.saveRezervacia(povodnaRezervacia, zakaznik, datumPrijazdu, datumOdjazdu, pocetDni, izby);
         }
+
         JOptionPane.showMessageDialog(this, "Rezervacia ulozena", "SUCESS", JOptionPane.INFORMATION_MESSAGE);
     }
 
     @Override
     public boolean validateFields() {
+        Date datumPrijazdu = dateChooserPrijazd.getDate();
+        Date datumOdjazdu = dateChooserOdjazd.getDate();
+        int pocetDni = (int) ChronoUnit.DAYS.between(datumPrijazdu.toInstant(), datumOdjazdu.toInstant());
+        if (pocetDni < 1) {
+            String msg = "Nie je mozne vytvorit rezervaciu na menej ako jeden den.";
+            logger.error(msg);
+            JOptionPane.showMessageDialog(this, msg, "DATE ERROR", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
         if (((DefaultTableModel) tableIzby.getModel()).getRowCount() == 0) {
             logger.error("Zoznam izieb je prazdny.");
             JOptionPane.showMessageDialog(this, "Zoznam izieb je prazdny", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -377,12 +386,14 @@ public class RezervaciePane extends javax.swing.JPanel implements IViewRefresh, 
         dateChooserPrijazd.setMinSelectableDate(Database.getInstance().getAppTime());
         this.refreshModel(listRezervacie, this.controller.getRezervacie());
         this.nastavComboBoxZakaznikov();
+        this.controller.clearTempRezervacia();
     }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnPridat;
     private javax.swing.JButton btnPridatIzbu;
+    private javax.swing.JButton btnSkontrolovat;
     private javax.swing.JButton btnStatusRezervacie;
     private javax.swing.JButton btnUlozit;
     private javax.swing.JComboBox<Zakaznik> comboBoxZakaznik;

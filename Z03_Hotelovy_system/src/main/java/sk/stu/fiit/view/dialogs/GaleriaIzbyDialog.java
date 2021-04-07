@@ -78,11 +78,6 @@ public class GaleriaIzbyDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_btnZavrietMouseReleased
 
     private void nacitajGaleriu() {
-        if (zvolenaIzba.getGaleria().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Tato izba nema ziadne fotky v galerii");
-            this.setVisible(false);
-            this.dispose();
-        }
         int idx = 0;
         for (Icon icon : this.zvolenaIzba.getGaleria()) {
             if(idx > 2){
