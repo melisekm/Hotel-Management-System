@@ -6,7 +6,7 @@ import java.io.Serializable;
  *
  * @author Martin Melisek
  */
-public class ZlavaFactory implements Serializable{
+public class ZlavaFactory implements Serializable {
 
     public Zlava getZlava(String nazov) {
         if ("7_D_GTE".equals(nazov)) {
@@ -15,6 +15,10 @@ public class ZlavaFactory implements Serializable{
             return new Zlava("1000_E_GTE", "Zlava za nakup nad 1000e", 0.15);
         } else if ("2_I_GTE".equals(nazov)) {
             return new Zlava("2_I_GTE", "Zlava za rezervaciu viac ako 2 izieb", 0.05);
+        } else if ("REGULAR".equals(nazov)) {
+            return new Zlava("20_REGULAR", "Zľava pre stáleho zákazníka.", 0.2);
+        } else if ("SECRET".equals(nazov)) {
+            return new Zlava("50_SECRET", "Tajna zlava len pre tých najvernejších", 0.5);
         }
         return null;
     }

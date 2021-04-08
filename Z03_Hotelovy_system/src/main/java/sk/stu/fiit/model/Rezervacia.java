@@ -8,7 +8,7 @@ import java.util.Date;
  *
  * @author Martin Melisek
  */
-public class Rezervacia implements Serializable{
+public class Rezervacia implements IZaplatitelne, Serializable{
 
     private String id;
     private Zakaznik zakaznik;
@@ -51,6 +51,12 @@ public class Rezervacia implements Serializable{
         return id + " - " + status.toString();
     }
 
+    @Override
+    public void zaplat(Platba platba) {
+        this.status = StatusRezervacie.POTVRDENA;
+        this.zaloha = platba;
+    }
+    
     public Zlava getZlava() {
         return zlava;
     }
@@ -67,6 +73,7 @@ public class Rezervacia implements Serializable{
         this.id = id;
     }
 
+    @Override
     public Zakaznik getZakaznik() {
         return zakaznik;
     }

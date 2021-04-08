@@ -2,6 +2,7 @@ package sk.stu.fiit.controller;
 
 import java.util.ArrayList;
 import java.util.Date;
+import sk.stu.fiit.database.Database;
 import sk.stu.fiit.model.Izba;
 import sk.stu.fiit.model.Rezervacia;
 import sk.stu.fiit.model.StatusRezervacie;
@@ -29,8 +30,13 @@ public class RezervacieController extends Controller {
     }
 
     private Rezervacia createRezervacia(Zakaznik zakaznik, Date datumPrijazdu, Date datumOdjazdu, int pocetDni) {
-        String id = "R" + this.getRezervacie().size();
-        return new Rezervacia(id, zakaznik, this.pridavaneIzby, datumPrijazdu, datumOdjazdu, pocetDni, this.priebeznaCena, StatusRezervacie.VYTVORENA, this.zlava);
+        String id = "R" + Database.getInstance().getAndSetRezervacieUUID();
+        ArrayList izby = new ArrayList<>(this.pridavaneIzby);
+        Zlava zlava = null;
+        if(this.zlava != null){
+            zlava = this.zlava;
+        }
+        return new Rezervacia(id, zakaznik, izby, datumPrijazdu, datumOdjazdu, pocetDni, this.priebeznaCena, StatusRezervacie.VYTVORENA, zlava);
     }
 
     public void pridajIzbu(int pocetDni, Izba pridavanaIzba) {
@@ -67,8 +73,19 @@ public class RezervacieController extends Controller {
         return true;
     }
 
-    public void aplikujZlavu(Rezervacia rezervacia, Zlava zlava) {
-        // TODO
+    public boolean aplikujZlavu(Rezervacia rezervacia, String kod) {
+        ZlavaFactory zlavaFactory = new ZlavaFactory();
+        Zlava zlava = zlavaFactory.getZlava(kod);
+        if(zlava == null){
+            return false;
+        }
+        rezervacia.setZlava(zlava);
+        rezervacia.setCena(rezervacia.getCena() * (1 - zlava.getPercento()));
+        return true;
+    }
+
+    public void zrusitRezervaciu(Rezervacia zvolenaRezervacia) {
+        this.getRezervacie().remove(zvolenaRezervacia);
     }
 
     public void clearTempRezervacia() {

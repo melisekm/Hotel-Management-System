@@ -24,7 +24,6 @@ public class MainScreen extends javax.swing.JFrame {
     public MainScreen() {
         initComponents();
         this.timeSetup(new Date());
-
     }
 
     /**
@@ -265,7 +264,7 @@ public class MainScreen extends javax.swing.JFrame {
         this.timer = new Timer(1000, new TimeActionListener(date));
         this.timer.setInitialDelay(0);
         this.timer.start();
-
+        //TODO Aktualizovat vsetko.
     }
 
     private class TimeActionListener implements ActionListener {

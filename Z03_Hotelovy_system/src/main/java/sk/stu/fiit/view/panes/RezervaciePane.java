@@ -22,6 +22,7 @@ import sk.stu.fiit.utils.ViewUtils;
 import sk.stu.fiit.view.ICRUDPane;
 import sk.stu.fiit.view.IViewRefresh;
 import sk.stu.fiit.view.dialogs.PridatIzbuDialog;
+import sk.stu.fiit.view.dialogs.StatusRezervacieDialog;
 
 /**
  *
@@ -32,14 +33,15 @@ public class RezervaciePane extends javax.swing.JPanel implements IViewRefresh, 
     private static final Logger logger = LoggerFactory.getLogger(RezervaciePane.class);
 
     private RezervacieController controller = new RezervacieController();
+    private JFrame parent = (JFrame) SwingUtilities.getWindowAncestor(this);
 
     private boolean novy = true;
 
     public RezervaciePane() {
         initComponents();
-        JTextFieldDateEditor editor = (JTextFieldDateEditor) dateChooserOdjazd.getDateEditor();
+        JTextFieldDateEditor editor = (JTextFieldDateEditor) dcOdjazd.getDateEditor();
         editor.setEditable(false);
-        editor = (JTextFieldDateEditor) dateChooserPrijazd.getDateEditor();
+        editor = (JTextFieldDateEditor) dcPrijazd.getDateEditor();
         editor.setEditable(false);
         this.refreshPane();
     }
@@ -66,8 +68,8 @@ public class RezervaciePane extends javax.swing.JPanel implements IViewRefresh, 
         labelPridaneIzby = new javax.swing.JLabel();
         btnPridatIzbu = new javax.swing.JButton();
         comboBoxZakaznik = new javax.swing.JComboBox<>();
-        dateChooserOdjazd = new com.toedter.calendar.JDateChooser();
-        dateChooserPrijazd = new com.toedter.calendar.JDateChooser();
+        dcOdjazd = new com.toedter.calendar.JDateChooser();
+        dcPrijazd = new com.toedter.calendar.JDateChooser();
         labelZlava = new javax.swing.JLabel();
         labelDataPocetIzieb = new javax.swing.JLabel();
         btnStatusRezervacie = new javax.swing.JButton();
@@ -81,7 +83,6 @@ public class RezervaciePane extends javax.swing.JPanel implements IViewRefresh, 
         separatorIzieb = new javax.swing.JSeparator();
         separatorCena = new javax.swing.JSeparator();
         separatorZlava = new javax.swing.JSeparator();
-        btnSkontrolovat = new javax.swing.JButton();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -155,21 +156,21 @@ public class RezervaciePane extends javax.swing.JPanel implements IViewRefresh, 
         comboBoxZakaznik.setModel(new DefaultComboBoxModel<Zakaznik>());
         add(comboBoxZakaznik, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 60, 250, 40));
 
-        dateChooserOdjazd.setDateFormatString("dd.MM.yyyy");
-        dateChooserOdjazd.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+        dcOdjazd.setDateFormatString("dd.MM.yyyy");
+        dcOdjazd.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                dateChooserOdjazdPropertyChange(evt);
+                dcOdjazdPropertyChange(evt);
             }
         });
-        add(dateChooserOdjazd, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 180, 250, 40));
+        add(dcOdjazd, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 180, 250, 40));
 
-        dateChooserPrijazd.setDateFormatString("dd.MM.yyyy");
-        dateChooserPrijazd.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+        dcPrijazd.setDateFormatString("dd.MM.yyyy");
+        dcPrijazd.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                dateChooserPrijazdPropertyChange(evt);
+                dcPrijazdPropertyChange(evt);
             }
         });
-        add(dateChooserPrijazd, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 120, 250, 40));
+        add(dcPrijazd, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 120, 250, 40));
 
         labelZlava.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         labelZlava.setText("Zľava:");
@@ -240,17 +241,6 @@ public class RezervaciePane extends javax.swing.JPanel implements IViewRefresh, 
         add(separatorIzieb, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 270, 390, 20));
         add(separatorCena, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 370, 390, 20));
         add(separatorZlava, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 320, 390, 20));
-
-        btnSkontrolovat.setBackground(new java.awt.Color(102, 102, 255));
-        btnSkontrolovat.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        btnSkontrolovat.setForeground(new java.awt.Color(255, 255, 255));
-        btnSkontrolovat.setText("Skontrolovať cenu");
-        btnSkontrolovat.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                btnSkontrolovatMouseReleased(evt);
-            }
-        });
-        add(btnSkontrolovat, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 340, 270, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void listRezervacieMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listRezervacieMouseReleased
@@ -262,8 +252,8 @@ public class RezervaciePane extends javax.swing.JPanel implements IViewRefresh, 
     }//GEN-LAST:event_btnUlozitMouseReleased
 
     private void btnPridatIzbuMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPridatIzbuMouseReleased
-        Date prijazd = dateChooserPrijazd.getDate();
-        Date odjazd = dateChooserOdjazd.getDate();
+        Date prijazd = dcPrijazd.getDate();
+        Date odjazd = dcOdjazd.getDate();
         int pocetDni = Utils.DAYS_BETWEEN(prijazd, odjazd);
         if (pocetDni < 1) {
             String msg = "Chybne zadane datum prijazdu alebo datum odjazdu.";
@@ -273,7 +263,7 @@ public class RezervaciePane extends javax.swing.JPanel implements IViewRefresh, 
             return;
         }
         DefaultTableModel tableModel = (DefaultTableModel) tableIzby.getModel();
-        PridatIzbuDialog dialog = new PridatIzbuDialog((JFrame) SwingUtilities.getWindowAncestor(this),
+        PridatIzbuDialog dialog = new PridatIzbuDialog(this.parent,
                 true, this.controller, prijazd, odjazd);
         Izba pridavanaIzba = dialog.showDialog();
         if (pridavanaIzba == null) {
@@ -303,38 +293,37 @@ public class RezervaciePane extends javax.swing.JPanel implements IViewRefresh, 
     }
 
     private void btnStatusRezervacieMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnStatusRezervacieMouseReleased
-        // TODO
+        Rezervacia zvolenaRezervacia = listRezervacie.getSelectedValue();
+        StatusRezervacieDialog dialog = new StatusRezervacieDialog(this.parent, true, this.controller, zvolenaRezervacia);
+        ViewUtils.showDialog(dialog);
+        this.refreshPane();
     }//GEN-LAST:event_btnStatusRezervacieMouseReleased
 
     private void btnPridatMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPridatMouseReleased
         this.clearRezervacia();
         this.novy = true;
+        this.resetBtns();
     }//GEN-LAST:event_btnPridatMouseReleased
 
-    private void btnSkontrolovatMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSkontrolovatMouseReleased
-        this.skontrolovatCenu();
-    }//GEN-LAST:event_btnSkontrolovatMouseReleased
-
     private void skontrolovatCenu() {
-        int pocetDni = Utils.DAYS_BETWEEN(dateChooserPrijazd.getDate(), dateChooserOdjazd.getDate());
+        int pocetDni = Utils.DAYS_BETWEEN(dcPrijazd.getDate(), dcOdjazd.getDate());
         this.controller.prepocitajCenu(pocetDni);
         this.updateLabels();
     }
 
-    private void dateChooserPrijazdPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dateChooserPrijazdPropertyChange
+    private void dcPrijazdPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dcPrijazdPropertyChange
         this.skontrolovatCenu();
+    }//GEN-LAST:event_dcPrijazdPropertyChange
 
-    }//GEN-LAST:event_dateChooserPrijazdPropertyChange
-
-    private void dateChooserOdjazdPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dateChooserOdjazdPropertyChange
+    private void dcOdjazdPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dcOdjazdPropertyChange
         this.skontrolovatCenu();
-    }//GEN-LAST:event_dateChooserOdjazdPropertyChange
+    }//GEN-LAST:event_dcOdjazdPropertyChange
 
     @Override
     public void saveModel() {
         Zakaznik zakaznik = (Zakaznik) comboBoxZakaznik.getSelectedItem();
-        Date datumPrijazdu = dateChooserPrijazd.getDate();
-        Date datumOdjazdu = dateChooserOdjazd.getDate();
+        Date datumPrijazdu = dcPrijazd.getDate();
+        Date datumOdjazdu = dcOdjazd.getDate();
         int pocetDni = Utils.DAYS_BETWEEN(datumPrijazdu, datumOdjazdu);
         if (this.novy) {
             logger.info(String.format("Ukladam novu rezervaciu"));
@@ -354,8 +343,8 @@ public class RezervaciePane extends javax.swing.JPanel implements IViewRefresh, 
             JOptionPane.showMessageDialog(this, "Zoznam izieb je prazdny", "ERROR", JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        Date datumPrijazdu = dateChooserPrijazd.getDate();
-        Date datumOdjazdu = dateChooserOdjazd.getDate();
+        Date datumPrijazdu = dcPrijazd.getDate();
+        Date datumOdjazdu = dcOdjazd.getDate();
         int pocetDni = Utils.DAYS_BETWEEN(datumPrijazdu, datumOdjazdu);
         if (pocetDni < 1) {
             String msg = "Chybne zadane datum prijazdu alebo datum odjazdu.";
@@ -380,10 +369,12 @@ public class RezervaciePane extends javax.swing.JPanel implements IViewRefresh, 
             this.clearRezervacia();
             return;
         }
+        this.novy = false;
+        this.resetBtns();
         Rezervacia r = listRezervacie.getSelectedValue();
         comboBoxZakaznik.setSelectedItem(r.getZakaznik());
-        dateChooserPrijazd.setDate(r.getPrijazd());
-        dateChooserOdjazd.setDate(r.getOdjazd());
+        dcPrijazd.setDate(r.getPrijazd());
+        dcOdjazd.setDate(r.getOdjazd());
         labelDataPocetIzieb.setText(String.valueOf(r.getIzby().size()));
         labelDataCena.setText(String.format("%.02f", r.getCena()));
         if (r.getZlava() != null) {
@@ -391,7 +382,22 @@ public class RezervaciePane extends javax.swing.JPanel implements IViewRefresh, 
         }
         btnStatusRezervacie.setVisible(true);
         this.naplnTabulkuIzieb(r);
-        this.novy = false;
+    }
+
+    private void resetBtns() {
+        if (this.novy == false) {
+            comboBoxZakaznik.setEnabled(false);
+            btnPridatIzbu.setEnabled(false);
+            btnUlozit.setEnabled(false);
+            dcOdjazd.setEnabled(false);
+            dcPrijazd.setEnabled(false);
+        } else {
+            comboBoxZakaznik.setEnabled(true);
+            btnPridatIzbu.setEnabled(true);
+            btnUlozit.setEnabled(true);
+            dcOdjazd.setEnabled(true);
+            dcPrijazd.setEnabled(true);
+        }
     }
 
     private void naplnTabulkuIzieb(Rezervacia rezervacia) {
@@ -421,12 +427,10 @@ public class RezervaciePane extends javax.swing.JPanel implements IViewRefresh, 
     private void resetTime() {
         Calendar cal = Calendar.getInstance();
         cal.setTime(Database.getInstance().getAppTime());
-        //dateChooserPrijazd.setDate(Database.getInstance().getAppTime());
         cal.add(Calendar.DATE, 1);
-        //dateChooserOdjazd.setDate(cal.getTime());
-        dateChooserOdjazd.setCalendar(null);
-        dateChooserPrijazd.setCalendar(null);
-        dateChooserOdjazd.setMinSelectableDate(cal.getTime());
+        dcOdjazd.setCalendar(null);
+        dcPrijazd.setCalendar(null);
+        dcOdjazd.setMinSelectableDate(cal.getTime());
     }
 
     private void nastavComboBoxZakaznikov() {
@@ -439,8 +443,8 @@ public class RezervaciePane extends javax.swing.JPanel implements IViewRefresh, 
 
     @Override
     public void refreshPane() {
-        dateChooserOdjazd.setMinSelectableDate(Database.getInstance().getAppTime());
-        dateChooserPrijazd.setMinSelectableDate(Database.getInstance().getAppTime());
+        dcOdjazd.setMinSelectableDate(Database.getInstance().getAppTime());
+        dcPrijazd.setMinSelectableDate(Database.getInstance().getAppTime());
         this.refreshModel(listRezervacie, this.controller.getRezervacie());
         this.nastavComboBoxZakaznikov();
         this.controller.clearTempRezervacia();
@@ -450,12 +454,11 @@ public class RezervaciePane extends javax.swing.JPanel implements IViewRefresh, 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnPridat;
     private javax.swing.JButton btnPridatIzbu;
-    private javax.swing.JButton btnSkontrolovat;
     private javax.swing.JButton btnStatusRezervacie;
     private javax.swing.JButton btnUlozit;
     private javax.swing.JComboBox<Zakaznik> comboBoxZakaznik;
-    private com.toedter.calendar.JDateChooser dateChooserOdjazd;
-    private com.toedter.calendar.JDateChooser dateChooserPrijazd;
+    private com.toedter.calendar.JDateChooser dcOdjazd;
+    private com.toedter.calendar.JDateChooser dcPrijazd;
     private javax.swing.JLabel labelCena;
     private javax.swing.JLabel labelCenaEur;
     private javax.swing.JLabel labelDataCena;

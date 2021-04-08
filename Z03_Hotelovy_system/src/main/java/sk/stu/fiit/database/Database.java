@@ -6,6 +6,7 @@ import java.util.Date;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sk.stu.fiit.model.Izba;
+import sk.stu.fiit.model.Platba;
 import sk.stu.fiit.model.Rezervacia;
 import sk.stu.fiit.model.Sluzba;
 import sk.stu.fiit.model.Ubytovanie;
@@ -26,6 +27,9 @@ public class Database implements Serializable {
     private ArrayList<Rezervacia> rezervacie = new ArrayList<>();
     private ArrayList<Izba> izby = new ArrayList<>();
     private ArrayList<Ubytovanie> ubytovania = new ArrayList<>();
+    private ArrayList<Platba> platby = new ArrayList<>();
+    private int rezervacieUUID = 1;
+    private int ubytovaniaUUID = 1;
 
     private Database() {
     }
@@ -93,6 +97,22 @@ public class Database implements Serializable {
 
     public void setUbytovania(ArrayList<Ubytovanie> ubytovania) {
         this.ubytovania = ubytovania;
+    }
+
+    public ArrayList<Platba> getPlatby() {
+        return platby;
+    }
+
+    public void setPlatby(ArrayList<Platba> platby) {
+        this.platby = platby;
+    }
+
+    public int getAndSetRezervacieUUID() {
+        return rezervacieUUID++;
+    }
+
+    public int getAndSetUbytovaniaUUID() {
+        return ubytovaniaUUID++;
     }
 
 }

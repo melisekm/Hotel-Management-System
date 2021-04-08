@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import sk.stu.fiit.database.Database;
 import sk.stu.fiit.model.Izba;
+import sk.stu.fiit.model.Platba;
 import sk.stu.fiit.model.Rezervacia;
 import sk.stu.fiit.model.Sluzba;
 import sk.stu.fiit.model.Ubytovanie;
@@ -46,6 +47,10 @@ public abstract class Controller {
 
     public ArrayList<Ubytovanie> getUbytovania() {
         return Database.getInstance().getUbytovania();
+    }
+
+    public ArrayList<Platba> getPlatby() {
+        return Database.getInstance().getPlatby();
     }
 
 }

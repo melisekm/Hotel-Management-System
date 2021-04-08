@@ -18,6 +18,12 @@ public class Zlava implements Serializable{
         this.percento = percento;
     }
 
+    public Zlava(Zlava other) {
+        this.nazov = other.nazov;
+        this.popis  = other.popis;
+        this.percento = other.percento;
+    }
+
     public String getNazov() {
         return nazov;
     }

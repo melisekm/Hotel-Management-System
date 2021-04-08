@@ -8,10 +8,11 @@ import java.util.Date;
  *
  * @author Martin Melisek
  */
-public class Ubytovanie implements Serializable{
+public class Ubytovanie implements IZaplatitelne, Serializable {
 
     private String id;
     private ArrayList<Izba> izby;
+    private Zakaznik zakaznik;
     private Date prijazd;
     private Date odjazd;
     private int pocetDni;
@@ -19,15 +20,30 @@ public class Ubytovanie implements Serializable{
     private ArrayList<Sluzba> sluzby;
     private Platba platba;
 
-    public Ubytovanie(String Id, ArrayList<Izba> izby, Date datumOd, Date datumDo, int pocetDni, double cena, ArrayList<Sluzba> sluzby, Platba platba) {
+    public Ubytovanie(String Id, ArrayList<Izba> izby, Zakaznik zakaznik, Date datumOd, Date datumDo, int pocetDni, double cena, ArrayList<Sluzba> sluzby, Platba platba) {
         this.id = Id;
         this.izby = izby;
+        this.zakaznik = zakaznik;
         this.prijazd = datumOd;
         this.odjazd = datumDo;
         this.pocetDni = pocetDni;
         this.cena = cena;
         this.sluzby = sluzby;
         this.platba = platba;
+    }
+
+    @Override
+    public void zaplat(Platba platba) {
+        this.platba = platba;
+    }
+
+    @Override
+    public Zakaznik getZakaznik() {
+        return zakaznik;
+    }
+
+    public void setZakaznik(Zakaznik zakaznik) {
+        this.zakaznik = zakaznik;
     }
 
     public String getId() {
