@@ -18,8 +18,14 @@ public abstract class Controller {
     public ArrayList<Izba> getDostupneIzby(Date prijazd, Date odjazd) {
         ArrayList<Izba> izby = new ArrayList<>(this.getIzby());
         for (Rezervacia rezervacia : this.getRezervacie()) {
-            //TODO skontrolovat inerval
+            boolean datesOverlap = rezervacia.getPrijazd().compareTo(odjazd) <= 0 && rezervacia.getOdjazd().compareTo(prijazd) >= 0;
+            if (datesOverlap) {
+                for (Izba izba : rezervacia.getIzby()) {
+                    izby.remove(izba);
+                }
+            }
         }
+        return izby;
     }
 
     public ArrayList<Zakaznik> getZakaznici() {

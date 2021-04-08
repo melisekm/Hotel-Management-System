@@ -1,5 +1,6 @@
 package sk.stu.fiit.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -7,7 +8,7 @@ import java.util.Date;
  *
  * @author Martin Melisek
  */
-public class Ubytovanie {
+public class Ubytovanie implements Serializable{
 
     private String id;
     private ArrayList<Izba> izby;

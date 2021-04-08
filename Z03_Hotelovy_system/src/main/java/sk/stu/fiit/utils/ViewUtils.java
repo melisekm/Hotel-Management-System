@@ -4,7 +4,6 @@ import java.awt.Component;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import static javax.swing.JOptionPane.showMessageDialog;
 import javax.swing.text.JTextComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -71,7 +70,6 @@ public class ViewUtils {
 
     public static void clearLabels(JLabel... labels) {
         clearLabels("", labels);
-
     }
 
     public static void clearLabels(String defaultValue, JLabel... labels) {

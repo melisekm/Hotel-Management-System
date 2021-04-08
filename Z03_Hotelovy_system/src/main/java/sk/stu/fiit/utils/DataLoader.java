@@ -5,7 +5,9 @@ import javax.swing.Icon;
 import sk.stu.fiit.database.Database;
 import sk.stu.fiit.model.Izba;
 import sk.stu.fiit.model.Pohlavie;
+import sk.stu.fiit.model.Rezervacia;
 import sk.stu.fiit.model.Sluzba;
+import sk.stu.fiit.model.StatusRezervacie;
 import sk.stu.fiit.model.Zakaznik;
 
 /**
@@ -21,10 +23,11 @@ public class DataLoader {
         db.getSluzby().add(new Sluzba("Raňajky", "Čas: 8:00\nširoký výber\nmožnosť objednávky na izbu", 10));
         db.getSluzby().add(new Sluzba("Wi-Fi", "Vysoká rýchlosť\nneobmedzené pripojenie\nheslo na recepcii", 5));
         db.getSluzby().add(new Sluzba("Masáž", "Čas: 10:00/16:00\nmožnosť výberu maséra\nkaždý deň", 25));
-        
+
         db.getIzby().add(new Izba("150", "TwinBed", "Dvojpostelova", 70, new ArrayList<Icon>(), 2));
         db.getIzby().add(new Izba("151", "SingleBed", "jednopostelova", 60, new ArrayList<Icon>(), 1));
         db.getIzby().add(new Izba("152", "Prezidentska", "apartman", 140, new ArrayList<Icon>(), 2));
+
     }
 
     private DataLoader() {

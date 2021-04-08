@@ -1,10 +1,12 @@
 package sk.stu.fiit.model;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Martin Melisek
  */
-public class ZlavaFactory {
+public class ZlavaFactory implements Serializable{
 
     public Zlava getZlava(String nazov) {
         if ("7_D_GTE".equals(nazov)) {

@@ -1,10 +1,12 @@
 package sk.stu.fiit.model;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Martin Melisek
  */
-public enum StatusRezervacie {
+public enum StatusRezervacie implements Serializable {
     VYTVORENA {
         @Override
         public String toString() {

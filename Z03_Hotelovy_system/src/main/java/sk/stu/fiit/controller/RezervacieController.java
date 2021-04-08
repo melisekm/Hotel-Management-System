@@ -1,9 +1,7 @@
 package sk.stu.fiit.controller;
 
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
-import sk.stu.fiit.exceptions.InvalidReservationDateException;
 import sk.stu.fiit.model.Izba;
 import sk.stu.fiit.model.Rezervacia;
 import sk.stu.fiit.model.StatusRezervacie;
@@ -18,7 +16,7 @@ import sk.stu.fiit.model.ZlavaFactory;
 public class RezervacieController extends Controller {
 
     private ArrayList<Izba> pridavaneIzby = new ArrayList<>();
-    private double priebeznaCena = 0;
+    private double priebeznaCena;
     private Zlava zlava;
 
     public void saveRezervacia(Zakaznik zakaznik, Date datumPrijazdu, Date datumOdjazdu, int pocetDni) {

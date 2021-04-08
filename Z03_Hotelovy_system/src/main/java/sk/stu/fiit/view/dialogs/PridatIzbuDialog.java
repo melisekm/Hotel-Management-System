@@ -23,11 +23,11 @@ public class PridatIzbuDialog extends javax.swing.JDialog {
 
     public PridatIzbuDialog(java.awt.Frame parent, boolean modal, RezervacieController controller, Date prijazd, Date odjazd) {
         super(parent, modal);
+        this.parent = (JFrame) parent;
+        this.controller = controller;
         this.prijazd = prijazd;
         this.odjazd = odjazd;
         initComponents();
-        this.parent = (JFrame) parent;
-        this.controller = controller;
         this.naplnTabulku();
     }
 

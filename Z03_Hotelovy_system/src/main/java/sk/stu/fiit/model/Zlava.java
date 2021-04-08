@@ -1,10 +1,12 @@
 package sk.stu.fiit.model;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Martin Melisek
  */
-public class Zlava {
+public class Zlava implements Serializable{
 
     private String nazov;
     private String popis;
