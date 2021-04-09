@@ -28,6 +28,14 @@ public abstract class Controller {
                 }
             }
         }
+        for (Ubytovanie ubytovanie : this.getUbytovania()) {
+            boolean datesOverlap = ubytovanie.getPrijazd().compareTo(odjazd) <= 0 && ubytovanie.getOdjazd().compareTo(prijazd) >= 0;
+            if (datesOverlap) {
+                for (Izba izba : ubytovanie.getIzby()) {
+                    izby.remove(izba);
+                }
+            }
+        }
         return izby;
     }
 

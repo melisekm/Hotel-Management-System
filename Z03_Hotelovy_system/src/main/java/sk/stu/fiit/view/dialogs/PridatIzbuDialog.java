@@ -5,7 +5,7 @@ import java.util.Date;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import sk.stu.fiit.controller.RezervacieController;
+import sk.stu.fiit.controller.BookingController;
 import sk.stu.fiit.model.Izba;
 import sk.stu.fiit.utils.ViewUtils;
 
@@ -15,13 +15,13 @@ import sk.stu.fiit.utils.ViewUtils;
  */
 public class PridatIzbuDialog extends javax.swing.JDialog {
 
-    private RezervacieController controller;
+    private BookingController controller;
     private Izba zvolenaIzba;
     private JFrame parent;
     private Date prijazd;
     private Date odjazd;
 
-    public PridatIzbuDialog(java.awt.Frame parent, boolean modal, RezervacieController controller, Date prijazd, Date odjazd) {
+    public PridatIzbuDialog(java.awt.Frame parent, boolean modal, BookingController controller, Date prijazd, Date odjazd) {
         super(parent, modal);
         this.parent = (JFrame) parent;
         this.controller = controller;

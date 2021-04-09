@@ -420,7 +420,7 @@ public class RezervaciePane extends javax.swing.JPanel implements IViewRefresh, 
             model.setRowCount(0);
             btnStatusRezervacie.setVisible(false);
         }
-        this.controller.clearTempRezervacia();
+        this.controller.clearTempBooking();
         this.updateLabels();
     }
 
@@ -447,7 +447,7 @@ public class RezervaciePane extends javax.swing.JPanel implements IViewRefresh, 
         dcPrijazd.setMinSelectableDate(Database.getInstance().getAppTime());
         this.refreshModel(listRezervacie, this.controller.getRezervacie());
         this.nastavComboBoxZakaznikov();
-        this.controller.clearTempRezervacia();
+        this.controller.clearTempBooking();
     }
 
 

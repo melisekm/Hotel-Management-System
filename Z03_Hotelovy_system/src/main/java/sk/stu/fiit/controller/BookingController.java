@@ -61,7 +61,7 @@ public class BookingController extends Controller {
         return true;
     }
 
-    public void clearTempRezervacia() {
+    public void clearTempBooking() {
         this.pridavaneIzby.clear();
         this.priebeznaCena = 0;
         this.zlava = null;

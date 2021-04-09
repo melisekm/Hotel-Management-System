@@ -19,7 +19,7 @@ public class Main {
 
     private final static String testovaciaDB = "C:\\Users\\melis\\Documents\\!VAVA\\94-330.dbZ03";
 
-    private static boolean loadDemoDB = true;
+    private static boolean loadDemoDB = false;
 
     static {
 

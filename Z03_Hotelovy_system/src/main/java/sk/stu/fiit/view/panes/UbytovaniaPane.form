@@ -32,6 +32,9 @@
                 <Property name="text" type="java.lang.String" value="Vytvori&#x165; na z&#xe1;klade rezerv&#xe1;cie"/>
                 <Property name="horizontalAlignment" type="int" value="0"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="checkBNaZakladeRMouseReleased"/>
+              </Events>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
                   <AbsoluteConstraints x="30" y="30" width="280" height="-1"/>
@@ -59,6 +62,7 @@
                       <Connection code="new DefaultListModel&lt;Rezervacia&gt;()" type="code"/>
                     </Property>
                     <Property name="selectionMode" type="int" value="0"/>
+                    <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Rezervacia&gt;"/>
@@ -323,10 +327,8 @@
     <Component class="com.toedter.calendar.JDateChooser" name="dcPrijazd">
       <Properties>
         <Property name="dateFormatString" type="java.lang.String" value="dd.MM.yyyy"/>
+        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
-      <Events>
-        <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="dcPrijazdPropertyChange"/>
-      </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
           <AbsoluteConstraints x="140" y="120" width="250" height="40"/>

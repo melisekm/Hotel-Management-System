@@ -28,7 +28,7 @@ public class RezervacieController extends BookingController {
         ArrayList izby = new ArrayList<>(this.pridavaneIzby);
         Zlava zlava = null;
         if (this.zlava != null) {
-            zlava = this.zlava;
+            zlava = new Zlava(this.zlava);
         }
         return new Rezervacia(id, zakaznik, izby, datumPrijazdu, datumOdjazdu, pocetDni, this.priebeznaCena, StatusRezervacie.VYTVORENA, zlava);
     }
