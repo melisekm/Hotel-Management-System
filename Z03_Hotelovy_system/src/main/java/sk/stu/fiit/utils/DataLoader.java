@@ -5,9 +5,7 @@ import javax.swing.Icon;
 import sk.stu.fiit.database.Database;
 import sk.stu.fiit.model.Izba;
 import sk.stu.fiit.model.Pohlavie;
-import sk.stu.fiit.model.Rezervacia;
 import sk.stu.fiit.model.Sluzba;
-import sk.stu.fiit.model.StatusRezervacie;
 import sk.stu.fiit.model.Zakaznik;
 
 /**

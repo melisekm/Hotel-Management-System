@@ -150,7 +150,7 @@ public class RezervaciePane extends javax.swing.JPanel implements IViewRefresh, 
                 btnPridatIzbuMouseReleased(evt);
             }
         });
-        add(btnPridatIzbu, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 280, 270, -1));
+        add(btnPridatIzbu, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 290, 270, -1));
 
         comboBoxZakaznik.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         comboBoxZakaznik.setModel(new DefaultComboBoxModel<Zakaznik>());

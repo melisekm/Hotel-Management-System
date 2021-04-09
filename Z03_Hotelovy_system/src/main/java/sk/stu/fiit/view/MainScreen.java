@@ -38,11 +38,11 @@ public class MainScreen extends javax.swing.JFrame {
 
         cardPane = new javax.swing.JPanel();
         domovPane = new sk.stu.fiit.view.panes.DomovPane();
-        ubytovaniaPane = new sk.stu.fiit.view.panes.UbytovaniaPane();
         zakazniciPane = new sk.stu.fiit.view.panes.ZakazniciPane();
         sluzbyPane = new sk.stu.fiit.view.panes.SluzbyPane();
         rezervaciePane = new sk.stu.fiit.view.panes.RezervaciePane();
         izbyPane = new sk.stu.fiit.view.panes.IzbyPane();
+        ubytovaniaPane = new sk.stu.fiit.view.panes.UbytovaniaPane();
         menuPane = new javax.swing.JPanel();
         btnDomov = new javax.swing.JButton();
         btnZakaznici = new javax.swing.JButton();
@@ -52,7 +52,7 @@ public class MainScreen extends javax.swing.JFrame {
         btnUbytovania = new javax.swing.JButton();
         btnIzby = new javax.swing.JButton();
         btnSluzby = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
+        grayPane = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Hotelový systém");
@@ -65,23 +65,11 @@ public class MainScreen extends javax.swing.JFrame {
         cardPane.setPreferredSize(new java.awt.Dimension(1200, 530));
         cardPane.setLayout(new java.awt.CardLayout());
         cardPane.add(domovPane, "DOMOV");
-
-        javax.swing.GroupLayout ubytovaniaPaneLayout = new javax.swing.GroupLayout(ubytovaniaPane);
-        ubytovaniaPane.setLayout(ubytovaniaPaneLayout);
-        ubytovaniaPaneLayout.setHorizontalGroup(
-            ubytovaniaPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1200, Short.MAX_VALUE)
-        );
-        ubytovaniaPaneLayout.setVerticalGroup(
-            ubytovaniaPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 530, Short.MAX_VALUE)
-        );
-
-        cardPane.add(ubytovaniaPane, "UBYTOVANIA");
         cardPane.add(zakazniciPane, "ZAKAZNICI");
         cardPane.add(sluzbyPane, "SLUZBY");
         cardPane.add(rezervaciePane, "REZERVACIE");
         cardPane.add(izbyPane, "IZBY");
+        cardPane.add(ubytovaniaPane, "UBYTOVANIA");
 
         getContentPane().add(cardPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 0, -1, -1));
 
@@ -211,20 +199,20 @@ public class MainScreen extends javax.swing.JFrame {
 
         getContentPane().add(menuPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 120, 420));
 
-        jPanel1.setBackground(new java.awt.Color(153, 153, 153));
+        grayPane.setBackground(new java.awt.Color(153, 153, 153));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout grayPaneLayout = new javax.swing.GroupLayout(grayPane);
+        grayPane.setLayout(grayPaneLayout);
+        grayPaneLayout.setHorizontalGroup(
+            grayPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 120, Short.MAX_VALUE)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        grayPaneLayout.setVerticalGroup(
+            grayPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 120, Short.MAX_VALUE)
         );
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 420, 120, 120));
+        getContentPane().add(grayPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 420, 120, 120));
 
         pack();
         setLocationRelativeTo(null);
@@ -334,8 +322,8 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JButton btnZakaznici;
     private javax.swing.JPanel cardPane;
     private sk.stu.fiit.view.panes.DomovPane domovPane;
+    private javax.swing.JPanel grayPane;
     private sk.stu.fiit.view.panes.IzbyPane izbyPane;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel labelCas;
     private javax.swing.JLabel labelDatum;
     private javax.swing.JPanel menuPane;

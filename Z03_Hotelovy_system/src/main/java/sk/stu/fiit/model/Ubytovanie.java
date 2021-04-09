@@ -1,6 +1,7 @@
 package sk.stu.fiit.model;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -19,17 +20,20 @@ public class Ubytovanie implements IZaplatitelne, Serializable {
     private double cena;
     private ArrayList<Sluzba> sluzby;
     private Platba platba;
+    private Rezervacia rezervacia;
 
-    public Ubytovanie(String Id, ArrayList<Izba> izby, Zakaznik zakaznik, Date datumOd, Date datumDo, int pocetDni, double cena, ArrayList<Sluzba> sluzby, Platba platba) {
-        this.id = Id;
-        this.izby = izby;
-        this.zakaznik = zakaznik;
-        this.prijazd = datumOd;
-        this.odjazd = datumDo;
-        this.pocetDni = pocetDni;
-        this.cena = cena;
-        this.sluzby = sluzby;
-        this.platba = platba;
+    @Override
+    public String toString() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+        return id + " - " + sdf.format(this.prijazd) + " - " + sdf.format(this.odjazd);
+    }
+
+    public Rezervacia getRezervacia() {
+        return rezervacia;
+    }
+
+    public void setRezervacia(Rezervacia rezervacia) {
+        this.rezervacia = rezervacia;
     }
 
     @Override

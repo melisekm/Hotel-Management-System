@@ -1,16 +1,29 @@
 package sk.stu.fiit.view.panes;
 
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import sk.stu.fiit.controller.UbytovaniaController;
+import sk.stu.fiit.model.Rezervacia;
+import sk.stu.fiit.model.Ubytovanie;
+import sk.stu.fiit.model.Zakaznik;
+import sk.stu.fiit.utils.ViewUtils;
+import sk.stu.fiit.view.ICRUDPane;
 import sk.stu.fiit.view.IViewRefresh;
 
 /**
  *
  * @author Martin Melisek
  */
-public class UbytovaniaPane extends javax.swing.JPanel implements IViewRefresh{
+public class UbytovaniaPane extends javax.swing.JPanel implements IViewRefresh, ICRUDPane {
 
-    /**
-     * Creates new form UbytovaniaPane
-     */
+    private static final Logger logger = LoggerFactory.getLogger(UbytovaniaPane.class);
+
+    private UbytovaniaController controller = new UbytovaniaController();
+
+    private boolean novy = true;
+
     public UbytovaniaPane() {
         initComponents();
     }
@@ -24,17 +37,295 @@ public class UbytovaniaPane extends javax.swing.JPanel implements IViewRefresh{
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+        dialogPridat = new javax.swing.JDialog();
+        dialogPridatMainPane = new javax.swing.JPanel();
+        checkBNaZakladeR = new javax.swing.JCheckBox();
+        scrollPaneRez = new javax.swing.JScrollPane();
+        listRezervacii = new javax.swing.JList<>();
+        btnDialogPridatOk = new javax.swing.JButton();
+        labelRezervacie = new javax.swing.JLabel();
+        scrollPaneRezervacie = new javax.swing.JScrollPane();
+        listUbytovania = new javax.swing.JList<>();
+        labelZakaznik = new javax.swing.JLabel();
+        labelDatumOdjazdu = new javax.swing.JLabel();
+        labelDatumPrijazdu = new javax.swing.JLabel();
+        btnUlozit = new javax.swing.JButton();
+        labelDataCena = new javax.swing.JLabel();
+        labelRezervacia = new javax.swing.JLabel();
+        labelCena = new javax.swing.JLabel();
+        labelPridaneIzby = new javax.swing.JLabel();
+        btnPridatIzbu = new javax.swing.JButton();
+        comboBoxZakaznik = new javax.swing.JComboBox<>();
+        dcOdjazd = new com.toedter.calendar.JDateChooser();
+        dcPrijazd = new com.toedter.calendar.JDateChooser();
+        labelZlava = new javax.swing.JLabel();
+        labelDataPocetIzieb = new javax.swing.JLabel();
+        btnZaplatit = new javax.swing.JButton();
+        labelDataZlava = new javax.swing.JLabel();
+        scrollPaneIzby = new javax.swing.JScrollPane();
+        tableIzby = new javax.swing.JTable();
+        labelPocetIzieb = new javax.swing.JLabel();
+        btnPridat = new javax.swing.JButton();
+        labelCenaEur = new javax.swing.JLabel();
+        labelZlavaPercent1 = new javax.swing.JLabel();
+        separatorIzieb = new javax.swing.JSeparator();
+        separatorCena = new javax.swing.JSeparator();
+        separatorZlava = new javax.swing.JSeparator();
+        btnPridatSluzbu = new javax.swing.JButton();
+
+        dialogPridat.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        dialogPridat.setTitle("Pridat ubytovanie");
+        dialogPridat.setModal(true);
+        dialogPridat.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        dialogPridatMainPane.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        checkBNaZakladeR.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        checkBNaZakladeR.setText("Vytvoriť na základe rezervácie");
+        checkBNaZakladeR.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        dialogPridatMainPane.add(checkBNaZakladeR, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 280, -1));
+
+        listRezervacii.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        listRezervacii.setModel(new DefaultListModel<Rezervacia>());
+        listRezervacii.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        scrollPaneRez.setViewportView(listRezervacii);
+
+        dialogPridatMainPane.add(scrollPaneRez, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 280, 200));
+
+        btnDialogPridatOk.setBackground(new java.awt.Color(102, 102, 102));
+        btnDialogPridatOk.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnDialogPridatOk.setForeground(new java.awt.Color(255, 255, 255));
+        btnDialogPridatOk.setText("OK");
+        btnDialogPridatOk.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btnDialogPridatOkMouseReleased(evt);
+            }
+        });
+        dialogPridatMainPane.add(btnDialogPridatOk, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 270, 110, -1));
+
+        dialogPridat.getContentPane().add(dialogPridatMainPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 340, 320));
+
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        labelRezervacie.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        labelRezervacie.setText("Ubytovania");
+        add(labelRezervacie, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 20, 130, -1));
+
+        listUbytovania.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        listUbytovania.setModel(new DefaultListModel<Ubytovanie>());
+        listUbytovania.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        listUbytovania.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                listUbytovaniaMouseReleased(evt);
+            }
+        });
+        scrollPaneRezervacie.setViewportView(listUbytovania);
+
+        add(scrollPaneRezervacie, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 60, 260, 340));
+
+        labelZakaznik.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        labelZakaznik.setText("Zákazník:");
+        add(labelZakaznik, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 90, 40));
+
+        labelDatumOdjazdu.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        labelDatumOdjazdu.setText("Dátum odjazdu:");
+        add(labelDatumOdjazdu, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, 130, 40));
+
+        labelDatumPrijazdu.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        labelDatumPrijazdu.setText("Dátum príjazdu:");
+        add(labelDatumPrijazdu, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 130, 40));
+
+        btnUlozit.setBackground(new java.awt.Color(51, 153, 0));
+        btnUlozit.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnUlozit.setForeground(new java.awt.Color(255, 255, 255));
+        btnUlozit.setText("ULOŽIŤ");
+        btnUlozit.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btnUlozitMouseReleased(evt);
+            }
+        });
+        add(btnUlozit, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 410, 250, -1));
+
+        labelDataCena.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        labelDataCena.setText("1 500.00");
+        add(labelDataCena, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 340, 100, 40));
+
+        labelRezervacia.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        labelRezervacia.setText("Ubytovanie");
+        add(labelRezervacia, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, -1));
+
+        labelCena.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        labelCena.setText("Cena:");
+        add(labelCena, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 340, 90, 40));
+
+        labelPridaneIzby.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        labelPridaneIzby.setText("Pridané izby");
+        add(labelPridaneIzby, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 20, 110, 40));
+
+        btnPridatIzbu.setBackground(new java.awt.Color(102, 102, 255));
+        btnPridatIzbu.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnPridatIzbu.setForeground(new java.awt.Color(255, 255, 255));
+        btnPridatIzbu.setText("Pridať izbu");
+        btnPridatIzbu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btnPridatIzbuMouseReleased(evt);
+            }
+        });
+        add(btnPridatIzbu, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 290, 270, -1));
+
+        comboBoxZakaznik.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        comboBoxZakaznik.setModel(new DefaultComboBoxModel<Zakaznik>());
+        add(comboBoxZakaznik, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 60, 250, 40));
+
+        dcOdjazd.setDateFormatString("dd.MM.yyyy");
+        dcOdjazd.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                dcOdjazdPropertyChange(evt);
+            }
+        });
+        add(dcOdjazd, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 180, 250, 40));
+
+        dcPrijazd.setDateFormatString("dd.MM.yyyy");
+        dcPrijazd.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                dcPrijazdPropertyChange(evt);
+            }
+        });
+        add(dcPrijazd, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 120, 250, 40));
+
+        labelZlava.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        labelZlava.setText("Zľava:");
+        add(labelZlava, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 290, 60, 40));
+
+        labelDataPocetIzieb.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        labelDataPocetIzieb.setText("7");
+        add(labelDataPocetIzieb, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 240, 60, 40));
+
+        btnZaplatit.setBackground(new java.awt.Color(102, 102, 255));
+        btnZaplatit.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnZaplatit.setForeground(new java.awt.Color(255, 255, 255));
+        btnZaplatit.setText("ZAPLATIŤ");
+        btnZaplatit.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btnZaplatitMouseReleased(evt);
+            }
+        });
+        add(btnZaplatit, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 410, 250, -1));
+
+        labelDataZlava.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        labelDataZlava.setText("15");
+        add(labelDataZlava, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 290, 250, 40));
+
+        tableIzby.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Kategória", "Izba", "Cena"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tableIzby.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        scrollPaneIzby.setViewportView(tableIzby);
+
+        add(scrollPaneIzby, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 60, 270, 210));
+
+        labelPocetIzieb.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        labelPocetIzieb.setText("Počet izieb:");
+        add(labelPocetIzieb, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, 90, 40));
+
+        btnPridat.setBackground(new java.awt.Color(102, 102, 255));
+        btnPridat.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnPridat.setForeground(new java.awt.Color(255, 255, 255));
+        btnPridat.setText("PRIDAŤ");
+        btnPridat.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btnPridatMouseReleased(evt);
+            }
+        });
+        add(btnPridat, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 410, 260, -1));
+
+        labelCenaEur.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        labelCenaEur.setText("€");
+        add(labelCenaEur, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 340, 20, 40));
+
+        labelZlavaPercent1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        labelZlavaPercent1.setText("%");
+        add(labelZlavaPercent1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 290, -1, 40));
+        add(separatorIzieb, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 270, 390, 20));
+        add(separatorCena, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 370, 390, 20));
+        add(separatorZlava, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 320, 390, 20));
+
+        btnPridatSluzbu.setBackground(new java.awt.Color(102, 102, 255));
+        btnPridatSluzbu.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnPridatSluzbu.setForeground(new java.awt.Color(255, 255, 255));
+        btnPridatSluzbu.setText("Pridať službu");
+        btnPridatSluzbu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btnPridatSluzbuMouseReleased(evt);
+            }
+        });
+        add(btnPridatSluzbu, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 340, 270, -1));
     }// </editor-fold>//GEN-END:initComponents
+
+    private void listUbytovaniaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listUbytovaniaMouseReleased
+
+    }//GEN-LAST:event_listUbytovaniaMouseReleased
+
+    private void btnUlozitMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUlozitMouseReleased
+
+    }//GEN-LAST:event_btnUlozitMouseReleased
+
+    private void btnPridatIzbuMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPridatIzbuMouseReleased
+
+    }//GEN-LAST:event_btnPridatIzbuMouseReleased
+
+    private void dcOdjazdPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dcOdjazdPropertyChange
+
+    }//GEN-LAST:event_dcOdjazdPropertyChange
+
+    private void dcPrijazdPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dcPrijazdPropertyChange
+
+    }//GEN-LAST:event_dcPrijazdPropertyChange
+
+    private void btnZaplatitMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnZaplatitMouseReleased
+
+    }//GEN-LAST:event_btnZaplatitMouseReleased
+
+    private void btnPridatMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPridatMouseReleased
+        ViewUtils.showDialog(dialogPridat);
+    }//GEN-LAST:event_btnPridatMouseReleased
+
+    private void btnPridatSluzbuMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPridatSluzbuMouseReleased
+       
+    }//GEN-LAST:event_btnPridatSluzbuMouseReleased
+
+    private void btnDialogPridatOkMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDialogPridatOkMouseReleased
+        
+    }//GEN-LAST:event_btnDialogPridatOkMouseReleased
+    
+    @Override
+    public void setModel() {
+        System.out.println("TATO METODA NIEJE IMPLEMENTOVANA"); //TODO
+    }
+
+    @Override
+    public boolean validateFields() {
+        System.out.println("TATO METODA NIEJE IMPLEMENTOVANA"); //TODO
+        return false;
+    }
+
+    @Override
+    public void saveModel() {
+        System.out.println("TATO METODA NIEJE IMPLEMENTOVANA"); //TODO
+    }
 
     @Override
     public void refreshPane() {
@@ -42,7 +333,42 @@ public class UbytovaniaPane extends javax.swing.JPanel implements IViewRefresh{
     }
 
 
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnDialogPridatOk;
+    private javax.swing.JButton btnPridat;
+    private javax.swing.JButton btnPridatIzbu;
+    private javax.swing.JButton btnPridatSluzbu;
+    private javax.swing.JButton btnUlozit;
+    private javax.swing.JButton btnZaplatit;
+    private javax.swing.JCheckBox checkBNaZakladeR;
+    private javax.swing.JComboBox<Zakaznik> comboBoxZakaznik;
+    private com.toedter.calendar.JDateChooser dcOdjazd;
+    private com.toedter.calendar.JDateChooser dcPrijazd;
+    private javax.swing.JDialog dialogPridat;
+    private javax.swing.JPanel dialogPridatMainPane;
+    private javax.swing.JLabel labelCena;
+    private javax.swing.JLabel labelCenaEur;
+    private javax.swing.JLabel labelDataCena;
+    private javax.swing.JLabel labelDataPocetIzieb;
+    private javax.swing.JLabel labelDataZlava;
+    private javax.swing.JLabel labelDatumOdjazdu;
+    private javax.swing.JLabel labelDatumPrijazdu;
+    private javax.swing.JLabel labelPocetIzieb;
+    private javax.swing.JLabel labelPridaneIzby;
+    private javax.swing.JLabel labelRezervacia;
+    private javax.swing.JLabel labelRezervacie;
+    private javax.swing.JLabel labelZakaznik;
+    private javax.swing.JLabel labelZlava;
+    private javax.swing.JLabel labelZlavaPercent1;
+    private javax.swing.JList<Rezervacia> listRezervacii;
+    private javax.swing.JList<Ubytovanie> listUbytovania;
+    private javax.swing.JScrollPane scrollPaneIzby;
+    private javax.swing.JScrollPane scrollPaneRez;
+    private javax.swing.JScrollPane scrollPaneRezervacie;
+    private javax.swing.JSeparator separatorCena;
+    private javax.swing.JSeparator separatorIzieb;
+    private javax.swing.JSeparator separatorZlava;
+    private javax.swing.JTable tableIzby;
     // End of variables declaration//GEN-END:variables
+
 }

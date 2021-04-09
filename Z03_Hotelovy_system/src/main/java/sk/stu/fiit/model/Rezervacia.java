@@ -1,6 +1,7 @@
 package sk.stu.fiit.model;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -8,7 +9,7 @@ import java.util.Date;
  *
  * @author Martin Melisek
  */
-public class Rezervacia implements IZaplatitelne, Serializable{
+public class Rezervacia implements IZaplatitelne, Serializable {
 
     private String id;
     private Zakaznik zakaznik;
@@ -48,7 +49,8 @@ public class Rezervacia implements IZaplatitelne, Serializable{
 
     @Override
     public String toString() {
-        return id + " - " + status.toString();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+        return id + " - " + status.toString() + " " + sdf.format(this.prijazd) + " - " + sdf.format(this.odjazd);
     }
 
     @Override
@@ -56,7 +58,7 @@ public class Rezervacia implements IZaplatitelne, Serializable{
         this.status = StatusRezervacie.POTVRDENA;
         this.zaloha = platba;
     }
-    
+
     public Zlava getZlava() {
         return zlava;
     }
