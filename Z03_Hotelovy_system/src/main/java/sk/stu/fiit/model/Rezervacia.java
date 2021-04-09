@@ -17,7 +17,7 @@ public class Rezervacia extends Booking implements Serializable {
         super(id, izby, zakaznik, prijazd, odjazd, pocetDni, cena, zlava);
         this.status = status;
     }
-
+    
     public void updateDetails(Rezervacia other) {
         super.updateDetails(other);
         this.status = other.status;
@@ -27,6 +27,14 @@ public class Rezervacia extends Booking implements Serializable {
         super.zaplat(platba);
         this.status = StatusRezervacie.POTVRDENA;
     }
+
+    @Override
+    public String toString() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+        return this.getId() + " - " + this.status.toString() + " - " + sdf.format(this.getPrijazd()) + " - " + sdf.format(this.getOdjazd());
+    }
+    
+    
 
     public StatusRezervacie getStatus() {
         return status;

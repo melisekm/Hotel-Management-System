@@ -24,6 +24,7 @@ import sk.stu.fiit.utils.Utils;
 import sk.stu.fiit.utils.ViewUtils;
 import sk.stu.fiit.view.ICRUDPane;
 import sk.stu.fiit.view.IViewRefresh;
+import sk.stu.fiit.view.dialogs.PlatbaDialog;
 import sk.stu.fiit.view.dialogs.PridatIzbuDialog;
 
 /**
@@ -292,11 +293,13 @@ public class UbytovaniaPane extends javax.swing.JPanel implements IViewRefresh, 
 
     private void listUbytovaniaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listUbytovaniaMouseReleased
         this.novy = false;
+        this.controller.clearTempBooking();
         this.setModel();
     }//GEN-LAST:event_listUbytovaniaMouseReleased
 
     private void btnUlozitMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUlozitMouseReleased
         this.updateModel(listUbytovania, this.controller.getUbytovania());
+        this.clearUbytovanie();
     }//GEN-LAST:event_btnUlozitMouseReleased
 
     private void btnPridatIzbuMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPridatIzbuMouseReleased
@@ -323,17 +326,19 @@ public class UbytovaniaPane extends javax.swing.JPanel implements IViewRefresh, 
             String.format("%.02f", pridavanaIzba.getCena())
         });
         this.controller.pridajIzbu(pocetDni, pridavanaIzba);
-        this.updateLabels();
+        this.updateLabelsBasedOnTempReservation();
     }//GEN-LAST:event_btnPridatIzbuMouseReleased
 
     private void dcOdjazdPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dcOdjazdPropertyChange
         int pocetDni = Utils.DAYS_BETWEEN(dcPrijazd.getDate(), dcOdjazd.getDate());
         this.controller.prepocitajCenu(pocetDni);
-        this.updateLabels();
+        this.updateLabelsBasedOnTempReservation();
     }//GEN-LAST:event_dcOdjazdPropertyChange
 
     private void btnZaplatitMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnZaplatitMouseReleased
-        //TODO
+        Ubytovanie ubytovanie = listUbytovania.getSelectedValue();
+        ViewUtils.showDialog(new PlatbaDialog(this.parent, true, ubytovanie, 1));
+        this.refreshPane();
     }//GEN-LAST:event_btnZaplatitMouseReleased
 
     private void btnPridatMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPridatMouseReleased
@@ -380,18 +385,22 @@ public class UbytovaniaPane extends javax.swing.JPanel implements IViewRefresh, 
     @Override
     public void setModel() {
         Boolean zoznamJePrazdny = listUbytovania.getModel().getSize() == 0;
-        if (zoznamJePrazdny || this.novy) {
+        if (this.controller.getRezervacia() == null && (zoznamJePrazdny || this.novy)) {
             this.clearUbytovanie();
             return;
         }
         Booking booking;
+        this.novy = false;
         if (this.controller.getRezervacia() != null) {
-            this.novy = true;
+            btnZaplatit.setEnabled(false);
             booking = this.controller.getRezervacia();
         } else {
-            this.novy = false;
-            btnZaplatit.setVisible(true);
             booking = listUbytovania.getSelectedValue();
+            if (booking.getPlatba() == null) {
+                btnZaplatit.setEnabled(true);
+            } else {
+                btnZaplatit.setEnabled(false);
+            }
         }
         comboBoxZakaznik.setSelectedItem(booking.getZakaznik());
         dcPrijazd.setDate(booking.getPrijazd());
@@ -400,6 +409,8 @@ public class UbytovaniaPane extends javax.swing.JPanel implements IViewRefresh, 
         labelDataCena.setText(String.format("%.02f", booking.getCena()));
         if (booking.getZlava() != null) {
             labelDataZlava.setText(booking.getZlava().getNazov() + " - " + String.valueOf(booking.getZlava().getPercento() * 100));
+        }else{
+            labelDataZlava.setText("0");
         }
         this.naplnTabulkuIzieb(booking);
         this.resetBtns();
@@ -423,7 +434,7 @@ public class UbytovaniaPane extends javax.swing.JPanel implements IViewRefresh, 
             return false;
         }
         this.controller.prepocitajCenu(pocetDni);
-        this.updateLabels();
+        this.updateLabelsBasedOnTempReservation();
         int res = JOptionPane.showConfirmDialog(this, "Prajete si ulozit ubytovanie?. Prosím skontrolujte vyplnené údaje", "CONFIRM", JOptionPane.YES_NO_OPTION);
         if (res == JOptionPane.YES_NO_OPTION) {
             return true;
@@ -437,9 +448,9 @@ public class UbytovaniaPane extends javax.swing.JPanel implements IViewRefresh, 
         Date datumPrijazdu = dcPrijazd.getDate();
         Date datumOdjazdu = dcOdjazd.getDate();
         int pocetDni = Utils.DAYS_BETWEEN(datumPrijazdu, datumOdjazdu);
-        logger.info(String.format("Ukladam novu rezervaciu"));
+        logger.info(String.format("Ukladam nove ubytovanie"));
         this.controller.saveUbytovanie(zakaznik, datumPrijazdu, datumOdjazdu, pocetDni);
-        JOptionPane.showMessageDialog(this, "Rezervacia ulozena", "SUCESS", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Ubytovanie uložené", "SUCESS", JOptionPane.INFORMATION_MESSAGE);
         this.novy = false;
     }
 
@@ -456,7 +467,7 @@ public class UbytovaniaPane extends javax.swing.JPanel implements IViewRefresh, 
             dcOdjazd.setEnabled(true);
         }
         if (this.controller.getRezervacia() != null) {
-            comboBoxZakaznik.setEnabled(true);
+            btnUlozit.setEnabled(true);
         }
     }
 
@@ -478,14 +489,17 @@ public class UbytovaniaPane extends javax.swing.JPanel implements IViewRefresh, 
             this.resetTime();
             DefaultTableModel model = (DefaultTableModel) tableIzby.getModel();
             model.setRowCount(0);
-            btnZaplatit.setVisible(false);
+            btnZaplatit.setEnabled(false);
         }
         this.controller.clearTempBooking();
-        this.updateLabels();
+        this.updateLabelsBasedOnTempReservation();
         this.resetBtns();
     }
 
-    private void updateLabels() {
+    private void updateLabelsBasedOnTempReservation() {
+        if (this.controller.getRezervacia() != null) {
+            return;
+        }
         labelDataPocetIzieb.setText(String.valueOf(this.controller.getPridavaneIzby().size()));
         if (this.controller.getZlava() == null) {
             labelDataZlava.setText("0");
@@ -519,9 +533,9 @@ public class UbytovaniaPane extends javax.swing.JPanel implements IViewRefresh, 
     @Override
     public void refreshPane() {
         dcOdjazd.setMinSelectableDate(Database.getInstance().getAppTime());
-        this.refreshModel(listUbytovania, this.controller.getUbytovania());
         this.nastavComboBoxZakaznikov();
-        this.controller.setRezervacia(null);
+        this.clearUbytovanie();
+        this.refreshModel(listUbytovania, this.controller.getUbytovania());
     }
 
 

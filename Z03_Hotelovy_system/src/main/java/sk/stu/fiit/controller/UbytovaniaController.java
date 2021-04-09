@@ -5,6 +5,7 @@ import java.util.Date;
 import sk.stu.fiit.database.Database;
 import sk.stu.fiit.model.Rezervacia;
 import sk.stu.fiit.model.Sluzba;
+import sk.stu.fiit.model.StatusRezervacie;
 import sk.stu.fiit.model.Ubytovanie;
 import sk.stu.fiit.model.Zakaznik;
 import sk.stu.fiit.model.Zlava;
@@ -38,7 +39,8 @@ public class UbytovaniaController extends BookingController {
 
     private Ubytovanie createUbytovanieOnReservation() {
         String id = "U" + Database.getInstance().getAndSetUbytovaniaUUID();
-        return new Ubytovanie(rezervacia, id);
+        this.rezervacia.setStatus(StatusRezervacie.VYKONANA);
+        return new Ubytovanie(this.rezervacia, id);
     }
 
     @Override
@@ -48,8 +50,6 @@ public class UbytovaniaController extends BookingController {
         this.sluzby.clear();
     }
     
-    
-
     public Rezervacia getRezervacia() {
         return rezervacia;
     }

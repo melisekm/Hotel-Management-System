@@ -1,5 +1,6 @@
 package sk.stu.fiit.model;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -8,7 +9,7 @@ import java.util.Date;
  *
  * @author Martin Melisek
  */
-public abstract class Booking implements IZaplatitelne {
+public abstract class Booking implements IZaplatitelne, Serializable {
 
     private String id;
     private ArrayList<Izba> izby;

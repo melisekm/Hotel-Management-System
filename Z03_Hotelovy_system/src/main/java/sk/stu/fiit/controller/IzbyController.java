@@ -78,8 +78,11 @@ public class IzbyController extends Controller {
                     cenaUbytovania += izba.getCena();
                 }
                 cenaUbytovania *= ubytovanie.getPocetDni();
-                for (Sluzba sluzba : ubytovanie.getSluzby()) {
-                    cenaUbytovania += sluzba.getCena();
+                if (ubytovanie.getSluzby() != null) {
+                    for (Sluzba sluzba : ubytovanie.getSluzby()) {
+                        cenaUbytovania += sluzba.getCena();
+
+                    }
                 }
                 Zlava zlava = this.skontrolujZlavu(ubytovanie.getPocetDni(), cenaUbytovania, ubytovanie.getIzby().size());
                 if (zlava != null) {

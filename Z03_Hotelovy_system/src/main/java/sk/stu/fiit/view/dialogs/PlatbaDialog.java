@@ -12,7 +12,14 @@ import sk.stu.fiit.utils.ViewUtils;
 public class PlatbaDialog extends javax.swing.JDialog {
 
     private PlatbaController controller;
-
+    
+    /**
+     * Dialogove okno platby
+     * @param parent parentske okno
+     * @param modal onTop
+     * @param polozka co sa plati
+     * @param percentualnaHodnota kolko % z ceny polozky sa plati eg. 1 - cela, 0.1 - 10%. 
+     */
     public PlatbaDialog(java.awt.Frame parent, boolean modal, IZaplatitelne polozka, double percentualnaHodnota) {
         super(parent, modal);
         initComponents();

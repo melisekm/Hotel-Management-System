@@ -178,24 +178,33 @@ public class StatusRezervacieDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_btnZaplatitMouseReleased
 
     private void updateLabels() {
-        if (this.zvolenaRezervacia.getStatus() == StatusRezervacie.POTVRDENA) {
-            btnZaplatit.setEnabled(false);
-            checkBoxZaplatena.setSelected(true);
-            btnUplatnitZlavu.setEnabled(false);
-
-        } else {
-            btnZaplatit.setEnabled(true);
-            checkBoxZaplatena.setSelected(false);
-            if (this.zvolenaRezervacia.getZlava() == null) {
-                btnUplatnitZlavu.setEnabled(true);
-            } else {
-                btnUplatnitZlavu.setEnabled(false);
-            }
+        switch (this.zvolenaRezervacia.getStatus()) {
+            case VYTVORENA:
+                this.setBtns(true, false, true, true);
+                break;
+            case POTVRDENA:
+                this.setBtns(false, true, false, false);
+                break;
+            case VYKONANA:
+                this.setBtns(false, true, false, false);
+                break;
+            case EXPIROVANA:
+                boolean zaplatena = false ? this.zvolenaRezervacia.getPlatba() == null : true;
+                this.setBtns(false, zaplatena, false, true);
+                break;
+            default:
+                throw new AssertionError();
         }
-
         labelDataId.setText(this.zvolenaRezervacia.getId());
         labelDataCena.setText(String.format("%.02f€", this.zvolenaRezervacia.getCena()));
         labelDataStatus.setText(this.zvolenaRezervacia.getStatus().toString().toUpperCase());
+    }
+
+    private void setBtns(boolean zaplatitBtn, boolean cbZaplatena, boolean uplatnitZlavuBtn, boolean zrusitRezBtn) {
+        this.btnZaplatit.setEnabled(zaplatitBtn);
+        this.checkBoxZaplatena.setSelected(cbZaplatena);
+        this.btnUplatnitZlavu.setEnabled(uplatnitZlavuBtn);
+        this.btnZrusitRezervaciu.setEnabled(zrusitRezBtn);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
