@@ -1,17 +1,22 @@
 package sk.stu.fiit.view.panes;
 
+import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import javax.swing.text.JTextComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sk.stu.fiit.controller.ZakaznikController;
 import sk.stu.fiit.model.Pohlavie;
+import sk.stu.fiit.model.Ubytovanie;
 import sk.stu.fiit.model.Zakaznik;
 import sk.stu.fiit.utils.ViewUtils;
 import sk.stu.fiit.view.ICRUDPane;
 import sk.stu.fiit.view.IViewRefresh;
+import sk.stu.fiit.view.dialogs.HistoriaUbytovaniDialog;
 
 /**
  *
@@ -22,6 +27,7 @@ public class ZakazniciPane extends javax.swing.JPanel implements IViewRefresh, I
     private static final Logger logger = LoggerFactory.getLogger(ZakazniciPane.class);
 
     private ZakaznikController controller = new ZakaznikController();
+    private JFrame parent = (JFrame) SwingUtilities.getWindowAncestor(this);
 
     private JTextComponent[] baseFields;
     private boolean novy = true;
@@ -178,7 +184,14 @@ public class ZakazniciPane extends javax.swing.JPanel implements IViewRefresh, I
     }//GEN-LAST:event_btnUlozitMouseReleased
 
     private void btnHistoriaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHistoriaMouseReleased
-        //TODO
+        Zakaznik z = listZakaznici.getSelectedValue();
+        if (z == null) {
+            logger.info("Nebol vybraty zakaznik a bolo kliknute na dialog historie");
+            JOptionPane.showMessageDialog(this, "Prosím vyberte zakaznika");
+            return;
+        }
+        ArrayList<Ubytovanie> historia = z.getHistoriaUbytovani();
+        ViewUtils.showDialog(new HistoriaUbytovaniDialog(this.parent, true, historia));
     }//GEN-LAST:event_btnHistoriaMouseReleased
 
     private void btnPridatMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPridatMouseReleased

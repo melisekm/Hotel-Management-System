@@ -6,7 +6,9 @@ import javax.swing.DefaultListModel;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.JTextComponent;
@@ -14,10 +16,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sk.stu.fiit.controller.IzbyController;
 import sk.stu.fiit.model.Izba;
+import sk.stu.fiit.model.Ubytovanie;
 import sk.stu.fiit.utils.ViewUtils;
 import sk.stu.fiit.view.ICRUDPane;
 import sk.stu.fiit.view.IViewRefresh;
 import sk.stu.fiit.view.dialogs.GaleriaIzbyDialog;
+import sk.stu.fiit.view.dialogs.HistoriaUbytovaniDialog;
 
 /**
  *
@@ -28,6 +32,7 @@ public class IzbyPane extends javax.swing.JPanel implements IViewRefresh, ICRUDP
     private static final Logger logger = LoggerFactory.getLogger(ZakazniciPane.class);
 
     private IzbyController controller = new IzbyController();
+    private JFrame parent = (JFrame) SwingUtilities.getWindowAncestor(this);
 
     private JTextComponent[] baseFields;
     private JTextComponent[] fotkyFields;
@@ -236,7 +241,14 @@ public class IzbyPane extends javax.swing.JPanel implements IViewRefresh, ICRUDP
     }//GEN-LAST:event_btnUlozitMouseReleased
 
     private void btnHistoriaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHistoriaMouseReleased
-        // TODO
+        Izba izba = listIzby.getSelectedValue();
+        if (izba == null) {
+            logger.info("Nebola vybrata izba a bolo kliknute na dialog historie");
+            JOptionPane.showMessageDialog(this, "Prosím vyberte izbu");
+            return;
+        }
+        ArrayList<Ubytovanie> historia = izba.getHistoriaUbytovani();
+        ViewUtils.showDialog(new HistoriaUbytovaniDialog(this.parent, true, historia));
     }//GEN-LAST:event_btnHistoriaMouseReleased
 
     private void btnPridatMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPridatMouseReleased
