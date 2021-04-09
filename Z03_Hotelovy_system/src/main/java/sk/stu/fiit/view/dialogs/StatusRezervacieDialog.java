@@ -178,18 +178,21 @@ public class StatusRezervacieDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_btnZaplatitMouseReleased
 
     private void updateLabels() {
-        if (this.zvolenaRezervacia.getZlava() == null) {
-            btnUplatnitZlavu.setEnabled(true);
-        } else {
-            btnUplatnitZlavu.setEnabled(false);
-        }
         if (this.zvolenaRezervacia.getStatus() == StatusRezervacie.POTVRDENA) {
             btnZaplatit.setEnabled(false);
             checkBoxZaplatena.setSelected(true);
+            btnUplatnitZlavu.setEnabled(false);
+
         } else {
             btnZaplatit.setEnabled(true);
             checkBoxZaplatena.setSelected(false);
+            if (this.zvolenaRezervacia.getZlava() == null) {
+                btnUplatnitZlavu.setEnabled(true);
+            } else {
+                btnUplatnitZlavu.setEnabled(false);
+            }
         }
+
         labelDataId.setText(this.zvolenaRezervacia.getId());
         labelDataCena.setText(String.format("%.02f€", this.zvolenaRezervacia.getCena()));
         labelDataStatus.setText(this.zvolenaRezervacia.getStatus().toString().toUpperCase());

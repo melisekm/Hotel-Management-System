@@ -15,11 +15,11 @@ import sk.stu.fiit.view.MainScreen;
  */
 public class Main {
 
-    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(IOController.class);
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(Main.class);
 
-    private final static String testovaciaDB = "C:\\Users\\melis\\Documents\\!VAVA\\latest.dbZ03";
+    private final static String testovaciaDB = "C:\\Users\\melis\\Documents\\!VAVA\\94-330.dbZ03";
 
-    private static boolean loadDemoDB = false;
+    private static boolean loadDemoDB = true;
 
     static {
         Database.createDatabase(); // prazdna DB

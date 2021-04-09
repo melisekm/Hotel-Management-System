@@ -1,5 +1,6 @@
 package sk.stu.fiit.controller;
 
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
@@ -20,8 +21,6 @@ import sk.stu.fiit.model.Zlava;
  */
 public class IzbyController extends Controller {
 
-    private static final Logger logger = LoggerFactory.getLogger(IzbyController.class);
-
     public void saveIzba(String oznacenie, String kategoria, String popis, int pocetLozok, double cena, ArrayList<File> galeria) {
         this.getIzby().add(this.createIzba(oznacenie, kategoria, popis, pocetLozok, cena, galeria));
     }
@@ -37,15 +36,24 @@ public class IzbyController extends Controller {
     private Izba createIzba(String oznacenie, String kategoria, String popis, int pocetLozok, double cena, ArrayList<File> galeria) {
         ArrayList<Icon> obrazky = new ArrayList<>();
         for (File obrazok : galeria) {
-            BufferedImage bi;
-            try {
-                bi = ImageIO.read(obrazok); // path is your file or image path
-                obrazky.add(new ImageIcon(bi));
-            } catch (Exception ex) {
-                logger.warn("Obrazok nie je mozne nacitat" + obrazok.getPath());
+            ImageIcon icon = transformImageIcon(obrazok);
+            if (icon != null) {
+                obrazky.add(icon);
             }
         }
         return new Izba(oznacenie, kategoria, popis, cena, obrazky, pocetLozok);
+    }
+
+    public ImageIcon transformImageIcon(File obrazok) {
+        if (!obrazok.exists()) {
+            return null;
+        }
+        ImageIcon imageIcon = null;
+        imageIcon = new ImageIcon(obrazok.getPath());
+        Image image = imageIcon.getImage();
+        Image newimg = image.getScaledInstance(920, 450, java.awt.Image.SCALE_SMOOTH);
+        imageIcon = new ImageIcon(newimg);
+        return imageIcon;
     }
 
     private void skontrolujRezervacie(Izba povodnaIzba) {
