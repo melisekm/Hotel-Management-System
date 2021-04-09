@@ -52,6 +52,7 @@ public class MainScreen extends javax.swing.JFrame {
         btnUbytovania = new javax.swing.JButton();
         btnIzby = new javax.swing.JButton();
         btnSluzby = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Hotelový systém");
@@ -208,7 +209,22 @@ public class MainScreen extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(3, 0, 3, 0);
         menuPane.add(btnSluzby, gridBagConstraints);
 
-        getContentPane().add(menuPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 120, 530));
+        getContentPane().add(menuPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 120, 420));
+
+        jPanel1.setBackground(new java.awt.Color(153, 153, 153));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 120, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 120, Short.MAX_VALUE)
+        );
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 420, 120, 120));
 
         pack();
         setLocationRelativeTo(null);
@@ -319,6 +335,7 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JPanel cardPane;
     private sk.stu.fiit.view.panes.DomovPane domovPane;
     private sk.stu.fiit.view.panes.IzbyPane izbyPane;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel labelCas;
     private javax.swing.JLabel labelDatum;
     private javax.swing.JPanel menuPane;

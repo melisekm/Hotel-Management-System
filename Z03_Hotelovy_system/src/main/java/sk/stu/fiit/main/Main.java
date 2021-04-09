@@ -22,8 +22,7 @@ public class Main {
     private static boolean loadDemoDB = true;
 
     static {
-        Database.createDatabase(); // prazdna DB
-        DataLoader.loadData(); // Zakaznik a sluzby
+
         if (loadDemoDB) {
             try {
                 new IOController().loadDatabase(new File(testovaciaDB));
@@ -36,6 +35,9 @@ public class Main {
                 Database.createDatabase(); // prazdna DB
                 DataLoader.loadData(); // Zakaznik a sluzby
             }
+        } else {
+            Database.createDatabase(); // prazdna DB
+            DataLoader.loadData(); // Zakaznik a sluzby
         }
 
     }

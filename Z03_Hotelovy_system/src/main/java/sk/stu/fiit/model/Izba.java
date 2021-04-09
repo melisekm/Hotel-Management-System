@@ -1,6 +1,5 @@
 package sk.stu.fiit.model;
 
-import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import javax.swing.Icon;
@@ -34,7 +33,9 @@ public class Izba implements Serializable {
         this.kategoria = other.kategoria;
         this.popis = other.popis;
         this.cena = other.cena;
-        this.galeria = other.galeria;
+        for (Icon icon : other.getGaleria()) {
+            this.galeria.add(icon);
+        }
         this.pocetLozok = other.pocetLozok;
     }
 

@@ -1,14 +1,10 @@
 package sk.stu.fiit.controller;
 
 import java.awt.Image;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
-import javax.imageio.ImageIO;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import sk.stu.fiit.model.Izba;
 import sk.stu.fiit.model.Rezervacia;
 import sk.stu.fiit.model.Sluzba;
@@ -81,10 +77,10 @@ public class IzbyController extends Controller {
                 for (Izba izba : ubytovanie.getIzby()) {
                     cenaUbytovania += izba.getCena();
                 }
+                cenaUbytovania *= ubytovanie.getPocetDni();
                 for (Sluzba sluzba : ubytovanie.getSluzby()) {
                     cenaUbytovania += sluzba.getCena();
                 }
-                cenaUbytovania *= ubytovanie.getPocetDni();
                 Zlava zlava = this.skontrolujZlavu(ubytovanie.getPocetDni(), cenaUbytovania, ubytovanie.getIzby().size());
                 if (zlava != null) {
                     cenaUbytovania *= (1 - zlava.getPercento());

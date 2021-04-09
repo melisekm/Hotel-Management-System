@@ -117,5 +117,4 @@ public class RezervacieController extends Controller {
     public void setZlava(Zlava zlava) {
         this.zlava = zlava;
     }
-
 }

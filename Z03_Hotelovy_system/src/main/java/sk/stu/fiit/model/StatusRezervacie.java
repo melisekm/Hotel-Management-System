@@ -19,6 +19,12 @@ public enum StatusRezervacie implements Serializable {
             return "Potvrdená";
         }
     },
+    VYKONANA {
+        @Override
+        public String toString() {
+            return "Vykonaná";
+        }
+    },
     EXPIROVANA {
         @Override
         public String toString() {

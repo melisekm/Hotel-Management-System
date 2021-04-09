@@ -1,9 +1,7 @@
 package sk.stu.fiit.view.panes;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
-import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -181,18 +179,18 @@ public class IzbyPane extends javax.swing.JPanel implements IViewRefresh, ICRUDP
                 btnGaleriaMouseReleased(evt);
             }
         });
-        add(btnGaleria, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 290, 250, 40));
+        add(btnGaleria, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 320, 250, 35));
 
         fieldFotka1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         fieldFotka1.setAutoscrolls(false);
         fieldFotka1.setMaximumSize(new java.awt.Dimension(60, 20));
-        add(fieldFotka1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 240, 64, 26));
+        add(fieldFotka1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 240, 75, 35));
 
         fieldFotka2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        add(fieldFotka2, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 270, 64, 26));
+        add(fieldFotka2, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 280, 75, 35));
 
         fieldFotka3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        add(fieldFotka3, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 300, 64, 26));
+        add(fieldFotka3, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 320, 75, 35));
 
         btnPridatFotku1.setBackground(new java.awt.Color(102, 102, 102));
         btnPridatFotku1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -203,7 +201,7 @@ public class IzbyPane extends javax.swing.JPanel implements IViewRefresh, ICRUDP
                 btnPridatFotku1MouseReleased(evt);
             }
         });
-        add(btnPridatFotku1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 240, 90, 30));
+        add(btnPridatFotku1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 240, 90, 35));
 
         btnPridatFotku2.setBackground(new java.awt.Color(102, 102, 102));
         btnPridatFotku2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -214,7 +212,7 @@ public class IzbyPane extends javax.swing.JPanel implements IViewRefresh, ICRUDP
                 btnPridatFotku2MouseReleased(evt);
             }
         });
-        add(btnPridatFotku2, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 270, 90, 30));
+        add(btnPridatFotku2, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 280, 90, 35));
 
         btnPridatFotku3.setBackground(new java.awt.Color(102, 102, 102));
         btnPridatFotku3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -225,7 +223,7 @@ public class IzbyPane extends javax.swing.JPanel implements IViewRefresh, ICRUDP
                 btnPridatFotku3MouseReleased(evt);
             }
         });
-        add(btnPridatFotku3, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 300, 90, 30));
+        add(btnPridatFotku3, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 320, 90, 35));
     }// </editor-fold>//GEN-END:initComponents
 
     private void listIzbyMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listIzbyMouseReleased
