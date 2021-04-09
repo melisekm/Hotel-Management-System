@@ -11,10 +11,10 @@ public class Platba implements Serializable {
     
     private Zakaznik zakaznik;
     private Date datum;
-    private IZaplatitelne polozka;
+    private Booking polozka;
     private boolean vHotovosti;
 
-    public Platba(Date datum, IZaplatitelne polozka, boolean vHotovosti) {
+    public Platba(Date datum, Booking polozka, boolean vHotovosti) {
         this.datum = datum;
         this.polozka = polozka;
         this.vHotovosti = vHotovosti;
@@ -29,11 +29,11 @@ public class Platba implements Serializable {
         this.datum = datum;
     }
 
-    public IZaplatitelne getPolozka() {
+    public Booking getPolozka() {
         return polozka;
     }
 
-    public void setPolozka(IZaplatitelne polozka) {
+    public void setPolozka(Booking polozka) {
         this.polozka = polozka;
     }
 

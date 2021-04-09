@@ -15,10 +15,13 @@ public class Ubytovanie extends Booking implements Serializable {
 
     public Ubytovanie(ArrayList<Sluzba> sluzby, String id, ArrayList<Izba> izby, Zakaznik zakaznik, Date prijazd, Date odjazd, int pocetDni, double cena, Zlava zlava) {
         super(id, izby, zakaznik, prijazd, odjazd, pocetDni, cena, zlava);
+        this.sluzby = sluzby;
     }
 
     public Ubytovanie(Rezervacia rezervacia, String id) {
         super(id, rezervacia.getIzby(), rezervacia.getZakaznik(), rezervacia.getPrijazd(), rezervacia.getOdjazd(), rezervacia.getPocetDni(), rezervacia.getCena(), rezervacia.getZlava());
+        this.rezervacia = rezervacia;
+        this.sluzby = sluzby;
     }
 
     public Rezervacia getRezervacia() {

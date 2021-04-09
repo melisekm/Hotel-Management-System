@@ -9,7 +9,7 @@ import java.util.Date;
  *
  * @author Martin Melisek
  */
-public abstract class Booking implements IZaplatitelne, Serializable {
+public abstract class Booking implements Serializable {
 
     private String id;
     private ArrayList<Izba> izby;
@@ -50,7 +50,6 @@ public abstract class Booking implements IZaplatitelne, Serializable {
         return id + " - " + sdf.format(this.prijazd) + " - " + sdf.format(this.odjazd);
     }
 
-    @Override
     public void zaplat(Platba platba) {
         this.platba = platba;
     }
@@ -71,7 +70,6 @@ public abstract class Booking implements IZaplatitelne, Serializable {
         this.izby = izby;
     }
 
-    @Override
     public Zakaznik getZakaznik() {
         return zakaznik;
     }

@@ -1,8 +1,11 @@
 package sk.stu.fiit.controller;
 
+import java.util.ArrayList;
 import sk.stu.fiit.database.Database;
-import sk.stu.fiit.model.IZaplatitelne;
+import sk.stu.fiit.model.Booking;
 import sk.stu.fiit.model.Platba;
+import sk.stu.fiit.model.Sluzba;
+import sk.stu.fiit.model.Ubytovanie;
 
 /**
  *
@@ -10,9 +13,9 @@ import sk.stu.fiit.model.Platba;
  */
 public class PlatbaController extends Controller {
 
-    private IZaplatitelne polozka;
+    private Booking polozka;
 
-    public PlatbaController(IZaplatitelne polozka) {
+    public PlatbaController(Booking polozka) {
         this.polozka = polozka;
     }
 
@@ -21,13 +24,20 @@ public class PlatbaController extends Controller {
         platba.setPolozka(polozka);
         this.polozka.zaplat(platba);
         this.getPlatby().add(platba);
+        if (this.polozka instanceof Ubytovanie) {
+            ArrayList<Sluzba> sluzby = ((Ubytovanie) this.polozka).getSluzby();
+            for (Sluzba sluzba : sluzby) {
+                sluzba.setDatumVyuzitia(Database.getInstance().getAppTime());
+                sluzba.getVyuzitie().add((Ubytovanie) this.polozka);
+            }
+        }
     }
 
-    public IZaplatitelne getPolozka() {
+    public Booking getPolozka() {
         return polozka;
     }
 
-    public void setPolozka(IZaplatitelne polozka) {
+    public void setPolozka(Booking polozka) {
         this.polozka = polozka;
     }
 

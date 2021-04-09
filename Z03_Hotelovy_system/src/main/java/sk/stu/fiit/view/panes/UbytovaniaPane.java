@@ -86,6 +86,7 @@ public class UbytovaniaPane extends javax.swing.JPanel implements IViewRefresh, 
         separatorCena = new javax.swing.JSeparator();
         separatorZlava = new javax.swing.JSeparator();
         btnPridatSluzbu = new javax.swing.JButton();
+        cbZaplatene = new javax.swing.JCheckBox();
 
         dialogPridat.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         dialogPridat.setTitle("Pridat ubytovanie");
@@ -191,7 +192,7 @@ public class UbytovaniaPane extends javax.swing.JPanel implements IViewRefresh, 
                 btnPridatIzbuMouseReleased(evt);
             }
         });
-        add(btnPridatIzbu, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 290, 270, -1));
+        add(btnPridatIzbu, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 290, 250, -1));
 
         comboBoxZakaznik.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         comboBoxZakaznik.setModel(new DefaultComboBoxModel<Zakaznik>());
@@ -288,7 +289,12 @@ public class UbytovaniaPane extends javax.swing.JPanel implements IViewRefresh, 
                 btnPridatSluzbuMouseReleased(evt);
             }
         });
-        add(btnPridatSluzbu, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 340, 270, -1));
+        add(btnPridatSluzbu, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 340, 250, -1));
+
+        cbZaplatene.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        cbZaplatene.setText("Zaplatené");
+        cbZaplatene.setEnabled(false);
+        add(cbZaplatene, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 410, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void listUbytovaniaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listUbytovaniaMouseReleased
@@ -392,14 +398,14 @@ public class UbytovaniaPane extends javax.swing.JPanel implements IViewRefresh, 
         Booking booking;
         this.novy = false;
         if (this.controller.getRezervacia() != null) {
-            btnZaplatit.setEnabled(false);
+            this.toggleBtns(false, false, true);
             booking = this.controller.getRezervacia();
         } else {
             booking = listUbytovania.getSelectedValue();
             if (booking.getPlatba() == null) {
-                btnZaplatit.setEnabled(true);
+                this.toggleBtns(false, true, true);
             } else {
-                btnZaplatit.setEnabled(false);
+                this.toggleBtns(true, false, false);
             }
         }
         comboBoxZakaznik.setSelectedItem(booking.getZakaznik());
@@ -409,7 +415,7 @@ public class UbytovaniaPane extends javax.swing.JPanel implements IViewRefresh, 
         labelDataCena.setText(String.format("%.02f", booking.getCena()));
         if (booking.getZlava() != null) {
             labelDataZlava.setText(booking.getZlava().getNazov() + " - " + String.valueOf(booking.getZlava().getPercento() * 100));
-        }else{
+        } else {
             labelDataZlava.setText("0");
         }
         this.naplnTabulkuIzieb(booking);
@@ -457,17 +463,17 @@ public class UbytovaniaPane extends javax.swing.JPanel implements IViewRefresh, 
     private void resetBtns() {
         if (this.novy == false) {
             comboBoxZakaznik.setEnabled(false);
-            btnPridatIzbu.setEnabled(false);
-            btnUlozit.setEnabled(false);
+            btnPridatIzbu.setVisible(false);
+            btnUlozit.setVisible(false);
             dcOdjazd.setEnabled(false);
         } else {
             comboBoxZakaznik.setEnabled(true);
-            btnPridatIzbu.setEnabled(true);
-            btnUlozit.setEnabled(true);
+            btnPridatIzbu.setVisible(true);
+            btnUlozit.setVisible(true);
             dcOdjazd.setEnabled(true);
         }
         if (this.controller.getRezervacia() != null) {
-            btnUlozit.setEnabled(true);
+            btnUlozit.setVisible(true);
         }
     }
 
@@ -489,7 +495,7 @@ public class UbytovaniaPane extends javax.swing.JPanel implements IViewRefresh, 
             this.resetTime();
             DefaultTableModel model = (DefaultTableModel) tableIzby.getModel();
             model.setRowCount(0);
-            btnZaplatit.setEnabled(false);
+            this.toggleBtns(false, false, true);
         }
         this.controller.clearTempBooking();
         this.updateLabelsBasedOnTempReservation();
@@ -530,6 +536,12 @@ public class UbytovaniaPane extends javax.swing.JPanel implements IViewRefresh, 
         dcOdjazd.setMinSelectableDate(cal.getTime());
     }
 
+    private void toggleBtns(boolean zaplatene, boolean btnZaplatene, boolean btnSluzby) {
+        cbZaplatene.setSelected(zaplatene);
+        btnZaplatit.setVisible(btnZaplatene);
+        btnPridatSluzbu.setVisible(btnSluzby);
+    }
+
     @Override
     public void refreshPane() {
         dcOdjazd.setMinSelectableDate(Database.getInstance().getAppTime());
@@ -546,6 +558,7 @@ public class UbytovaniaPane extends javax.swing.JPanel implements IViewRefresh, 
     private javax.swing.JButton btnPridatSluzbu;
     private javax.swing.JButton btnUlozit;
     private javax.swing.JButton btnZaplatit;
+    private javax.swing.JCheckBox cbZaplatene;
     private javax.swing.JCheckBox checkBNaZakladeR;
     private javax.swing.JComboBox<Zakaznik> comboBoxZakaznik;
     private com.toedter.calendar.JDateChooser dcOdjazd;

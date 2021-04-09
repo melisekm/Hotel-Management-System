@@ -3,6 +3,7 @@ package sk.stu.fiit.controller;
 import java.util.ArrayList;
 import java.util.Date;
 import sk.stu.fiit.database.Database;
+import sk.stu.fiit.model.Izba;
 import sk.stu.fiit.model.Rezervacia;
 import sk.stu.fiit.model.Sluzba;
 import sk.stu.fiit.model.StatusRezervacie;
@@ -20,16 +21,24 @@ public class UbytovaniaController extends BookingController {
     public ArrayList<Sluzba> sluzby = new ArrayList<>();
 
     public void saveUbytovanie(Zakaznik zakaznik, Date datumPrijazdu, Date datumOdjazdu, int pocetDni) {
+        Ubytovanie noveUbytovanie;
         if (this.rezervacia == null) {
-            this.getUbytovania().add(this.createUbytovanie(zakaznik, datumPrijazdu, datumOdjazdu, pocetDni));
+            noveUbytovanie = this.createUbytovanie(zakaznik, datumPrijazdu, datumOdjazdu, pocetDni);
+            this.getUbytovania().add(noveUbytovanie);
         } else {
-            this.getUbytovania().add(this.createUbytovanieOnReservation());
+            noveUbytovanie = this.createUbytovanieOnReservation();
+            this.getUbytovania().add(noveUbytovanie);
         }
+        for (Izba izba : noveUbytovanie.getIzby()) {
+            izba.getHistoriaUbytovani().add(noveUbytovanie);
+        }
+        Zakaznik ubytovanyZakaznik = noveUbytovanie.getZakaznik();
+        ubytovanyZakaznik.getHistoriaUbytovani().add(noveUbytovanie);
     }
 
     private Ubytovanie createUbytovanie(Zakaznik zakaznik, Date datumPrijazdu, Date datumOdjazdu, int pocetDni) {
         String id = "U" + Database.getInstance().getAndSetUbytovaniaUUID();
-        ArrayList izby = new ArrayList<>(this.pridavaneIzby);
+        ArrayList<Izba> izby = new ArrayList<>(this.pridavaneIzby);
         Zlava zlava = null;
         if (this.zlava != null) {
             zlava = new Zlava(this.zlava);
@@ -49,7 +58,7 @@ public class UbytovaniaController extends BookingController {
         this.rezervacia = null;
         this.sluzby.clear();
     }
-    
+
     public Rezervacia getRezervacia() {
         return rezervacia;
     }

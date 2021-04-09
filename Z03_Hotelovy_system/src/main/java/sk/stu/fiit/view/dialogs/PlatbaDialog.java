@@ -2,7 +2,7 @@ package sk.stu.fiit.view.dialogs;
 
 import javax.swing.JOptionPane;
 import sk.stu.fiit.controller.PlatbaController;
-import sk.stu.fiit.model.IZaplatitelne;
+import sk.stu.fiit.model.Booking;
 import sk.stu.fiit.utils.ViewUtils;
 
 /**
@@ -20,7 +20,7 @@ public class PlatbaDialog extends javax.swing.JDialog {
      * @param polozka co sa plati
      * @param percentualnaHodnota kolko % z ceny polozky sa plati eg. 1 - cela, 0.1 - 10%. 
      */
-    public PlatbaDialog(java.awt.Frame parent, boolean modal, IZaplatitelne polozka, double percentualnaHodnota) {
+    public PlatbaDialog(java.awt.Frame parent, boolean modal, Booking polozka, double percentualnaHodnota) {
         super(parent, modal);
         initComponents();
         this.controller = new PlatbaController(polozka);
