@@ -1,9 +1,10 @@
 package sk.stu.fiit.view.dialogs;
 
+import java.awt.CardLayout;
+import java.util.ArrayList;
 import javax.swing.Icon;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import sk.stu.fiit.model.Izba;
+import sk.stu.fiit.view.panes.ObrazokPane;
 
 /**
  *
@@ -11,16 +12,13 @@ import sk.stu.fiit.model.Izba;
  */
 public class GaleriaIzbyDialog extends javax.swing.JDialog {
 
-    private Izba zvolenaIzba;
-    private JLabel[] obrazky;
-
-    public GaleriaIzbyDialog(java.awt.Frame parent, boolean modal, Izba zvolenaIzba) {
+    private ArrayList<Icon> obrazky;
+    
+    public GaleriaIzbyDialog(java.awt.Frame parent, boolean modal, ArrayList<Icon> obrazky) {
         super(parent, modal);
         initComponents();
-        this.obrazky = new JLabel[]{
-            obrazok1, obrazok2, obrazok3
-        };
-        this.zvolenaIzba = zvolenaIzba;
+        
+        this.obrazky = obrazky;
         this.nacitajGaleriu();
     }
 
@@ -33,20 +31,14 @@ public class GaleriaIzbyDialog extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        obrazok1 = new javax.swing.JLabel();
         btnZavriet = new javax.swing.JButton();
-        obrazok2 = new javax.swing.JLabel();
-        obrazok3 = new javax.swing.JLabel();
+        cardPane = new javax.swing.JPanel();
+        btnDalsi = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Galeria");
         setPreferredSize(new java.awt.Dimension(905, 501));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        obrazok1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        obrazok1.setText("jLabel2");
-        obrazok1.setPreferredSize(new java.awt.Dimension(384, 216));
-        getContentPane().add(obrazok1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 230, -1, -1));
 
         btnZavriet.setBackground(new java.awt.Color(102, 102, 255));
         btnZavriet.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -57,17 +49,21 @@ public class GaleriaIzbyDialog extends javax.swing.JDialog {
                 btnZavrietMouseReleased(evt);
             }
         });
-        getContentPane().add(btnZavriet, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 470, -1, -1));
+        getContentPane().add(btnZavriet, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 470, -1, -1));
 
-        obrazok2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        obrazok2.setText("jLabel2");
-        obrazok2.setPreferredSize(new java.awt.Dimension(384, 216));
-        getContentPane().add(obrazok2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 10, -1, -1));
+        cardPane.setLayout(new java.awt.CardLayout());
+        getContentPane().add(cardPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 920, 450));
 
-        obrazok3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        obrazok3.setText("jLabel2");
-        obrazok3.setPreferredSize(new java.awt.Dimension(384, 216));
-        getContentPane().add(obrazok3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 230, -1, -1));
+        btnDalsi.setBackground(new java.awt.Color(102, 102, 102));
+        btnDalsi.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnDalsi.setForeground(new java.awt.Color(255, 255, 255));
+        btnDalsi.setText("Ďalšia");
+        btnDalsi.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btnDalsiMouseReleased(evt);
+            }
+        });
+        getContentPane().add(btnDalsi, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 470, 150, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -77,20 +73,24 @@ public class GaleriaIzbyDialog extends javax.swing.JDialog {
         this.dispose();
     }//GEN-LAST:event_btnZavrietMouseReleased
 
+    private void btnDalsiMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDalsiMouseReleased
+        CardLayout cl = (CardLayout) (cardPane.getLayout());
+        cl.next(cardPane);
+    }//GEN-LAST:event_btnDalsiMouseReleased
+
     private void nacitajGaleriu() {
-        int idx = 0;
-        for (Icon icon : this.zvolenaIzba.getGaleria()) {
-            if(idx > 2){
-                return;
-            }
-            this.obrazky[idx].setIcon(icon);
+        //this.panely = new ArrayList<>();
+        for (int idx = 0; idx < this.obrazky.size(); idx++) {
+            Icon icon = this.obrazky.get(idx);
+            //panely.add(String.valueOf(panely.size()));
+            cardPane.add(new ObrazokPane(icon));
         }
     }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnDalsi;
     private javax.swing.JButton btnZavriet;
-    private javax.swing.JLabel obrazok1;
-    private javax.swing.JLabel obrazok2;
-    private javax.swing.JLabel obrazok3;
+    private javax.swing.JPanel cardPane;
     // End of variables declaration//GEN-END:variables
 }

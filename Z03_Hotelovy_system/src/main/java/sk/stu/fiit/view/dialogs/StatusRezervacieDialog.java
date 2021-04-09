@@ -1,9 +1,7 @@
 package sk.stu.fiit.view.dialogs;
 
 import java.awt.Frame;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sk.stu.fiit.controller.RezervacieController;
@@ -174,7 +172,7 @@ public class StatusRezervacieDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_btnZavrietMouseReleased
 
     private void btnZaplatitMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnZaplatitMouseReleased
-        PlatbaDialog platbaDialog = new PlatbaDialog(this.parent, true, this.zvolenaRezervacia);
+        PlatbaDialog platbaDialog = new PlatbaDialog(this.parent, true, this.zvolenaRezervacia, 0.1);
         ViewUtils.showDialog(platbaDialog);
         this.updateLabels();
     }//GEN-LAST:event_btnZaplatitMouseReleased

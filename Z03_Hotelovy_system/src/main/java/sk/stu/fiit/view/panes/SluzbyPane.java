@@ -205,7 +205,7 @@ public class SluzbyPane extends javax.swing.JPanel implements IViewRefresh, ICRU
             logger.error("Neboli vyplnene vsetky potrebne polia.");
             return false;
         }
-        if (!ViewUtils.validateDoubleTextField(this, fieldCena)) {
+        if (!ViewUtils.validateDoubleTextFields(this, fieldCena)) {
             logger.error("V Poli cena bola zadana invalidna hodnota.");
             return false;
         }

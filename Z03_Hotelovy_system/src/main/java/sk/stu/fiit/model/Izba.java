@@ -1,5 +1,6 @@
 package sk.stu.fiit.model;
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import javax.swing.Icon;
@@ -26,6 +27,15 @@ public class Izba implements Serializable {
         this.galeria = galeria;
         this.pocetLozok = pocetLozok;
         this.historiaUbytovani = new ArrayList<>();
+    }
+
+    public void updateDetails(Izba other) {
+        this.oznacenie = other.oznacenie;
+        this.kategoria = other.kategoria;
+        this.popis = other.popis;
+        this.cena = other.cena;
+        this.galeria = other.galeria;
+        this.pocetLozok = other.pocetLozok;
     }
 
     @Override

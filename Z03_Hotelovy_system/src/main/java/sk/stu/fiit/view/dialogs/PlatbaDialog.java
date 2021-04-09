@@ -13,11 +13,11 @@ public class PlatbaDialog extends javax.swing.JDialog {
 
     private PlatbaController controller;
 
-    public PlatbaDialog(java.awt.Frame parent, boolean modal, IZaplatitelne polozka) {
+    public PlatbaDialog(java.awt.Frame parent, boolean modal, IZaplatitelne polozka, double percentualnaHodnota) {
         super(parent, modal);
         initComponents();
         this.controller = new PlatbaController(polozka);
-        labelDataCena.setText(String.format("%.02f €", this.controller.getPolozka().getCena()));
+        labelDataCena.setText(String.format("%.02f €", this.controller.getPolozka().getCena() * percentualnaHodnota));
     }
 
     @SuppressWarnings("unchecked")

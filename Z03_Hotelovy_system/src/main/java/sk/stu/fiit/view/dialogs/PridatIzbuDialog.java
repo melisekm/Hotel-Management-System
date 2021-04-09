@@ -104,12 +104,12 @@ public class PridatIzbuDialog extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Prosím vyberte izbu.");
             return;
         }
-        Izba i = (Izba) ((DefaultTableModel) tableIzby.getModel()).getValueAt(row, 0);
-        if (i.getGaleria().isEmpty()) {
+        Izba zobrazovanaIzba = (Izba) ((DefaultTableModel) tableIzby.getModel()).getValueAt(row, 0);
+        if (zobrazovanaIzba.getGaleria().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Tato izba nema ziadne fotky v galerii");
             return;
         }
-        ViewUtils.showDialog(new GaleriaIzbyDialog(this.parent, true, i));
+        ViewUtils.showDialog(new GaleriaIzbyDialog(this.parent, true, zobrazovanaIzba.getGaleria()));
 
     }//GEN-LAST:event_btnGaleriaMouseReleased
 
