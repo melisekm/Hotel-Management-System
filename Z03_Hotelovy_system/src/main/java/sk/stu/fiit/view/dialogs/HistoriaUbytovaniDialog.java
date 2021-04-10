@@ -2,6 +2,7 @@ package sk.stu.fiit.view.dialogs;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import org.slf4j.Logger;
@@ -239,14 +240,15 @@ public class HistoriaUbytovaniDialog extends javax.swing.JDialog {
         }
 
         boolean existujeZoznamSluzieb = ubytovanie.getSluzby() != null;
+        model = (DefaultListModel<String>) listSluzby.getModel();
+        model.setSize(0);
         if (existujeZoznamSluzieb) {
             boolean zoznamSluziebNiejePrazdny = !ubytovanie.getSluzby().isEmpty();
             if (zoznamSluziebNiejePrazdny) {
-                model = (DefaultListModel<String>) listSluzby.getModel();
-                model.setSize(0);
                 labelZiadneSluzby.setVisible(false);
                 for (Sluzba sluzba : ubytovanie.getSluzby()) {
-                    String format = sluzba.getNazov() + " - " + sdf.format(sluzba.getDatumVyuzitia()) + " - " + String.format("%.02f", sluzba.getCena());
+                    Date datumVyuzitia = sluzba.getVyuzitie().get(ubytovanie);
+                    String format = sluzba.getNazov() + " - " + sdf.format(datumVyuzitia) + " - " + String.format("%.02f€", sluzba.getCena());
                     model.addElement(format);
                 }
             }

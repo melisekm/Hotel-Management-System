@@ -52,6 +52,15 @@ public class UbytovaniaController extends BookingController {
         return new Ubytovanie(this.rezervacia, id);
     }
 
+    public void pridajSluzbu(Ubytovanie zvoleneUbytovanie, Sluzba sluzba) {
+        if(zvoleneUbytovanie.getSluzby() == null){
+            zvoleneUbytovanie.setSluzby(new ArrayList<>());
+        }
+        sluzba.getVyuzitie().put(zvoleneUbytovanie, Database.getInstance().getAppTime());
+        zvoleneUbytovanie.getSluzby().add(sluzba);
+        zvoleneUbytovanie.setCena(zvoleneUbytovanie.getCena() + sluzba.getCena());
+    }
+
     @Override
     public void clearTempBooking() {
         super.clearTempBooking();

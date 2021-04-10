@@ -3,6 +3,7 @@ package sk.stu.fiit.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 /**
  *
@@ -13,15 +14,13 @@ public class Sluzba implements Serializable {
     private String nazov;
     private String popis;
     private double cena;
-    private Date datumVyuzitia;
-    private ArrayList<Ubytovanie> vyuzitie;
+    private HashMap<Ubytovanie, Date> vyuzitie;
 
     public Sluzba(String nazov, String popis, double cena) {
         this.nazov = nazov;
         this.popis = popis;
         this.cena = cena;
-        this.datumVyuzitia = null;
-        this.vyuzitie = new ArrayList<>();
+        this.vyuzitie = new HashMap<>();
     }
 
     public void updateDetails(String nazov, String popis, Double cena) {
@@ -35,11 +34,11 @@ public class Sluzba implements Serializable {
         return nazov + " - " + String.format("%.02f", cena) + "€";
     }
 
-    public ArrayList<Ubytovanie> getVyuzitie() {
+    public HashMap<Ubytovanie, Date> getVyuzitie() {
         return vyuzitie;
     }
 
-    public void setVyuzitie(ArrayList<Ubytovanie> vyuzitie) {
+    public void setVyuzitie(HashMap<Ubytovanie, Date> vyuzitie) {
         this.vyuzitie = vyuzitie;
     }
 
@@ -65,14 +64,6 @@ public class Sluzba implements Serializable {
 
     public void setCena(double cena) {
         this.cena = cena;
-    }
-
-    public Date getDatumVyuzitia() {
-        return datumVyuzitia;
-    }
-
-    public void setDatumVyuzitia(Date datumVyuzitia) {
-        this.datumVyuzitia = datumVyuzitia;
     }
 
 }

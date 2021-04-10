@@ -150,7 +150,7 @@ public class RezervaciePane extends javax.swing.JPanel implements IViewRefresh, 
                 btnPridatIzbuMouseReleased(evt);
             }
         });
-        add(btnPridatIzbu, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 290, 270, -1));
+        add(btnPridatIzbu, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 290, 250, -1));
 
         comboBoxZakaznik.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         comboBoxZakaznik.setModel(new DefaultComboBoxModel<Zakaznik>());
@@ -307,7 +307,7 @@ public class RezervaciePane extends javax.swing.JPanel implements IViewRefresh, 
 
     private void skontrolovatCenu() {
         int pocetDni = Utils.DAYS_BETWEEN(dcPrijazd.getDate(), dcOdjazd.getDate());
-        this.controller.prepocitajCenu(pocetDni);
+        this.controller.prepocitajTempCenu(pocetDni);
         this.updateLabels();
     }
 
@@ -353,7 +353,7 @@ public class RezervaciePane extends javax.swing.JPanel implements IViewRefresh, 
             this.resetTime();
             return false;
         }
-        this.controller.prepocitajCenu(pocetDni);
+        this.controller.prepocitajTempCenu(pocetDni);
         this.updateLabels();
         int res = JOptionPane.showConfirmDialog(this, "Prajete si uložiť rezerváciu?. Prosím skontrolujte vyplnené údaje", "CONFIRM", JOptionPane.YES_NO_OPTION);
         if (res == JOptionPane.YES_NO_OPTION) {

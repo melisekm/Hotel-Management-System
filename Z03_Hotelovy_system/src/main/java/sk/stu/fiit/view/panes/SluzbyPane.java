@@ -1,5 +1,8 @@
 package sk.stu.fiit.view.panes;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Map;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -240,12 +243,14 @@ public class SluzbyPane extends javax.swing.JPanel implements IViewRefresh, ICRU
         scrollPaneVyuzitie.setVisible(true);
         DefaultTableModel model = (DefaultTableModel) tableVyuzitia.getModel();
         ((DefaultTableModel) tableVyuzitia.getModel()).setRowCount(0);
-        for (Ubytovanie ubytovanie : s.getVyuzitie()) {
-            int index = ubytovanie.getSluzby().indexOf(s);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+        for (Map.Entry<Ubytovanie, Date> entry : s.getVyuzitie().entrySet()) {
+            Ubytovanie ubytovanie = entry.getKey();
+            Date datumUbytovania = entry.getValue();
             boolean isZaplatene = true ? ubytovanie.getPlatba() != null : false;
             model.addRow(new Object[]{
                 ubytovanie.getId(),
-                ubytovanie.getSluzby().get(index).getDatumVyuzitia(),
+                sdf.format(datumUbytovania),
                 isZaplatene
             });
         }

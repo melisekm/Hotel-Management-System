@@ -18,16 +18,16 @@ public class BookingController extends Controller {
 
     public void pridajIzbu(int pocetDni, Izba pridavanaIzba) {
         this.pridavaneIzby.add(pridavanaIzba);
-        this.prepocitajCenu(pocetDni);
+        this.prepocitajTempCenu(pocetDni);
     }
 
-    public boolean prepocitajCenu(int pocetDni) {
+    public boolean prepocitajTempCenu(int pocetDni) {
         this.priebeznaCena = 0;
         for (Izba izba : pridavaneIzby) {
             this.priebeznaCena += izba.getCena();
         }
         this.priebeznaCena *= pocetDni;
-        this.skontrolujZlavu(pocetDni);
+        this.skontrolujTempZlavu(pocetDni);
         if (this.zlava != null) {
             this.priebeznaCena *= (1 - this.zlava.getPercento());
             return true;
@@ -35,7 +35,7 @@ public class BookingController extends Controller {
         return false;
     }
 
-    private boolean skontrolujZlavu(int pocetDni) {
+    private boolean skontrolujTempZlavu(int pocetDni) {
         ZlavaFactory zlavaFactory = new ZlavaFactory();
         if (this.priebeznaCena > 1000) {
             this.zlava = zlavaFactory.getZlava("1000_E_GTE");

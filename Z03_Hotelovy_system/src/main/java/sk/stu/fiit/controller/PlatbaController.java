@@ -24,13 +24,6 @@ public class PlatbaController extends Controller {
         platba.setPolozka(polozka);
         this.polozka.zaplat(platba);
         this.getPlatby().add(platba);
-        if (this.polozka instanceof Ubytovanie) {
-            ArrayList<Sluzba> sluzby = ((Ubytovanie) this.polozka).getSluzby();
-            for (Sluzba sluzba : sluzby) {
-                sluzba.setDatumVyuzitia(Database.getInstance().getAppTime());
-                sluzba.getVyuzitie().add((Ubytovanie) this.polozka);
-            }
-        }
     }
 
     public Booking getPolozka() {

@@ -26,6 +26,7 @@ import sk.stu.fiit.view.ICRUDPane;
 import sk.stu.fiit.view.IViewRefresh;
 import sk.stu.fiit.view.dialogs.PlatbaDialog;
 import sk.stu.fiit.view.dialogs.PridatIzbuDialog;
+import sk.stu.fiit.view.dialogs.PridatSluzbuDialog;
 
 /**
  *
@@ -283,7 +284,7 @@ public class UbytovaniaPane extends javax.swing.JPanel implements IViewRefresh, 
         btnPridatSluzbu.setBackground(new java.awt.Color(102, 102, 255));
         btnPridatSluzbu.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnPridatSluzbu.setForeground(new java.awt.Color(255, 255, 255));
-        btnPridatSluzbu.setText("Pridať službu");
+        btnPridatSluzbu.setText("Služby");
         btnPridatSluzbu.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 btnPridatSluzbuMouseReleased(evt);
@@ -337,7 +338,7 @@ public class UbytovaniaPane extends javax.swing.JPanel implements IViewRefresh, 
 
     private void dcOdjazdPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dcOdjazdPropertyChange
         int pocetDni = Utils.DAYS_BETWEEN(dcPrijazd.getDate(), dcOdjazd.getDate());
-        this.controller.prepocitajCenu(pocetDni);
+        this.controller.prepocitajTempCenu(pocetDni);
         this.updateLabelsBasedOnTempReservation();
     }//GEN-LAST:event_dcOdjazdPropertyChange
 
@@ -353,7 +354,9 @@ public class UbytovaniaPane extends javax.swing.JPanel implements IViewRefresh, 
     }//GEN-LAST:event_btnPridatMouseReleased
 
     private void btnPridatSluzbuMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPridatSluzbuMouseReleased
-        //TODO
+        Ubytovanie u = listUbytovania.getSelectedValue();
+        ViewUtils.showDialog(new PridatSluzbuDialog(this.parent, true, this.controller, u));
+        this.refreshPane();
     }//GEN-LAST:event_btnPridatSluzbuMouseReleased
 
     private void btnDialogPridatOkMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDialogPridatOkMouseReleased
@@ -398,14 +401,14 @@ public class UbytovaniaPane extends javax.swing.JPanel implements IViewRefresh, 
         Booking booking;
         this.novy = false;
         if (this.controller.getRezervacia() != null) {
-            this.toggleBtns(false, false, true);
+            this.toggleBtns(false, false, false);
             booking = this.controller.getRezervacia();
         } else {
             booking = listUbytovania.getSelectedValue();
             if (booking.getPlatba() == null) {
                 this.toggleBtns(false, true, true);
             } else {
-                this.toggleBtns(true, false, false);
+                this.toggleBtns(true, false, true);
             }
         }
         comboBoxZakaznik.setSelectedItem(booking.getZakaznik());
@@ -439,7 +442,7 @@ public class UbytovaniaPane extends javax.swing.JPanel implements IViewRefresh, 
             this.resetTime();
             return false;
         }
-        this.controller.prepocitajCenu(pocetDni);
+        this.controller.prepocitajTempCenu(pocetDni);
         this.updateLabelsBasedOnTempReservation();
         int res = JOptionPane.showConfirmDialog(this, "Prajete si ulozit ubytovanie?. Prosím skontrolujte vyplnené údaje", "CONFIRM", JOptionPane.YES_NO_OPTION);
         if (res == JOptionPane.YES_NO_OPTION) {
@@ -495,7 +498,7 @@ public class UbytovaniaPane extends javax.swing.JPanel implements IViewRefresh, 
             this.resetTime();
             DefaultTableModel model = (DefaultTableModel) tableIzby.getModel();
             model.setRowCount(0);
-            this.toggleBtns(false, false, true);
+            this.toggleBtns(false, false, false);
         }
         this.controller.clearTempBooking();
         this.updateLabelsBasedOnTempReservation();
