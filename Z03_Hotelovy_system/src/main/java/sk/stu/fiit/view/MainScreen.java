@@ -57,7 +57,7 @@ public class MainScreen extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Hotelový systém");
         setMinimumSize(new java.awt.Dimension(430, 530));
-        setPreferredSize(new java.awt.Dimension(1100, 530));
+        setPreferredSize(new java.awt.Dimension(1100, 540));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 

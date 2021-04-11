@@ -17,7 +17,7 @@ public class Main {
 
     private static final org.slf4j.Logger logger = LoggerFactory.getLogger(Main.class);
 
-    private final static String testovaciaDB = "C:\\Users\\melis\\Documents\\!VAVA\\latest.dbZ03";
+    private final static String testovaciaDB = "C:\\Users\\melis\\Documents\\!VAVA\\demo1.dbZ03";
 
     private static boolean loadDemoDB = true;
 

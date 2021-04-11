@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.swing.JPanel;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.block.BlockBorder;
 import org.jfree.chart.labels.StandardPieSectionLabelGenerator;
 import org.jfree.chart.plot.PiePlot;
 import org.jfree.data.general.DefaultPieDataset;
@@ -40,6 +41,7 @@ public class PieChart extends Chart {
                 false // odkazy
         );
         PiePlot plot = (PiePlot) chart.getPlot();
+        plot.setNoDataMessage("Nenašli sa žiadne záznamy.");
         plot.setSimpleLabels(true);
         plot.setLegendLabelGenerator(new StandardPieSectionLabelGenerator("{0} - {1} ({2})")); // formatovanie legendy
         plot.setLabelGenerator(null); // nezobrazovať labely v grafe
@@ -50,6 +52,7 @@ public class PieChart extends Chart {
         plot.setOutlinePaint(null);
         chart.setBackgroundPaint(farbaPozadia);
         chart.getLegend().setBackgroundPaint(farbaPozadia);
+        chart.getLegend().setFrame(BlockBorder.NONE);
         return chart;
     }
 

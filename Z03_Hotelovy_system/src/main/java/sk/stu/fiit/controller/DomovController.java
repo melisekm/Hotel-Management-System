@@ -1,8 +1,6 @@
 package sk.stu.fiit.controller;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import sk.stu.fiit.database.Database;
@@ -42,21 +40,65 @@ public class DomovController extends Controller {
     }
 
     public LinkedHashMap<String, Double> getPrijmyDataset() {
-        ArrayList<Platba> prijmy = new ArrayList<>(this.getPlatby());
-        Collections.sort(prijmy);
         LinkedHashMap<String, Double> datasetRaw = new LinkedHashMap<>();
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.");
-        for (Platba platba : prijmy) {
+        for (Platba platba : this.getPlatby()) {
             String datum = sdf.format(platba.getDatum());
             Double cena = datasetRaw.get(datum);
             if (cena == null) {
                 datasetRaw.put(sdf.format(platba.getDatum()), platba.getCena());
             } else {
-                cena += platba.getPolozka().getCena();
+                cena += platba.getCena();
                 datasetRaw.put(sdf.format(platba.getDatum()), cena);
             }
         }
         return datasetRaw;
+    }
+
+    public LinkedHashMap<String, Double> getRezervacieDataset() {
+        LinkedHashMap<String, Double> datasetRaw = new LinkedHashMap<>();
+        double pocetPotvrdenych, pocetVytvorenych, pocetVykonanych, pocetExpirovanych, pocetUkoncenych;
+        pocetPotvrdenych = pocetVytvorenych = pocetVykonanych = pocetExpirovanych = pocetUkoncenych = 0;
+        for (Rezervacia rezervacia : this.getRezervacie()) {
+            switch (rezervacia.getStatus()) {
+                case EXPIROVANA:
+                    pocetExpirovanych++;
+                    break;
+                case POTVRDENA:
+                    pocetPotvrdenych++;
+                    break;
+                case UKONCENA:
+                    pocetUkoncenych++;
+                    break;
+                case VYKONANA:
+                    pocetVykonanych++;
+                    break;
+                case VYTVORENA:
+                    pocetVytvorenych++;
+                    break;
+                default:
+                    throw new AssertionError();
+            }
+        }
+        datasetRaw.put(StatusRezervacie.EXPIROVANA.toString(), pocetExpirovanych);
+        datasetRaw.put(StatusRezervacie.POTVRDENA.toString(), pocetPotvrdenych);
+        datasetRaw.put(StatusRezervacie.UKONCENA.toString(), pocetUkoncenych);
+        datasetRaw.put(StatusRezervacie.VYKONANA.toString(), pocetVykonanych);
+        datasetRaw.put(StatusRezervacie.VYTVORENA.toString(), pocetVytvorenych);
+        return datasetRaw;
+    }
+
+    public String[] getStatistiky() {
+        double celkovoPlatby = 0;
+        for (Platba platba : this.getPlatby()) {
+            celkovoPlatby += platba.getCena();
+        }
+        return new String[]{
+            String.valueOf(this.getIzby().size()), String.valueOf(this.getRezervacie().size()),
+            String.valueOf(this.getSluzby().size()), String.valueOf(this.getUbytovania().size()),
+            String.valueOf(this.getZakaznici().size()),
+            String.format("Príjmy celkovo: %.02f EUR", celkovoPlatby)
+        };
     }
 
 }
