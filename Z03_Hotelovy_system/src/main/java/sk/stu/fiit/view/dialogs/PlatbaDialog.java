@@ -23,8 +23,9 @@ public class PlatbaDialog extends javax.swing.JDialog {
     public PlatbaDialog(java.awt.Frame parent, boolean modal, Booking polozka, double percentualnaHodnota) {
         super(parent, modal);
         initComponents();
-        this.controller = new PlatbaController(polozka);
-        labelDataCena.setText(String.format("%.02f €", this.controller.getPolozka().getCena() * percentualnaHodnota));
+        double cena = polozka.getCena() * percentualnaHodnota;
+        this.controller = new PlatbaController(polozka, cena);
+        labelDataCena.setText(String.format("%.02f €", cena));
     }
 
     @SuppressWarnings("unchecked")

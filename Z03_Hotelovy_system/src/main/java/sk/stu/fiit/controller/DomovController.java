@@ -1,8 +1,13 @@
 package sk.stu.fiit.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import sk.stu.fiit.database.Database;
 import sk.stu.fiit.model.Izba;
+import sk.stu.fiit.model.Platba;
 import sk.stu.fiit.model.Rezervacia;
 import sk.stu.fiit.model.StatusRezervacie;
 import sk.stu.fiit.model.StatusUbytovanie;
@@ -26,7 +31,7 @@ public class DomovController extends Controller {
             }
         }
         for (Ubytovanie ubytovanie : this.getUbytovania()) {
-            if(ubytovanie.getOdjazd().before(cas)){
+            if (ubytovanie.getOdjazd().before(cas)) {
                 ubytovanie.setStatus(StatusUbytovanie.UKONCENE);
                 for (Izba izba : ubytovanie.getIzby()) {
                     izba.getHistoriaUbytovani().add(ubytovanie);
@@ -34,6 +39,24 @@ public class DomovController extends Controller {
                 ubytovanie.getZakaznik().getHistoriaUbytovani().add(ubytovanie);
             }
         }
+    }
+
+    public LinkedHashMap<String, Double> getPrijmyDataset() {
+        ArrayList<Platba> prijmy = new ArrayList<>(this.getPlatby());
+        Collections.sort(prijmy);
+        LinkedHashMap<String, Double> datasetRaw = new LinkedHashMap<>();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.");
+        for (Platba platba : prijmy) {
+            String datum = sdf.format(platba.getDatum());
+            Double cena = datasetRaw.get(datum);
+            if (cena == null) {
+                datasetRaw.put(sdf.format(platba.getDatum()), platba.getCena());
+            } else {
+                cena += platba.getPolozka().getCena();
+                datasetRaw.put(sdf.format(platba.getDatum()), cena);
+            }
+        }
+        return datasetRaw;
     }
 
 }

@@ -1,10 +1,9 @@
-package sk.stu.fiit.view;
+package sk.stu.fiit.view.charts;
 
 import java.awt.Color;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import javax.swing.JPanel;
-import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.labels.StandardPieSectionLabelGenerator;
@@ -16,18 +15,15 @@ import org.jfree.data.general.PieDataset;
  *
  * @author Martin Melisek
  */
-@SuppressWarnings("unchecked")
-public class Chart {
+public class PieChart extends Chart {
 
-    private HashMap<String, Double> datasetRaw;
-
-    public Chart(HashMap<String, Double> dataset) {
-        this.datasetRaw = dataset;
+    public PieChart(LinkedHashMap<String, Double> dataset, String nadpis) {
+        super(dataset, nadpis);
     }
 
     private PieDataset createDataset() {
         DefaultPieDataset dataset = new DefaultPieDataset();
-        for (Map.Entry<String, Double> entry : datasetRaw.entrySet()) {
+        for (Map.Entry<String, Double> entry : this.getRawDataset().entrySet()) {
             String key = entry.getKey();
             Double value = entry.getValue();
             dataset.setValue(key, value);
@@ -35,8 +31,8 @@ public class Chart {
         return dataset;
     }
 
-    public JFreeChart createChart(PieDataset dataset, String nadpis) {
-        JFreeChart chart = ChartFactory.createPieChart(
+    private JFreeChart createChart(PieDataset dataset, String nadpis) {
+        JFreeChart chart = org.jfree.chart.ChartFactory.createPieChart(
                 nadpis, // nadpis
                 dataset, // data
                 true, // legenda
@@ -47,9 +43,9 @@ public class Chart {
         plot.setSimpleLabels(true);
         plot.setLegendLabelGenerator(new StandardPieSectionLabelGenerator("{0} - {1} ({2})")); // formatovanie legendy
         plot.setLabelGenerator(null); // nezobrazovať labely v grafe
-        
+
         //farby
-        Color farbaPozadia = new Color(214,217,223);
+        Color farbaPozadia = new Color(214, 217, 223);
         plot.setBackgroundPaint(farbaPozadia);
         plot.setOutlinePaint(null);
         chart.setBackgroundPaint(farbaPozadia);
@@ -58,7 +54,7 @@ public class Chart {
     }
 
     public JPanel createPiePane() {
-        JFreeChart chart = createChart(createDataset(), "Nadpis");
+        JFreeChart chart = createChart(createDataset(), this.getNadpis());
         return new ChartPanel(chart);
     }
 }

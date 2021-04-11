@@ -7,18 +7,28 @@ import java.util.Date;
  *
  * @author Martin Melisek
  */
-public class Platba implements Serializable {
-    
+public class Platba implements Serializable, Comparable<Platba> {
+
     private Zakaznik zakaznik;
     private Date datum;
     private Booking polozka;
     private boolean vHotovosti;
+    private double cena;
 
-    public Platba(Date datum, Booking polozka, boolean vHotovosti) {
+    public Platba(Date datum, Booking polozka, boolean vHotovosti, double cena) {
         this.datum = datum;
         this.polozka = polozka;
         this.vHotovosti = vHotovosti;
         this.zakaznik = polozka.getZakaznik();
+        this.cena = cena;
+    }
+
+    @Override
+    public int compareTo(Platba o) {
+        if (this.datum == null || o.getDatum() == null) {
+            return 0;
+        }
+        return this.datum.compareTo(o.getDatum());
     }
 
     public Date getDatum() {
@@ -52,7 +62,13 @@ public class Platba implements Serializable {
     public void setZakaznik(Zakaznik zakaznik) {
         this.zakaznik = zakaznik;
     }
-    
-    
+
+    public double getCena() {
+        return cena;
+    }
+
+    public void setCena(double cena) {
+        this.cena = cena;
+    }
 
 }

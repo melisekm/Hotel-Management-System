@@ -3,7 +3,6 @@ package sk.stu.fiit.controller;
 import java.util.ArrayList;
 import java.util.Date;
 import sk.stu.fiit.database.Database;
-import sk.stu.fiit.model.Booking;
 import sk.stu.fiit.model.Izba;
 import sk.stu.fiit.model.Platba;
 import sk.stu.fiit.model.Rezervacia;
