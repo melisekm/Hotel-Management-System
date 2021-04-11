@@ -19,7 +19,7 @@ public class Main {
 
     private final static String testovaciaDB = "C:\\Users\\melis\\Documents\\!VAVA\\demo1.dbZ03";
 
-    private static boolean loadDemoDB = true;
+    private static boolean loadDemoDB = false;
 
     static {
 
@@ -43,7 +43,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        Locale.setDefault(new Locale("en", "GB")); // globalny oddelovac desatinnych miest
+        Locale.setDefault(new Locale("sk", "SK")); // globalny oddelovac desatinnych miest
         MainScreen.main();
     }
 }

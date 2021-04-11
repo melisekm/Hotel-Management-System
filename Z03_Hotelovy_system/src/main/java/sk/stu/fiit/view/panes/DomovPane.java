@@ -1,6 +1,7 @@
 package sk.stu.fiit.view.panes;
 
 import java.util.Date;
+import java.util.ResourceBundle;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -44,11 +45,9 @@ public class DomovPane extends javax.swing.JPanel implements IViewRefresh {
 
         jSeparator6 = new javax.swing.JSeparator();
         btnTimeSetup = new javax.swing.JButton();
-        btnJazyk = new javax.swing.JButton();
         btnIO = new javax.swing.JButton();
         dcTimeTravel = new com.toedter.calendar.JDateChooser();
         jSeparator1 = new javax.swing.JSeparator();
-        jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
         barChartDesignPane = new javax.swing.JPanel();
         labelDetaily = new javax.swing.JLabel();
@@ -70,7 +69,8 @@ public class DomovPane extends javax.swing.JPanel implements IViewRefresh {
         add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 1010, 10));
 
         btnTimeSetup.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        btnTimeSetup.setText("Zmeniť čas");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("sk/stu/fiit/view/Bundle_sk_SK"); // NOI18N
+        btnTimeSetup.setText(bundle.getString("DomovPane.btnTimeSetup.text")); // NOI18N
         btnTimeSetup.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 btnTimeSetupMouseReleased(evt);
@@ -78,12 +78,8 @@ public class DomovPane extends javax.swing.JPanel implements IViewRefresh {
         });
         add(btnTimeSetup, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 450, 160, -1));
 
-        btnJazyk.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        btnJazyk.setText("Nastavenie Jazyka");
-        add(btnJazyk, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 450, -1, -1));
-
         btnIO.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        btnIO.setText("Načítavanie a ukladanie údajov...");
+        btnIO.setText(bundle.getString("DomovPane.btnIO.text")); // NOI18N
         btnIO.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 btnIOMouseReleased(evt);
@@ -93,11 +89,8 @@ public class DomovPane extends javax.swing.JPanel implements IViewRefresh {
         add(dcTimeTravel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 450, 130, 30));
         add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 430, 1010, 10));
 
-        jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
-        add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 430, 10, 60));
-
         jSeparator3.setOrientation(javax.swing.SwingConstants.VERTICAL);
-        add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 430, 10, 60));
+        add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 431, 10, 70));
 
         barChartDesignPane.setBackground(new java.awt.Color(153, 153, 153));
         barChartDesignPane.setEnabled(false);
@@ -117,54 +110,54 @@ public class DomovPane extends javax.swing.JPanel implements IViewRefresh {
         add(barChartDesignPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 460, 360));
 
         labelDetaily.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
-        labelDetaily.setText("Detaily");
+        labelDetaily.setText(bundle.getString("DomovPane.labelDetaily.text")); // NOI18N
         add(labelDetaily, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 0, 80, -1));
 
         jSeparator4.setOrientation(javax.swing.SwingConstants.VERTICAL);
         add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, -10, 10, 540));
 
         labelPocetIzieb.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        labelPocetIzieb.setText("Počet izieb");
+        labelPocetIzieb.setText(bundle.getString("DomovPane.labelPocetIzieb.text")); // NOI18N
         add(labelPocetIzieb, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 80, 240, -1));
 
         labelPocetZakaznikov.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        labelPocetZakaznikov.setText("Počet zákazníkov");
+        labelPocetZakaznikov.setText(bundle.getString("DomovPane.labelPocetZakaznikov.text")); // NOI18N
         add(labelPocetZakaznikov, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 180, 270, -1));
 
         labelPocetUbytovani.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        labelPocetUbytovani.setText("Počet ubytovaní");
+        labelPocetUbytovani.setText(bundle.getString("DomovPane.labelPocetUbytovani.text")); // NOI18N
         add(labelPocetUbytovani, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 230, 240, -1));
 
         labelPocetSluzieb.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        labelPocetSluzieb.setText("Počet služieb");
+        labelPocetSluzieb.setText(bundle.getString("DomovPane.labelPocetSluzieb.text")); // NOI18N
         add(labelPocetSluzieb, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 130, 220, -1));
 
         labelDataIzby.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        labelDataIzby.setText("40");
+        labelDataIzby.setText(bundle.getString("DomovPane.labelDataIzby.text")); // NOI18N
         add(labelDataIzby, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 80, 150, -1));
 
         labelDataSluzby.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        labelDataSluzby.setText("40");
+        labelDataSluzby.setText(bundle.getString("DomovPane.labelDataSluzby.text")); // NOI18N
         add(labelDataSluzby, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 130, 150, -1));
 
         labelDataZakaznici.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        labelDataZakaznici.setText("40");
+        labelDataZakaznici.setText(bundle.getString("DomovPane.labelDataZakaznici.text")); // NOI18N
         add(labelDataZakaznici, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 180, 150, -1));
 
         labelDataUbytovania.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        labelDataUbytovania.setText("40");
+        labelDataUbytovania.setText(bundle.getString("DomovPane.labelDataUbytovania.text")); // NOI18N
         add(labelDataUbytovania, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 230, 150, -1));
 
         labelRezervacie.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        labelRezervacie.setText("Počet rezervácií");
+        labelRezervacie.setText(bundle.getString("DomovPane.labelRezervacie.text")); // NOI18N
         add(labelRezervacie, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 280, 220, -1));
 
         labelDataRezervacie.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        labelDataRezervacie.setText("40");
+        labelDataRezervacie.setText(bundle.getString("DomovPane.labelDataRezervacie.text")); // NOI18N
         add(labelDataRezervacie, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 280, 150, -1));
 
         labelPrijmy.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        labelPrijmy.setText("Príjmy celkovo: 8000 EUR");
+        labelPrijmy.setText(bundle.getString("DomovPane.labelPrijmy.text")); // NOI18N
         add(labelPrijmy, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 380, 300, -1));
 
         pieChartDesignPane.setBackground(new java.awt.Color(153, 153, 153));
@@ -188,7 +181,7 @@ public class DomovPane extends javax.swing.JPanel implements IViewRefresh {
     private void btnTimeSetupMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTimeSetupMouseReleased
         Date d = dcTimeTravel.getDate();
         if (d == null) {
-            JOptionPane.showMessageDialog(this, "Zadajte cas");
+            JOptionPane.showMessageDialog(this, java.util.ResourceBundle.getBundle(Database.getInstance().getBundle()).getString("ZADAJTE CAS"));
             return;
         }
         MainScreen parent = (MainScreen) SwingUtilities.getAncestorOfClass(MainScreen.class, this);
@@ -207,12 +200,12 @@ public class DomovPane extends javax.swing.JPanel implements IViewRefresh {
 
     private void setChart(String type) {
         BarPieChartFactory factory = new BarPieChartFactory();
-        if ("BAR".equals(type)) {
-            prijmyPanel = factory.createChart(type, "Príjmy", this.controller.getPrijmyDataset());
+        if ("BAR".equals(type)) { //NOI18N
+            prijmyPanel = factory.createChart(type, java.util.ResourceBundle.getBundle(Database.getInstance().getBundle()).getString("PRÍJMY"), this.controller.getPrijmyDataset());
             prijmyPanel.setPreferredSize(new java.awt.Dimension(460, 360));
             add(prijmyPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 460, 360));
-        } else if ("PIE".equals(type)) {
-            rezervaciePanel = factory.createChart(type, "Rezervácie", this.controller.getRezervacieDataset());
+        } else if ("PIE".equals(type)) { //NOI18N
+            rezervaciePanel = factory.createChart(type, java.util.ResourceBundle.getBundle(Database.getInstance().getBundle()).getString("REZERVÁCIE"), this.controller.getRezervacieDataset());
             rezervaciePanel.setPreferredSize(new java.awt.Dimension(300, 360));
             add(rezervaciePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 0, 300, 360));
         }
@@ -224,14 +217,28 @@ public class DomovPane extends javax.swing.JPanel implements IViewRefresh {
             this.statistikyLabels[i].setText(labelData[i]);
         }
     }
+    
+    public void reInternationalize(){
+        String bundleLoc = Database.getInstance().getBundle();
+        ResourceBundle r = ResourceBundle.getBundle(bundleLoc);
+        btnIO.setText(r.getString("DomovPane.btnIO.text"));
+        btnTimeSetup.setText(r.getString("DomovPane.btnTimeSetup.text"));
+        labelRezervacie.setText(r.getString("DomovPane.labelRezervacie.text"));
+        labelPocetSluzieb.setText(r.getString("DomovPane.labelPocetSluzieb.text"));
+        labelPocetUbytovani.setText(r.getString("DomovPane.labelPocetUbytovani.text"));
+        labelPocetZakaznikov.setText(r.getString("DomovPane.labelPocetZakaznikov.text"));
+        labelPocetIzieb.setText(r.getString("DomovPane.labelPocetIzieb.text"));
+        labelDetaily.setText(r.getString("DomovPane.labelDetaily.text"));
+        this.refreshPane();
+    }
 
     @Override
     public void refreshPane() {
         this.remove(prijmyPanel);
         this.remove(rezervaciePanel);
         this.revalidate();
-        this.setChart("BAR");
-        this.setChart("PIE");
+        this.setChart("BAR"); //NOI18N
+        this.setChart("PIE"); //NOI18N
         this.setLabels();
         this.repaint();
     }
@@ -239,11 +246,9 @@ public class DomovPane extends javax.swing.JPanel implements IViewRefresh {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel barChartDesignPane;
     private javax.swing.JButton btnIO;
-    private javax.swing.JButton btnJazyk;
     private javax.swing.JButton btnTimeSetup;
     private com.toedter.calendar.JDateChooser dcTimeTravel;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator6;

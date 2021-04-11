@@ -7,6 +7,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.ResourceBundle;
 import javax.swing.Timer;
 import sk.stu.fiit.database.Database;
 
@@ -52,12 +53,14 @@ public class MainScreen extends javax.swing.JFrame {
         btnUbytovania = new javax.swing.JButton();
         btnIzby = new javax.swing.JButton();
         btnSluzby = new javax.swing.JButton();
+        labelIconSK = new javax.swing.JLabel();
+        labelIconUSA = new javax.swing.JLabel();
         grayPane = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Hotelový systém");
         setMinimumSize(new java.awt.Dimension(430, 530));
-        setPreferredSize(new java.awt.Dimension(1100, 540));
+        setPreferredSize(new java.awt.Dimension(1140, 540));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -71,7 +74,7 @@ public class MainScreen extends javax.swing.JFrame {
         cardPane.add(izbyPane, "IZBY");
         cardPane.add(ubytovaniaPane, "UBYTOVANIA");
 
-        getContentPane().add(cardPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 0, -1, -1));
+        getContentPane().add(cardPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 0, 1170, -1));
 
         menuPane.setBackground(new java.awt.Color(153, 153, 153));
         menuPane.setLayout(new java.awt.GridBagLayout());
@@ -159,6 +162,7 @@ public class MainScreen extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 0.1;
         gridBagConstraints.insets = new java.awt.Insets(3, 0, 3, 0);
         menuPane.add(btnUbytovania, gridBagConstraints);
@@ -197,7 +201,33 @@ public class MainScreen extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(3, 0, 3, 0);
         menuPane.add(btnSluzby, gridBagConstraints);
 
-        getContentPane().add(menuPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 120, 420));
+        labelIconSK.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        labelIconSK.setForeground(new java.awt.Color(0, 0, 0));
+        labelIconSK.setText("SK");
+        labelIconSK.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                labelIconSKMouseReleased(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 8;
+        menuPane.add(labelIconSK, gridBagConstraints);
+
+        labelIconUSA.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        labelIconUSA.setForeground(new java.awt.Color(0, 0, 0));
+        labelIconUSA.setText("USA");
+        labelIconUSA.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                labelIconUSAMouseReleased(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 9;
+        menuPane.add(labelIconUSA, gridBagConstraints);
+
+        getContentPane().add(menuPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 150, 420));
 
         grayPane.setBackground(new java.awt.Color(153, 153, 153));
 
@@ -205,14 +235,14 @@ public class MainScreen extends javax.swing.JFrame {
         grayPane.setLayout(grayPaneLayout);
         grayPaneLayout.setHorizontalGroup(
             grayPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 120, Short.MAX_VALUE)
+            .addGap(0, 150, Short.MAX_VALUE)
         );
         grayPaneLayout.setVerticalGroup(
             grayPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 120, Short.MAX_VALUE)
         );
 
-        getContentPane().add(grayPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 420, 120, 120));
+        getContentPane().add(grayPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 420, 150, 120));
 
         pack();
         setLocationRelativeTo(null);
@@ -242,6 +272,30 @@ public class MainScreen extends javax.swing.JFrame {
     private void btnSluzbyMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSluzbyMouseReleased
         switchScene("SLUZBY", sluzbyPane);
     }//GEN-LAST:event_btnSluzbyMouseReleased
+
+    private void labelIconSKMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelIconSKMouseReleased
+        Database.getInstance().setBundle("sk_SK");
+        domovPane.reInternationalize();
+        this.reInternationalize();
+    }//GEN-LAST:event_labelIconSKMouseReleased
+
+    private void labelIconUSAMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelIconUSAMouseReleased
+        Database.getInstance().setBundle("en_US");
+        domovPane.reInternationalize();
+        this.reInternationalize();
+    }//GEN-LAST:event_labelIconUSAMouseReleased
+
+    private void reInternationalize() {
+        String bundleLoc = Database.getInstance().getBundle();
+        ResourceBundle r = ResourceBundle.getBundle(bundleLoc);
+        this.setTitle(r.getString("MainScreen.title"));
+        btnDomov.setText(r.getString("MainScreen.btnDomov.text"));
+        btnRezervacie.setText(r.getString("MainScreen.btnRezervacie.text"));
+        btnZakaznici.setText(r.getString("MainScreen.btnZakaznici.text"));
+        btnUbytovania.setText(r.getString("MainScreen.btnUbytovania.text"));
+        btnSluzby.setText(r.getString("MainScreen.btnSluzby.text"));
+        btnIzby.setText(r.getString("MainScreen.btnIzby.text"));
+    }
 
     private void switchScene(String scene, IViewRefresh pane) {
         CardLayout cl = (CardLayout) (cardPane.getLayout());
@@ -328,6 +382,8 @@ public class MainScreen extends javax.swing.JFrame {
     private sk.stu.fiit.view.panes.IzbyPane izbyPane;
     private javax.swing.JLabel labelCas;
     private javax.swing.JLabel labelDatum;
+    private javax.swing.JLabel labelIconSK;
+    private javax.swing.JLabel labelIconUSA;
     private javax.swing.JPanel menuPane;
     private sk.stu.fiit.view.panes.RezervaciePane rezervaciePane;
     private sk.stu.fiit.view.panes.SluzbyPane sluzbyPane;

@@ -31,6 +31,8 @@ public class Database implements Serializable {
     private int rezervacieUUID = 1;
     private int ubytovaniaUUID = 1;
 
+    private String bundle = "sk/stu/fiit/view/Bundle_sk_SK";
+
     private Database() {
     }
 
@@ -113,6 +115,14 @@ public class Database implements Serializable {
 
     public int getAndSetUbytovaniaUUID() {
         return ubytovaniaUUID++;
+    }
+
+    public String getBundle() {
+        return bundle;
+    }
+
+    public void setBundle(String loc) {
+        this.bundle = "sk/stu/fiit/view/Bundle_" + loc;
     }
 
 }

@@ -17,6 +17,7 @@ import org.jfree.chart.renderer.category.CategoryItemRenderer;
 import org.jfree.chart.renderer.category.StandardBarPainter;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
+import sk.stu.fiit.database.Database;
 
 /**
  *
@@ -33,7 +34,7 @@ public class BarChart extends Chart {
         for (Map.Entry<String, Double> entry : this.getRawDataset().entrySet()) {
             String datum = entry.getKey();
             Double hodnota = entry.getValue();
-            dataset.setValue(hodnota, "Výška príjmu v €", datum);
+            dataset.setValue(hodnota, java.util.ResourceBundle.getBundle("sk/stu/fiit/view/Bundle_sk_SK").getString("VÝŠKA PRÍJMU V €"), datum);
         }
         return dataset;
     }
@@ -41,8 +42,8 @@ public class BarChart extends Chart {
     private JFreeChart createChart(CategoryDataset dataset, String nadpis) {
         JFreeChart chart = ChartFactory.createBarChart(
                 nadpis,
-                "", // TODO
-                "Výška príjmu v €", // TODO
+                "", // TODO //NOI18N
+                java.util.ResourceBundle.getBundle(Database.getInstance().getBundle()).getString("VÝŠKA PRÍJMU V €"), // TODO
                 dataset,
                 PlotOrientation.VERTICAL,
                 false,
@@ -50,8 +51,8 @@ public class BarChart extends Chart {
                 false
         );
         CategoryPlot plot = (CategoryPlot) chart.getPlot();
-        plot.setNoDataMessage("Nenašli sa žiadne záznamy.");
-        plot.getDomainAxis().setLabelFont(new Font("Dialog", Font.PLAIN, 8));
+        plot.setNoDataMessage(java.util.ResourceBundle.getBundle(Database.getInstance().getBundle()).getString("NENAŠLI SA ŽIADNE ZÁZNAMY."));
+        plot.getDomainAxis().setLabelFont(new Font("Dialog", Font.PLAIN, 8)); //NOI18N
 
         //farby
         Color farbaPozadia = new Color(214, 217, 223);

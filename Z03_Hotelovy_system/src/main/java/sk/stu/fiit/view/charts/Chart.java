@@ -1,7 +1,6 @@
 package sk.stu.fiit.view.charts;
 
 import java.util.LinkedHashMap;
-import java.util.TreeMap;
 
 /**
  *

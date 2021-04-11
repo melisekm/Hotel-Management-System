@@ -41,7 +41,7 @@ public class DomovController extends Controller {
 
     public LinkedHashMap<String, Double> getPrijmyDataset() {
         LinkedHashMap<String, Double> datasetRaw = new LinkedHashMap<>();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.");
+        SimpleDateFormat sdf = new SimpleDateFormat(java.util.ResourceBundle.getBundle(Database.getInstance().getBundle()).getString("sdfFormat"));
         for (Platba platba : this.getPlatby()) {
             String datum = sdf.format(platba.getDatum());
             Double cena = datasetRaw.get(datum);
@@ -97,7 +97,7 @@ public class DomovController extends Controller {
             String.valueOf(this.getIzby().size()), String.valueOf(this.getRezervacie().size()),
             String.valueOf(this.getSluzby().size()), String.valueOf(this.getUbytovania().size()),
             String.valueOf(this.getZakaznici().size()),
-            String.format("Príjmy celkovo: %.02f EUR", celkovoPlatby)
+            String.format(java.util.ResourceBundle.getBundle(Database.getInstance().getBundle()).getString("PRIJMY"), celkovoPlatby)
         };
     }
 
