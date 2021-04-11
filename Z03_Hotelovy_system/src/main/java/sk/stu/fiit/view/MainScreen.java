@@ -17,7 +17,6 @@ import sk.stu.fiit.database.Database;
  */
 public class MainScreen extends javax.swing.JFrame {
 
-    final DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
     final DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
 
     private Timer timer;
@@ -203,7 +202,7 @@ public class MainScreen extends javax.swing.JFrame {
 
         labelIconSK.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         labelIconSK.setForeground(new java.awt.Color(0, 0, 0));
-        labelIconSK.setText("SK");
+        labelIconSK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sk/stu/fiit/view/assets/sk.png"))); // NOI18N
         labelIconSK.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 labelIconSKMouseReleased(evt);
@@ -216,7 +215,7 @@ public class MainScreen extends javax.swing.JFrame {
 
         labelIconUSA.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         labelIconUSA.setForeground(new java.awt.Color(0, 0, 0));
-        labelIconUSA.setText("USA");
+        labelIconUSA.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sk/stu/fiit/view/assets/usa.png"))); // NOI18N
         labelIconUSA.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 labelIconUSAMouseReleased(evt);
@@ -295,6 +294,7 @@ public class MainScreen extends javax.swing.JFrame {
         btnUbytovania.setText(r.getString("MainScreen.btnUbytovania.text"));
         btnSluzby.setText(r.getString("MainScreen.btnSluzby.text"));
         btnIzby.setText(r.getString("MainScreen.btnIzby.text"));
+        this.timeSetup(Database.getInstance().getAppTime());
     }
 
     private void switchScene(String scene, IViewRefresh pane) {
@@ -310,10 +310,11 @@ public class MainScreen extends javax.swing.JFrame {
         this.timer = new Timer(1000, new TimeActionListener(date));
         this.timer.setInitialDelay(0);
         this.timer.start();
-        //TODO Aktualizovat vsetko.
     }
 
     private class TimeActionListener implements ActionListener {
+
+        final DateFormat dateFormat = new SimpleDateFormat(java.util.ResourceBundle.getBundle(Database.getInstance().getBundle()).getString("DD.MM.YYYY"));
 
         private Calendar cal = Calendar.getInstance();
 

@@ -8,6 +8,7 @@ import javax.swing.JList;
  *
  * @author Martin Melisek
  */
+@SuppressWarnings("unchecked")
 public interface ICRUDPane {
 
     /**
