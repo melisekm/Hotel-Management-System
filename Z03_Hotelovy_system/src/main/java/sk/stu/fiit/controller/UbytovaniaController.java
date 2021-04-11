@@ -29,21 +29,15 @@ public class UbytovaniaController extends BookingController {
             noveUbytovanie = this.createUbytovanieOnReservation();
             this.getUbytovania().add(noveUbytovanie);
         }
-        for (Izba izba : noveUbytovanie.getIzby()) {
-            izba.getHistoriaUbytovani().add(noveUbytovanie);
-        }
-        Zakaznik ubytovanyZakaznik = noveUbytovanie.getZakaznik();
-        ubytovanyZakaznik.getHistoriaUbytovani().add(noveUbytovanie);
     }
 
     private Ubytovanie createUbytovanie(Zakaznik zakaznik, Date datumPrijazdu, Date datumOdjazdu, int pocetDni) {
         String id = "U" + Database.getInstance().getAndSetUbytovaniaUUID();
-        ArrayList<Izba> izby = new ArrayList<>(this.pridavaneIzby);
         Zlava zlava = null;
         if (this.zlava != null) {
             zlava = new Zlava(this.zlava);
         }
-        return new Ubytovanie(this.sluzby, id, izby, zakaznik, datumPrijazdu, datumOdjazdu, pocetDni, this.priebeznaCena, zlava);
+        return new Ubytovanie(new ArrayList<>(this.sluzby), id, new ArrayList<>(this.pridavaneIzby), zakaznik, datumPrijazdu, datumOdjazdu, pocetDni, this.priebeznaCena, zlava);
     }
 
     private Ubytovanie createUbytovanieOnReservation() {
@@ -53,7 +47,7 @@ public class UbytovaniaController extends BookingController {
     }
 
     public void pridajSluzbu(Ubytovanie zvoleneUbytovanie, Sluzba sluzba) {
-        if(zvoleneUbytovanie.getSluzby() == null){
+        if (zvoleneUbytovanie.getSluzby() == null) {
             zvoleneUbytovanie.setSluzby(new ArrayList<>());
         }
         sluzba.getVyuzitie().put(zvoleneUbytovanie, Database.getInstance().getAppTime());

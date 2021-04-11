@@ -64,7 +64,15 @@ public class PridatIzbuDialog extends javax.swing.JDialog {
             new String [] {
                 "Kategória", "Izba", "Popis", "Počet lôžok", "Cena"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         scrollPaneIzby.setViewportView(tableIzby);
 
         getContentPane().add(scrollPaneIzby, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 630, 220));

@@ -5,6 +5,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import sk.stu.fiit.controller.UbytovaniaController;
 import sk.stu.fiit.model.Sluzba;
+import sk.stu.fiit.model.StatusUbytovanie;
 import sk.stu.fiit.model.Ubytovanie;
 
 /**
@@ -23,7 +24,7 @@ public class PridatSluzbuDialog extends javax.swing.JDialog {
         this.zvoleneUbytovanie = zvoleneUbytovanie;
         this.naplnListSluzieb();
         this.setSluzbaInfo();
-        if (this.zvoleneUbytovanie.getPlatba() != null) {
+        if (this.zvoleneUbytovanie.getPlatba() != null || this.zvoleneUbytovanie.getStatus() == StatusUbytovanie.UKONCENE) {
             this.btnVybrat.setEnabled(false);
         } else {
             this.btnVybrat.setEnabled(true);

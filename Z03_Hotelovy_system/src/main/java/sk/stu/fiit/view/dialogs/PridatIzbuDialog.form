@@ -49,11 +49,11 @@
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
               <Table columnCount="5" rowCount="0">
-                <Column editable="true" title="Kateg&#xf3;ria" type="java.lang.Object"/>
-                <Column editable="true" title="Izba" type="java.lang.Object"/>
-                <Column editable="true" title="Popis" type="java.lang.Object"/>
-                <Column editable="true" title="Po&#x10d;et l&#xf4;&#x17e;ok" type="java.lang.Object"/>
-                <Column editable="true" title="Cena" type="java.lang.Object"/>
+                <Column editable="false" title="Kateg&#xf3;ria" type="java.lang.Object"/>
+                <Column editable="false" title="Izba" type="java.lang.Object"/>
+                <Column editable="false" title="Popis" type="java.lang.Object"/>
+                <Column editable="false" title="Po&#x10d;et l&#xf4;&#x17e;ok" type="java.lang.Object"/>
+                <Column editable="false" title="Cena" type="java.lang.Object"/>
               </Table>
             </Property>
           </Properties>

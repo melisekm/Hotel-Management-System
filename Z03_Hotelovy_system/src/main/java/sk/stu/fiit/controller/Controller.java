@@ -3,10 +3,13 @@ package sk.stu.fiit.controller;
 import java.util.ArrayList;
 import java.util.Date;
 import sk.stu.fiit.database.Database;
+import sk.stu.fiit.model.Booking;
 import sk.stu.fiit.model.Izba;
 import sk.stu.fiit.model.Platba;
 import sk.stu.fiit.model.Rezervacia;
 import sk.stu.fiit.model.Sluzba;
+import sk.stu.fiit.model.StatusRezervacie;
+import sk.stu.fiit.model.StatusUbytovanie;
 import sk.stu.fiit.model.Ubytovanie;
 import sk.stu.fiit.model.Zakaznik;
 import sk.stu.fiit.model.Zlava;
@@ -22,7 +25,8 @@ public abstract class Controller {
         ArrayList<Izba> izby = new ArrayList<>(this.getIzby());
         for (Rezervacia rezervacia : this.getRezervacie()) {
             boolean datesOverlap = rezervacia.getPrijazd().compareTo(odjazd) <= 0 && rezervacia.getOdjazd().compareTo(prijazd) >= 0;
-            if (datesOverlap) {
+            boolean jeRezervaciaUkoncena = rezervacia.getStatus() != StatusRezervacie.EXPIROVANA && rezervacia.getStatus() != StatusRezervacie.UKONCENA;
+            if (datesOverlap && jeRezervaciaUkoncena) {
                 for (Izba izba : rezervacia.getIzby()) {
                     izby.remove(izba);
                 }
@@ -30,7 +34,7 @@ public abstract class Controller {
         }
         for (Ubytovanie ubytovanie : this.getUbytovania()) {
             boolean datesOverlap = ubytovanie.getPrijazd().compareTo(odjazd) <= 0 && ubytovanie.getOdjazd().compareTo(prijazd) >= 0;
-            if (datesOverlap) {
+            if (datesOverlap && ubytovanie.getStatus() != StatusUbytovanie.UKONCENE) {
                 for (Izba izba : ubytovanie.getIzby()) {
                     izby.remove(izba);
                 }

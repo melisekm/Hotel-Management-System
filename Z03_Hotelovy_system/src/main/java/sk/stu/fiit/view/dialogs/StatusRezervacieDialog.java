@@ -157,6 +157,10 @@ public class StatusRezervacieDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_btnZrusitRezervaciuMouseReleased
 
     private void btnUplatnitZlavuMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUplatnitZlavuMouseReleased
+        if (this.zvolenaRezervacia.getZlava() != null) {
+            JOptionPane.showMessageDialog(this, "K tejto rezervacii uz bola aplikovana zlava.");
+            return;
+        }
         String kod = JOptionPane.showInputDialog(this, "Zadajte kód:");
         if (this.controller.aplikujZlavu(this.zvolenaRezervacia, kod)) {
             JOptionPane.showMessageDialog(this, "Zľava aplikovaná");
@@ -183,11 +187,10 @@ public class StatusRezervacieDialog extends javax.swing.JDialog {
                 this.setBtns(true, false, true, true);
                 break;
             case POTVRDENA:
-                this.setBtns(false, true, false, false);
-                break;
             case VYKONANA:
                 this.setBtns(false, true, false, false);
                 break;
+            case UKONCENA:
             case EXPIROVANA:
                 boolean zaplatena = false ? this.zvolenaRezervacia.getPlatba() == null : true;
                 this.setBtns(false, zaplatena, false, true);

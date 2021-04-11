@@ -272,6 +272,8 @@ public class MainScreen extends javax.swing.JFrame {
             Calendar now = Calendar.getInstance();
             now.setTime(new Date());
             now.set(Calendar.DATE, this.cal.get(Calendar.DATE));
+            now.set(Calendar.MONTH, this.cal.get(Calendar.MONTH));
+            now.set(Calendar.YEAR, this.cal.get(Calendar.YEAR));
             Date time = now.getTime();
             String datum = dateFormat.format(time);
             String cas = timeFormat.format(time);
