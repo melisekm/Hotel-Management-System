@@ -5,6 +5,7 @@ import java.io.File;
 import java.util.ArrayList;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import org.slf4j.LoggerFactory;
 import sk.stu.fiit.model.Izba;
 import sk.stu.fiit.model.Rezervacia;
 import sk.stu.fiit.model.Sluzba;
@@ -16,6 +17,8 @@ import sk.stu.fiit.model.Zlava;
  * @author Martin Melisek
  */
 public class IzbyController extends Controller {
+
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(IzbyController.class);
 
     public void saveIzba(String oznacenie, String kategoria, String popis, int pocetLozok, double cena, ArrayList<File> galeria) {
         this.getIzby().add(this.createIzba(oznacenie, kategoria, popis, pocetLozok, cena, galeria));
@@ -42,6 +45,7 @@ public class IzbyController extends Controller {
 
     public ImageIcon transformImageIcon(File obrazok) {
         if (!obrazok.exists()) {
+            logger.warn("Fotka s cestou " + obrazok.getPath() + " neexistuje.");
             return null;
         }
         ImageIcon imageIcon = null;

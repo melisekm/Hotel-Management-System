@@ -43,7 +43,8 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        Locale.setDefault(new Locale("sk", "SK")); // globalny oddelovac desatinnych miest
+        logger.info("Spustam aplikaciu");
+        Locale.setDefault(new Locale("en", "GB")); // globalny oddelovac desatinnych miest
         MainScreen.main();
     }
 }

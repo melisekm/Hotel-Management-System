@@ -27,6 +27,7 @@ public class GaleriaIzbyDialog extends javax.swing.JDialog {
         btnZavriet = new javax.swing.JButton();
         cardPane = new javax.swing.JPanel();
         btnDalsi = new javax.swing.JButton();
+        btnPrev = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Galeria");
@@ -56,7 +57,18 @@ public class GaleriaIzbyDialog extends javax.swing.JDialog {
                 btnDalsiMouseReleased(evt);
             }
         });
-        getContentPane().add(btnDalsi, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 470, 150, -1));
+        getContentPane().add(btnDalsi, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 470, 160, -1));
+
+        btnPrev.setBackground(new java.awt.Color(102, 102, 102));
+        btnPrev.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnPrev.setForeground(new java.awt.Color(255, 255, 255));
+        btnPrev.setText("Predchádzajúca");
+        btnPrev.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btnPrevMouseReleased(evt);
+            }
+        });
+        getContentPane().add(btnPrev, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 470, 160, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -71,9 +83,15 @@ public class GaleriaIzbyDialog extends javax.swing.JDialog {
         cl.next(cardPane);
     }//GEN-LAST:event_btnDalsiMouseReleased
 
+    private void btnPrevMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPrevMouseReleased
+        CardLayout cl = (CardLayout) (cardPane.getLayout());
+        cl.previous(cardPane);
+    }//GEN-LAST:event_btnPrevMouseReleased
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDalsi;
+    private javax.swing.JButton btnPrev;
     private javax.swing.JButton btnZavriet;
     private javax.swing.JPanel cardPane;
     // End of variables declaration//GEN-END:variables

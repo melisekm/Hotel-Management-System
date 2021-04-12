@@ -9,6 +9,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.ResourceBundle;
 import javax.swing.Timer;
+import org.slf4j.LoggerFactory;
 import sk.stu.fiit.database.Database;
 
 /**
@@ -16,6 +17,8 @@ import sk.stu.fiit.database.Database;
  * @author Martin Melisek
  */
 public class MainScreen extends javax.swing.JFrame {
+
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(MainScreen.class);
 
     final DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
 
@@ -61,6 +64,11 @@ public class MainScreen extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(430, 530));
         setPreferredSize(new java.awt.Dimension(1140, 540));
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         cardPane.setMinimumSize(new java.awt.Dimension(1200, 530));
@@ -273,16 +281,22 @@ public class MainScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSluzbyMouseReleased
 
     private void labelIconSKMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelIconSKMouseReleased
+        logger.info("Prepinam jazyk na slovencinu.");
         Database.getInstance().setBundle("sk_SK");
         domovPane.reInternationalize();
         this.reInternationalize();
     }//GEN-LAST:event_labelIconSKMouseReleased
 
     private void labelIconUSAMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelIconUSAMouseReleased
+        logger.info("Prepinam jazyk na anglicitnu.");
         Database.getInstance().setBundle("en_US");
         domovPane.reInternationalize();
         this.reInternationalize();
     }//GEN-LAST:event_labelIconUSAMouseReleased
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        logger.info("Closing app..\n");
+    }//GEN-LAST:event_formWindowClosing
 
     private void reInternationalize() {
         String bundleLoc = Database.getInstance().getBundle();
@@ -304,6 +318,7 @@ public class MainScreen extends javax.swing.JFrame {
     }
 
     public void timeSetup(Date date) {
+        logger.info("Nastavujem cas v aplikacii - " + date.toString());
         if (this.timer != null) {
             this.timer.stop();
         }
