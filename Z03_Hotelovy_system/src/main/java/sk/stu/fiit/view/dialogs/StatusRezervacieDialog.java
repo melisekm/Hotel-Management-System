@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sk.stu.fiit.controller.RezervacieController;
 import sk.stu.fiit.model.Rezervacia;
-import sk.stu.fiit.model.StatusRezervacie;
 import sk.stu.fiit.utils.ViewUtils;
 
 /**

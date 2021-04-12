@@ -32,9 +32,13 @@ public class DomovController extends Controller {
             if (ubytovanie.getOdjazd().before(cas)) {
                 ubytovanie.setStatus(StatusUbytovanie.UKONCENE);
                 for (Izba izba : ubytovanie.getIzby()) {
-                    izba.getHistoriaUbytovani().add(ubytovanie);
+                    if (!izba.getHistoriaUbytovani().contains(ubytovanie)) {
+                        izba.getHistoriaUbytovani().add(ubytovanie);
+                    }
                 }
-                ubytovanie.getZakaznik().getHistoriaUbytovani().add(ubytovanie);
+                if (!ubytovanie.getZakaznik().getHistoriaUbytovani().contains(ubytovanie)) {
+                    ubytovanie.getZakaznik().getHistoriaUbytovani().add(ubytovanie);
+                }
             }
         }
     }

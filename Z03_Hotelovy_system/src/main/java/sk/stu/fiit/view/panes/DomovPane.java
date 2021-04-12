@@ -158,7 +158,7 @@ public class DomovPane extends javax.swing.JPanel implements IViewRefresh {
 
         labelPrijmy.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         labelPrijmy.setText(bundle.getString("DomovPane.labelPrijmy.text")); // NOI18N
-        add(labelPrijmy, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 380, 300, -1));
+        add(labelPrijmy, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 380, 380, -1));
 
         pieChartDesignPane.setBackground(new java.awt.Color(153, 153, 153));
         pieChartDesignPane.setEnabled(false);
