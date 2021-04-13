@@ -42,8 +42,8 @@ public class BarChart extends Chart {
     private JFreeChart createChart(CategoryDataset dataset, String nadpis) {
         JFreeChart chart = ChartFactory.createBarChart(
                 nadpis,
-                "", // TODO //NOI18N
-                java.util.ResourceBundle.getBundle(Database.getInstance().getBundle()).getString("VÝŠKA PRÍJMU V €"), // TODO
+                "", //NOI18N
+                java.util.ResourceBundle.getBundle(Database.getInstance().getBundle()).getString("VÝŠKA PRÍJMU V €"),
                 dataset,
                 PlotOrientation.VERTICAL,
                 false,

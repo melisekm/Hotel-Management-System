@@ -17,7 +17,6 @@ public class Main {
     static {
         Database.createDatabase(); // prazdna DB
         DataLoader.loadData(); // Zakaznik a sluzby
-
     }
 
     public static void main(String[] args) {
