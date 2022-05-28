@@ -14,7 +14,3 @@ Mockup app
 - room categories
 - view history of room reservations
 - discounts
-
-
-LOC Distribution: 
-<img src="graf.png">
